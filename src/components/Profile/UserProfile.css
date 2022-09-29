@@ -1,0 +1,35 @@
+.card-headers{
+    background-color: #343a40;
+}
+
+ul{
+    list-style: none;
+}
+
+.nav-link{
+    color: #fff;
+}
+
+.nav-link:hover{
+    color: white;
+}
+
+.nav-item{
+    height: 100%;
+}
+
+.nav-items:hover{
+    background-color: #c90416
+}
+
+ul.nav-card-profile{
+    list-style: none;
+}
+
+ul.nav-card-profile li{
+    display: inline-block;
+}
+
+.card-primary.card-outline {
+    border-top: 3px solid #c90416;
+  }
