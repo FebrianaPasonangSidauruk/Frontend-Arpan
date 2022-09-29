@@ -10,6 +10,7 @@ const UserProfile = () => {
 
     const [users, setUsers] = useState([]);
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [employee_title, setEmployeeTitle] = useState("");
   const [department, setDepartment] = useState("");
@@ -27,6 +28,7 @@ const UserProfile = () => {
 const getUserById = async () => {
     const response = await axios.get(`http://localhost:5001/users/${id}`);
     setName(response.data.name);
+    setUsername(response.data.username);
     setEmail(response.data.email);
     setEmployeeTitle(response.data.employee_title);
     setDepartment(response.data.department);
@@ -43,6 +45,7 @@ const getUserById = async () => {
     try {
       await axios.patch(`http://localhost:5001/users/${id}`, {
         name,
+        username,
         email,
         employee_title,
         department,
@@ -136,19 +139,19 @@ const getUserById = async () => {
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Department</label>
                       <div className="col-sm-10">
-                        <input type="text" className="form-control"  placeholder="Department" />
+                      <p className="text-muted text-center">{department}</p>
                       </div>
                     </div>
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Division</label>
                       <div className="col-sm-10">
-                        <input type="text" className="form-control" placeholder="Division" />
+                      <p className="text-muted text-center">{division}</p>
                       </div>
                     </div>
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Sub-Directorate</label>
                       <div className="col-sm-10">
-                      <input type="text" className="form-control" placeholder="Sub-Directorate" />
+                      <p className="text-muted text-center">{sub_directorate}</p>
                       </div>
                     </div>
                     <div className="form-group row">
@@ -178,17 +181,17 @@ const getUserById = async () => {
                 </div>
 
                 <div className="tab-pane" id="settings">
-                  <form className="form-horizontal">
+                  <form className="form-horizontal" onSubmit={updateUser}>
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Username</label>
                       <div className="col-sm-10">
-                        <input type="text" className="form-control" placeholder="Name" />
+                        <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Password</label>
+                      <label className="col-sm-2 col-form-label">Email</label>
                       <div className="col-sm-10">
-                        <input type="text" className="form-control" placeholder="Email" />
+                        <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
                       </div>
                     </div>
                     <div className="form-group row">

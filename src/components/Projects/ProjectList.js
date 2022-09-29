@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {FaPencilAlt} from 'react-icons/fa'
 import Options from './Options'
+import './Options.css';
 
 function ProjectList({project}) {
   return (

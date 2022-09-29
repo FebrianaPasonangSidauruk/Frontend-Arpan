@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import {FaCubes, FaUserAlt, FaTools, FaUsersCog} from 'react-icons/fa'
 import {HiClipboardList, HiChat} from 'react-icons/hi'
 import {BsListCheck} from 'react-icons/bs'
-// import './Sidebar.css'
+import './Sidebar.css'
 import logo from '../img/logo-sidebar.png';
 
 const Sidebar = () => {
@@ -75,7 +75,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <nav className="mt-2">
         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li className="nav-item menu-open">
+          <li className="nav-item">
             <Link to= '/dashboard' className='nav-link'>
               <i className="nav-icon fas fa-chart-pie" />
               <p>
@@ -83,8 +83,8 @@ const Sidebar = () => {
               </p>
             </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link">
+          <li className="nav-item menu-open">
+            <a href='#' className="nav-link">
               <i className="nav-icon fas"><BsListCheck/></i>
               <p>
                 Project Tracking
@@ -99,7 +99,7 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" className="nav-link">
+                <a href="#" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>Task Assignment</p>
                 </a>
@@ -145,7 +145,7 @@ const Sidebar = () => {
                 Administrator Menu
               </p></a></li>
           <li className="nav-item">
-            <a href="pages/calendar.html" className="nav-link">
+            <a href="#" className="nav-link">
               <i className="nav-icon far"><FaUsersCog/> </i>
               <p>
                 User Management
@@ -154,7 +154,7 @@ const Sidebar = () => {
           </li>
 
           <li className="nav-item">
-            <a href="pages/gallery.html" className="nav-link">
+            <a href="#" className="nav-link">
               <i className="nav-icon far"><HiChat/> </i>
               <p>
                 Feedback/Report

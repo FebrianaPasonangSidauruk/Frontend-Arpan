@@ -1,0 +1,13 @@
+.card-header{
+    background-color: #6c757d;
+    color:white;
+}
+
+.modal-header{
+    background-color: #343a40;
+    color: white;
+}
+
+.close{
+    color: white;
+}

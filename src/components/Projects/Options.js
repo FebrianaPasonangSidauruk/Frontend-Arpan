@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from "axios";
+import './Options.css';
 
 const Options = ({project}) => {
     const [no_nodin_rfsrfi, setNo_nodin_rfsrfi] = useState('');
@@ -103,7 +104,7 @@ const Options = ({project}) => {
           <div className="card-header">
               <h3 className="card-title">PIC Tester</h3>
             </div>
-            <table class="table table-striped">
+            <table class="table ">
               <tr>
               <th>PIC Tester 1</th>
               <td>{pic_tester_1}</td>
