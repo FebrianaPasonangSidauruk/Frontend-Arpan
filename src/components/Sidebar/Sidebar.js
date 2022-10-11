@@ -83,7 +83,13 @@ const Sidebar = () => {
               </p>
             </Link>
           </li>
-          <li className="nav-item menu-open">
+          <li className="nav-item">
+          <Link to= '/dashboard/projectList' className='nav-link'>
+          <i className="nav-icon fas"><BsListCheck/></i>
+                  <p>Project List</p>
+                </Link>
+          </li>
+          {/* <li className="nav-item menu-open">
             <a href='#' className="nav-link">
               <i className="nav-icon fas"><BsListCheck/></i>
               <p>
@@ -105,25 +111,25 @@ const Sidebar = () => {
                 </a>
               </li>
             </ul>
-          </li>
+          </li> */}
 
 
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a href="#" className="nav-link">
               <i className="nav-icon fas"><FaCubes/> </i>
               <p>
                 Product List
               </p>
             </a>
-          </li>
+          </li> */}
 
           <li className="nav-item">
-            <a href="#" className="nav-link">
+            <Link to= '/dashboard/audit' className='nav-link'>
               <i className="nav-icon fas"><HiClipboardList/></i>
               <p>
-                Nodin List
+                Audit
               </p>
-            </a>
+            </Link>
           </li>
 
           <li className="nav-item">

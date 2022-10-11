@@ -3,12 +3,12 @@ import { Pie } from "react-chartjs-2";
 import './PieChart.css'
 import { Chart as ChartJS } from "chart.js/auto";
 
-function PieChart({ chartData }) {
+function PieChart({ chartDataPie }) {
 
   return (
   <div className="pie-chart">
   <Pie
-   data={chartData} 
+   data={chartDataPie} 
   options={{
     title:{
       display:true,
@@ -19,7 +19,8 @@ function PieChart({ chartData }) {
       display:true,
       position:'right'
     }
-  }}/>;
+  }}/>
+  <br/>
   </div>
   );
 }

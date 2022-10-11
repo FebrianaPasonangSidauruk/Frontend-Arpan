@@ -1,3 +1,73 @@
 .card-body-table{
     align-items: center;
 }
+
+/* .filterpie{
+    
+    text-align: center;
+} */
+
+/* .filter-btn-chart{
+    background-color: aqua;
+    border-radius: 2px;
+    margin: 20%;
+} */
+
+/* .breadcrumb-item{
+    background-color: aqua;
+} */
+
+/* .col-sm-6 .filterpie{
+    align-items: center;
+    text-align: center;
+
+} */
+
+/* Style The Dropdown Button */
+.dropbtnFilter {
+    border-radius: 2px;
+    background-color: #dc3545;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    width: 100px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdownFilter {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content-filter{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content-filter a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content-filter a:hover {background-color: #f1f1f1}
+  
+  /* Show the dropdown menu on hover */
+  .dropdownFilter:hover .dropdown-content-filter {
+    display: block;
+  }
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdownFilter:hover .dropbtnFilter {
+    background-color: #b81f2e;
+  }

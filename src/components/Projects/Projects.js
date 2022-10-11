@@ -63,7 +63,6 @@ function Projects() {
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-        <li class="breadcrumb-item active">Project Tracking</li>
         <li class="breadcrumb-item active">Project List</li>
         </ol>
         </div>
@@ -104,8 +103,8 @@ function Projects() {
           </div>
           
           <div className='table-container  mt-5'>
-            <table className="table table-bordered table-hover">
-              <thead>
+          {/* <table className="table table-bordered table-hover">
+          <thead>
                    <tr className='row-table'>
                       <th>No</th>
                       <th>Nomor Nodin RFS/RFI</th>
@@ -121,6 +120,26 @@ function Projects() {
                       <th>Type</th>
                       <th>Nodin BO</th>
                       <th>Options</th>
+                  </tr>
+              </thead>
+              </table> */}
+            <table className="table table-bordered table-hover">
+              <thead>
+                   <tr className='row-table'>
+                      <th className='project-header'>No</th>
+                      <th className='project-header'>Nomor Nodin RFS/RFI</th>
+                      <th className='project-header'>Tanggal Nodin RFS/RFI</th>
+                      <th className='project-header'>Subject Nodin RFS/RFI</th>
+                      <th className='project-header'>Status</th>
+                      <th className='project-header'>Status RFC/ITR</th>
+                      <th className='project-header'>Nomor Nodin RFC/ITR</th>
+                      <th className='project-header'>Tanggal Nodin RFC/ITR</th>
+                      <th className='project-header'>Subject Nodin RFC/ITR</th>
+                      <th className='project-header'>Requestor</th>
+                      <th className='project-header'>PIC Dev</th>
+                      <th className='project-header'>Type</th>
+                      <th className='project-header'>Nodin BO</th>
+                      <th className='project-header'>Options</th>
                   </tr>
               </thead>
               <tbody>

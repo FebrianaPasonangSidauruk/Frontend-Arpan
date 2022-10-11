@@ -9,15 +9,71 @@ import LineChart from '../Chart/LineChart';
 import './Dashboard.css'
 
 const Dashboard = () => {
-  const statePie = {
+  const statePieDaily = {
     labels: ['RFS', 'RFI', 'RFC', 'ITR'],
     datasets:[
         {
-        data: [7,6,3,5],
+        data: [1,2,1,1],
         backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
         }
       ]
   }
+  
+  const statePieWeekly = {
+    labels: ['RFS', 'RFI', 'RFC', 'ITR'],
+    datasets:[
+        {
+        data: [2,4,5,8],
+        backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+        }
+      ]
+  }
+
+  const statePieMonth = {
+    labels: ['RFS', 'RFI', 'RFC', 'ITR'],
+    datasets:[
+        {
+        data: [17,16,13,15],
+        backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+        }
+      ]
+  }
+
+  const statePieYearly = {
+    labels: ['RFS', 'RFI', 'RFC', 'ITR'],
+    datasets:[
+        {
+        data: [30,80,45,20],
+        backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+        }
+      ]
+  }
+
+  const [chartDataPie, setChartDataPie] = useState(statePieDaily)
+
+  var clickHandlerTime;
+
+  const clickHandlerDaily = () =>{
+    // clickHandlerTime = {statePieDaily}
+    <PieChart chartData ={statePieDaily}/>
+  }
+
+  const clickHandlerMonthly = () =>{
+    clickHandlerTime = {statePieMonth}
+    // clickHandlerTime = <PieChart chartData ={statePieDaily}/>
+  }
+
+  const clickHandlerWeekly = () =>{
+    clickHandlerTime = {statePieWeekly}
+    // clickHandlerTime = <PieChart chartData ={statePieDaily}/>
+  }
+
+  const clickHandlerYearly= () =>{
+    clickHandlerTime = {statePieYearly}
+    // clickHandlerTime = <PieChart chartData ={statePieDaily}/>
+  }
+  
+
 
   const stateLine = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
@@ -69,7 +125,29 @@ datasets: [
             <li className="breadcrumb-item"><a href="#">Home</a></li>
           </ol>
         </div>
+        <div className="card-body-table">
+        <div className="col-sm-12 filterpie">
+            <ol className="breadcrumb float-sm-right">
+            <li className="breadcrumb-item-">
+            <div class="dropdownFilter">
+              <button class="dropbtnFilter">Filter</button>
+              <div class="dropdown-content-filter">
+                <a onClick= {() => setChartDataPie(statePieDaily)}>Daily</a>
+                <a onClick= {() => setChartDataPie(statePieWeekly)}>Weekly</a>
+                <a onClick= {() => setChartDataPie(statePieMonth)}>Monthly</a>
+                <a onClick= {() => setChartDataPie(statePieYearly)}>Yearly</a>
+              </div>
+            </div>
+            </li>
+            {/* <li className="breadcrumb-item-"><button className='filter-btn-chart' onClick= {() => setChartDataPie(statePieDaily)}>Daily </button></li>
+            <li className="breadcrumb-item-"><button className='filter-btn-chart'  onClick= {() => setChartDataPie(statePieWeekly)} >Weekly </button></li>
+            <li className="breadcrumb-item-"><button className='filter-btn-chart'  onClick= {() => setChartDataPie(statePieMonth)}> Monthly </button></li>
+            <li className="breadcrumb-item-"><button className='filter-btn-chart'  onClick= {() => setChartDataPie(statePieYearly)}> Yearly</button></li> */}
+          </ol>
+        </div>
       </div>
+      </div>
+      
     </div>
   </div>
   <section className="content">
@@ -128,7 +206,15 @@ datasets: [
 
           </div>
           <div className="card-body-table">
-              <PieChart chartData ={statePie}/>
+              <PieChart chartDataPie ={chartDataPie}/>
+          {/* <div className="col-sm-6 filterpie">
+            <ol className="breadcrumb float-sm-right">
+            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieDaily)}>Daily</button></li>
+            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieWeekly)} >Weekly</button></li>
+            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieMonth)}>Monthly</button></li>
+            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieYearly)}>Yearly</button></li>
+          </ol>
+        </div> */}
           </div>
         </div>
         
