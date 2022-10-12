@@ -5,9 +5,22 @@ import {FaSearch} from 'react-icons/fa';
 import ProjectList from './ProjectList';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
+import ReactExport from 'react-data-export';
 import './Projects.css';
+import { getRequestor } from './apiData';
+import * as XLSX from 'xlsx';
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+
 
 function Projects() {
+    const [title_dev, setTitle_dev] = useState([]);
+    const [exporData, setExportData] = useState([]);
+    const [dataProject, setDataProject] = useState([]);
+
+
+
     const [projects, setProjects] = useState([]);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(10);
@@ -20,6 +33,10 @@ function Projects() {
     useEffect(() => {
         getProjects();
       }, [page, keyword]);
+    
+      useEffect(() => {
+          getProducts();
+        }, []);
 
       const getProjects = async () => {
         const response = await axios.get(
@@ -29,7 +46,75 @@ function Projects() {
         setPage(response.data.page);
         setPages(response.data.totalPage);
         setRows(response.data.totalRows);
+
+
+        setDataProject(response.data.result);
       };
+
+      const getProducts = async() =>{
+        const res = await axios.get(`http://localhost:5001/getProject`);
+
+        const requestor_list = res.data.map((data) => data.title_dev);
+        setTitle_dev([...new Set(requestor_list)]);
+        console.log(title_dev);
+
+        return;
+        
+    }
+
+    const handleOnExport = () =>{
+      var wb = XLSX.utils.book_new()
+      var ws = XLSX.utils.json_to_sheet(projects);
+      XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
+      XLSX.writeFile(wb, "tesfile.xlsx");
+  }
+
+    
+
+    const DataSet = [
+      {
+        columns: [
+          {title: "Nomor Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Tanggal Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Subject Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Status", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Status RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Nomor Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Tanggal Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Subject Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Requestor", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "PIC Dev", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Type", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+          {title: "Nodin BO", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+        ],
+        data: projects.map((data) => [
+          {value: data.no_nodin_rfsrfi, style: {font: {sz: "14"}}},
+          {value: data.date_nodin_rfsrfi, style: {font: {sz: "14"}}},
+          {value: data.subject_nodin_rfsrfi, style: {font: {sz: "14"}}},
+          {value: data.status, style: {font: {sz: "14"}}},
+          {value: data.detail_status, style: {font: {sz: "14"}}},
+          {value: data.no_nodin_rfcitr, style: {font: {sz: "14"}}},
+          {value: data.date_nodin_rfcitr, style: {font: {sz: "14"}}},
+          {value: data.subject_nodin_rfcitr, style: {font: {sz: "14"}}},
+          {value: data.title_dev, style: {font: {sz: "14"}}},
+          {value: data.pic_dev, style: {font: {sz: "14"}}},
+          {value: data.type_nodin, style: {font: {sz: "14"}}},
+          {value: data.no_nodin_bo, style: {font: {sz: "14"}}},
+
+        ])
+      }
+      
+    ]
+
+    const dataProjectHandler = async(event) =>{
+      // setProjects([])
+      // setExportData([]);
+      const data = await getRequestor(event.target.value);
+      console.log(data);
+      setExportData([...data]);
+      setProjects(data);
+      console.log(exporData)
+    }
     
     const changePage = ({ selected }) => {
       setPage(selected);
@@ -47,7 +132,15 @@ function Projects() {
         setPage(0);
         setMsg("");
         setKeyword(query);
+        console.log(keyword)
       };
+
+      function refresh(){
+        setPage(0);
+        setMsg("");
+        setKeyword("");
+        console.log(keyword)
+      }
 
   return (
     <div>
@@ -92,37 +185,52 @@ function Projects() {
                 <i className="fas"><FaSearch/> </i>
                 </button>
               </div>
-            {/* <div className="input-group-append">
-                <button type="submit" className="btn btn-lg btn-default">
-                <i className="fas"><FaSearch/> </i>
-                </button>
-              </div> */}
             </div>
           </form>
+          <form>
+                  <select
+                    className="custom-select"
+                    name="example"
+                    // value={projects}
+                    onChange={(event) => dataProjectHandler(event)}
+                    defaultValue="Choose....."
+                    style={{ paddingTop: "5px", marginTop: "10px" }}
+                  >
+                    {/* <option>--Select--</option> */}
+                    {title_dev.map((requestor) => (
+                      <option
+                        value={requestor}
+                        // onChange={(event) => dataProjectHandler(event)}
+                      >
+                        {requestor}
+                      </option>
+                    ))}
+                  </select>
+                  <button type="submit" className="btn btn-lg btn-default" 
+                  onClick= {refresh}
+                  >
+                <i className="fas">refresh </i>
+                </button>
+                </form>
+                <button onClick={handleOnExport}>export</button>
+                {/* {projects.length !== 0 ? (
+                         <ExcelFile 
+                         filename="Project List" 
+                         element={<button type="button" className="btn btn-success float-right m-3">Export Data</button>}>
+                             <ExcelSheet dataSet={DataSet} name="project list"/>
+                         </ExcelFile>
+                    ): null}            */}
+                {/* <form onSubmit={searchData}> */}
+                {/* <button type="submit" className="btn btn-lg btn-default" 
+                  onClick= {refresh}
+                  >
+                <i className="fas">refresh </i>
+                </button> */}
+                {/* </form> */}
           </div>
           </div>
           
           <div className='table-container  mt-5'>
-          {/* <table className="table table-bordered table-hover">
-          <thead>
-                   <tr className='row-table'>
-                      <th>No</th>
-                      <th>Nomor Nodin RFS/RFI</th>
-                      <th>Tanggal Nodin RFS/RFI</th>
-                      <th>Subject Nodin RFS/RFI</th>
-                      <th>Status</th>
-                      <th>Status RFC/ITR</th>
-                      <th>Nomor Nodin RFC/ITR</th>
-                      <th>Tanggal Nodin RFC/ITR</th>
-                      <th>Subject Nodin RFC/ITR</th>
-                      <th>Requestor</th>
-                      <th>PIC Dev</th>
-                      <th>Type</th>
-                      <th>Nodin BO</th>
-                      <th>Options</th>
-                  </tr>
-              </thead>
-              </table> */}
             <table className="table table-bordered table-hover">
               <thead>
                    <tr className='row-table'>

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
+import Tes from './Tes';
 import { v4 as uuidv4 } from 'uuid';
 
 const Audit = () => {
@@ -138,13 +139,14 @@ const Audit = () => {
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Requestor</label>
                       <div className="col-sm-10">
-                        <input type="text" 
+                        <Tes/>
+                        {/* <input type="text" 
                         name="requestor"
                         className="form-control" 
                         variant="filled"
                         value={inputFieldRequestor.requestor}
                         onChange={event => handleChangeInputRequestor(inputFieldRequestor.idRequestor, event)}
-                        placeholder="Requestor" />
+                        placeholder="Requestor" /> */}
                         <button className="offset-sm-1 col-sm-2" disabled={inputFieldsRequestor.length === 1} 
                         onClick={() => handleRemoveFieldsRequestor(inputFieldRequestor.idRequestor)}> 
                       - 

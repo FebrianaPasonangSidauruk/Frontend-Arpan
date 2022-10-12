@@ -104,7 +104,6 @@ const Tes = () => {
                 className=""
                 style={{ paddingTop: "5px", marginTop: "40px" }}
               >
-                Model
                 <form onSubmit={handleSubmit}>
                   <select
                     className="custom-select"
@@ -134,13 +133,13 @@ const Tes = () => {
   
                
   
-                  <button
+                  {/* <button
                     type="submit"
                     class="btn btn-success"
-                    style={{ marginTop: "100px" }}
+
                   >
                     Inference
-                  </button>
+                  </button> */}
                 </form>
               </label>
             </div>
