@@ -12,6 +12,7 @@ import axios from "axios";
 // }
 
    export const getRequestor = async (keyword) => {
+    console.log('tes', keyword)
     try{
         const {data} = await axios.get(
           `http://localhost:5001/requestor?search_requestor=${keyword}`

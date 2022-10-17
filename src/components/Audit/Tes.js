@@ -108,8 +108,9 @@ const Tes = () => {
                   <select
                     className="custom-select"
                     name="example"
-                    value={model}
-                    onChange={(e) => handleChange(e)}
+                    // value={model}
+                    // onChange={(e) => handleChange(e)}
+                    onChange={(e) => setmodel(e.target.value)}
                     style={{ paddingTop: "5px", marginTop: "10px" }}
                   >
                     <option>--Select--</option>
@@ -124,12 +125,13 @@ const Tes = () => {
                     {title_dev.map((requestor) => (
                       <option
                         value={requestor}
-                        onChange={(e) => setmodel(e.target.value)}
+                        
                       >
                         {requestor}
                       </option>
                     ))}
                   </select>
+                  <p>Bulan: {model} </p> 
   
                
   

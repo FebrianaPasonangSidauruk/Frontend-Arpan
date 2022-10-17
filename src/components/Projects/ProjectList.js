@@ -4,8 +4,10 @@ import Options from './Options'
 import './Options.css';
 
 function ProjectList({project}) {
+  var index;
   return (
     <>              
+                    {/* <td>{index + 1}</td> */}
                     <td>{project.id_project}</td>
                     <td>{project.no_nodin_rfsrfi}</td>
                     <td>{project.date_nodin_rfsrfi}</td>

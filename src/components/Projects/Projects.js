@@ -64,9 +64,13 @@ function Projects() {
 
     const handleOnExport = () =>{
       var wb = XLSX.utils.book_new()
-      var ws = XLSX.utils.json_to_sheet(projects);
+      var ws = XLSX.utils.json_to_sheet(exporData);
       XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
       XLSX.writeFile(wb, "tesfile.xlsx");
+  }
+
+  const cekcoba = () =>{
+    console.log(exporData)
   }
 
     
@@ -107,12 +111,11 @@ function Projects() {
     ]
 
     const dataProjectHandler = async(event) =>{
-      // setProjects([])
-      // setExportData([]);
       const data = await getRequestor(event.target.value);
+      setKeyword(event.target.value)
+      
+      setExportData(data);
       console.log(data);
-      setExportData([...data]);
-      setProjects(data);
       console.log(exporData)
     }
     
@@ -213,13 +216,14 @@ function Projects() {
                 </button>
                 </form>
                 <button onClick={handleOnExport}>export</button>
-                {/* {projects.length !== 0 ? (
+                <button onClick={cekcoba}>cek</button>
+                {projects.length !== 0 ? (
                          <ExcelFile 
                          filename="Project List" 
                          element={<button type="button" className="btn btn-success float-right m-3">Export Data</button>}>
                              <ExcelSheet dataSet={DataSet} name="project list"/>
                          </ExcelFile>
-                    ): null}            */}
+                    ): null}           
                 {/* <form onSubmit={searchData}> */}
                 {/* <button type="submit" className="btn btn-lg btn-default" 
                   onClick= {refresh}
@@ -251,8 +255,9 @@ function Projects() {
                   </tr>
               </thead>
               <tbody>
-                {projects.map((project) => (
+                {projects.map((project, index) => (
                   <tr key={project.id_project}>
+                    {/* <td>{index + 1}</td> */}
                     <ProjectList project={project} />
                   </tr>
                 ))}

@@ -7,6 +7,8 @@ import Projects from './components/Projects/Projects';
 import UserProfile from './components/Profile/UserProfile';
 import Audit from './components/Audit/Audit';
 import Tes from './components/Audit/Tes';
+import TesAudit from './components/Audit/TesAudit';
+import Teslagi from './components/Audit/teslagi';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path='/profile/:id' exact element={<UserProfile/>}/>
         <Route path='/dashboard/audit' exact element={<Audit/>}/>
         <Route path="/tes" exact element={<Tes />} />
+        <Route path="/tesaudit" exact element={<TesAudit />} />
+        <Route path="/teslagi" exact element={<Teslagi />} />
       </>
     </Routes>
   );

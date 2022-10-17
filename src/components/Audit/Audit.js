@@ -4,11 +4,18 @@ import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import Tes from './Tes';
 import { v4 as uuidv4 } from 'uuid';
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+
+import MonthYearPicker from 'react-month-year-picker';
 
 const Audit = () => {
     const [requestors, setRequestors] = useState([]);
     const [keyword, setKeyword] = useState("");
     const [query, setQuery] = useState("");
+    const [smonth, setMonth] = useState();
+    const [syear, setYear] = useState(2022);
+    // const [startDate, setStartDate] = useState(2022);
 
     // useEffect(() => {
     //     getRequestor();
@@ -106,6 +113,13 @@ const Audit = () => {
 
     }
 
+    const handleChangeMonth= (month, year) =>{
+      setMonth(month)
+      console.log(smonth)
+        console.log(month)
+        console.log(year)
+    }
+
 
 
   return (
@@ -181,7 +195,29 @@ const Audit = () => {
                         value={inputFieldPeriod.period}
                         onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
                         placeholder="period" />
+                        {/* <input className='input-periodCard' type='month' value= {month} onChange={m=>setMonth(m.target.value)}/> */}
+                        <MonthYearPicker
+                          className='month-picker-card'
+                          selectedMonth={smonth}
+                          selectedYear={syear}
+                          minYear={2018}
+                          maxYear={2030}
+                          onChangeYear={(year) => setYear(year)}
+                          onChangeMonth={(month) => setMonth(month)}
+                        />
+                        {/* <DatePicker
+                        selectedMonth={smonth}
+                        selectedYear={syear}
+                        selected={startDate} onChange={(date) =>   
+                          setStartDate(date)}
+                        onChangeYear={(year) => setYear(year)}
+                          onChangeMonth={(month) => setMonth(month)}
+                        dateFormat="MM/yyyy"
 
+                        showMonthYearPicker
+                        showFullMonthYearPicker
+                      /> */}
+                        <p>Bulan: {smonth} tahun: {syear}</p> 
                         <input type="text" 
                         name="tgl_signoff"
                         className="form-control" 
