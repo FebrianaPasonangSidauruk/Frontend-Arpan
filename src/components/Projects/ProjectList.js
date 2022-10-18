@@ -21,6 +21,7 @@ function ProjectList({project}) {
                     <td>{project.pic_dev}</td>
                     <td>{project.type_nodin}</td>
                     <td>{project.no_nodin_bo}</td>
+                    <td>{project.testing_progress}</td>
                     <td>
                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default"><i className="fas"><FaPencilAlt/> </i></button>
                     </td>
@@ -35,11 +36,9 @@ function ProjectList({project}) {
         </button>
         </div>
         <div class="modal-body">
-            <Options project={project}/>
-        </div>
-        <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+            <Options 
+            value={project.id_project}
+            project={project}/>
         </div>
         </div>
 

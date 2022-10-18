@@ -3,6 +3,7 @@ import axios from "axios";
 import './Options.css';
 
 const Options = ({project}) => {
+    const [testing_progress, setTesting_progress] = useState('');
     const [no_nodin_rfsrfi, setNo_nodin_rfsrfi] = useState('');
     const [date_nodin_rfsrfi, setDate_nodin_rfsrfi] = useState('');
     const [subject_nodin_rfsrfi, setSubject_nodin_rfsrfi] = useState('');
@@ -23,6 +24,7 @@ const Options = ({project}) => {
     const [pic_tester_5, setPic_tester_5] = useState('');
 
     const id_project  = project.id_project;
+    
 
     useEffect(() => {
         getDataById();
@@ -32,9 +34,11 @@ const Options = ({project}) => {
         e.preventDefault();
         // id = users.id 
         console.log("ya")
-        // console.log(id)
+        console.log(id_project)
+        console.log(testing_progress)
         try {
           await axios.patch(`http://localhost:5001/datas/${id_project}`, {
+            testing_progress: testing_progress,
             no_nodin_rfsrfi: no_nodin_rfsrfi ,
             date_nodin_rfsrfi: date_nodin_rfsrfi ,
             subject_nodin_rfsrfi: subject_nodin_rfsrfi,
@@ -60,7 +64,9 @@ const Options = ({project}) => {
       };
 
       const getDataById = async () => {
+        console.log(id_project)
         const response = await axios.get(`http://localhost:5001/datas/${id_project}`);
+        setTesting_progress(response.data.testing_progress);
         setNo_nodin_rfsrfi(response.data.no_nodin_rfsrfi);
         setDate_nodin_rfsrfi(response.data.date_nodin_rfsrfi);
         setSubject_nodin_rfsrfi(response.data.subject_nodin_rfsrfi);
@@ -99,6 +105,18 @@ const Options = ({project}) => {
               <td>{end_date_testing}</td>
               </tr>
             </tbody>
+            </table>
+
+            <div className="card-header">
+              <h3 className="card-title">Testing Progress</h3>
+            </div>
+            <table class="table table-striped">
+            <tr>
+              <th>Progress</th>
+              <td>
+              <input type="text" className="form-control" value={testing_progress} onChange={(e) => setTesting_progress(e.target.value)} placeholder="...." />
+                </td>
+            </tr>
             </table>
 
           <div className="card-header">
@@ -156,6 +174,10 @@ const Options = ({project}) => {
               <td>{notes_testing}</td>
               </tr>
             </table>
+            <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onClick={updateData}>Save changes</button>
+        </div>
         </div>
   )
 }

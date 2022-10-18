@@ -8,22 +8,25 @@ import { cobaAudit } from './apiAudit';
 import TesModal from './TesModal';
 import './Audit.css';
 
-import { v4 as uuidv4 } from 'uuid';
 
 const TesAudit = () => {
     const [requestors, setRequestors] = useState([]);
     const [keyword, setKeyword] = useState("");
-    const [keyword2, setKeyword2] = useState("");
-    const [keyword3, setKeyword3] = useState("");
+
     const [query, setQuery] = useState("");
+
     const [smonth, setMonth] = useState();
     const [syear, setYear] = useState(2022);
+    const [smonth2, setMonth2] = useState();
+    const [syear2, setYear2] = useState(2022);
+    const [smonth3, setMonth3] = useState();
+    const [syear3, setYear3] = useState(2022);
+
     const [title_dev, setTitle_dev] = useState([]);
     const [exporData, setExportData] = useState([]);
     const[req, setReq] = useState("");
     const[req2, setReq2] = useState("");
     const[req3, setReq3] = useState("");
-    const[defaultval, setDefaultval] = useState("kosongin")
 
     useEffect(() => {
         getProducts();
@@ -39,49 +42,14 @@ const TesAudit = () => {
         return;
         
     }
-
-    const dataProjectHandler = async(event) =>{
-        const data = await cobaAudit(event.target.value);
-        setKeyword(event.target.value)
-        console.log(data);
-        setExportData(data);
-        console.log(exporData)
-      }
-
-    const [inputFieldsRequestor, setInputFieldsRequestor] = useState([
-        {idRequestor: uuidv4(), requestor: ''},
-    ]);
     
     const dataProjectRequestor = async(event) => {
-        // event = keyword;
-        // setExportData([]);
         event.preventDefault();
-        setKeyword(req);
-        setKeyword2(req2);
-        setKeyword2(req3);
-        console.log("keyword", keyword)
-        const data = await cobaAudit(req, req2, req3)
+        const data = await cobaAudit(req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3)
         setExportData(data);
         console.log(exporData)
         console.log(data);
-        // e.preventDefault();
-        // re.preventDefault();
-        // console.log("Req1 req2 re3", e)
-        // const data = await cobaAudit(event.target.value);
-        console.log("Req1 req2 re3", req, req2, req3)
-        // console.log("InputFieldsRequestor", inputFieldsRequestor);
-    };
-
-    const handlebuttonreq = (req, req2, req3) => {
-        console.log("Req1 req2 re3", req, req2, req3)
-        // console.log("InputFieldsRequestor", inputFieldsRequestor);
-    };
-
-
-    const handleSubmitAll = (e) => {
-        e.preventDefault();
-        console.log("InputFieldsRequestor", inputFieldsRequestor);
-        console.log("InputFieldsPeriod", inputFieldsPeriod);
+        console.log("Req1 req2 re3 bulan tahun", req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3)
     };
 
     const submitrequestor= (e) =>{
@@ -91,44 +59,15 @@ const TesAudit = () => {
 
     }
 
-    //period
-    const [inputFieldsPeriod, setInputFieldsPeriod] = useState([
-        {idPeriod: uuidv4(), period: '', tgl_signoff:'', req_name:'', req_title:'', revas_name:'', revas_title:''},
-    ]);
     
     const handleSubmitPeriod = (e) => {
         e.preventDefault();
-        // setKeyword(query);
-        console.log("InputFieldsPeriod", inputFieldsPeriod);
-        // console.log("Requestor", requestors);
+        
     };
 
-    const handleChangeInputPeriod = (idPeriod, event) => {
-        const newInputFieldsPeriod = inputFieldsPeriod.map(a => {
-            if(idPeriod === a.idPeriod){
-                a[event.target.name] = event.target.value
-            }
-            return a;
-        })
 
-        setInputFieldsPeriod(newInputFieldsPeriod);
-    }
 
-    const handleAddFieldsPeriod = () =>{
-        setInputFieldsPeriod([...inputFieldsPeriod, {idPeriod: uuidv4(), period: '', tgl_signoff:'', req_name:'', req_title:'', revas_name:'', revas_title:''}])
-        // setRequestors([...requestors]);
-    }
-
-    const handleRemoveFieldsPeriod = idPeriod => {
-        const values = [...inputFieldsPeriod];
-        values.splice(values.findIndex(value => value.idPeriod === idPeriod), 1);
-        setInputFieldsPeriod(values);
-    }
-
-    const submitPeriod= (e) =>{
-        e.preventDefault();
-        setKeyword(query);
-        // console.log("Period", periods);
+    const getPDF = (e) =>{
 
     }
 
@@ -159,7 +98,7 @@ const TesAudit = () => {
                     <div class="col-12">
                         <div class="card">
           
-                            <form className='form-horizontal'>
+                            <form className='form-horizontal' >
                                 <div className="form-group row">
                                     <label className="col-sm-2 col-form-label">Requestor</label>
                                         <div className="col-sm-8">
@@ -168,20 +107,19 @@ const TesAudit = () => {
                                                 name="example"
                                                 placeholder='pilih'
                                                 onChange={(event) => setReq(event.target.value)}
-                                                // onChange={(event) => dataProjectHandler(event)}
                                                 style={{ paddingTop: "5px", marginTop: "10px" }}
                                             >
                                                 {title_dev.map((requestor) => (
                                                     <option value={requestor}
-                                                    // onChange={(requestor)=> setReq(requestor.target.value)}
                                                     >
                                                         {requestor}
                                                     </option>
                                                 ))}
-                                                <option>--Select--</option>
+                                                <option>-</option>
                                             </select>
                                         </div>
-                                        <p>req1: {req}</p> 
+                                        {/* <br/> <br/> */}
+                                        {/* <p>req1: {req}</p>  */}
                                         <label className="col-sm-2 col-form-label">OR</label>
                                 </div>
                                 <div className="form-group row">
@@ -193,7 +131,7 @@ const TesAudit = () => {
                                                 onChange={(event) => setReq2(event.target.value)}
                                                 // onChange={(event) => dataProjectHandler(event)}
                                                 style={{ paddingTop: "5px", marginTop: "10px" }}
-                                            ><option>--Select--</option>
+                                            ><option>-</option>
                                                 {title_dev.map((requestor) => (
                                                     <option value={requestor}>
                                                         {requestor}
@@ -201,7 +139,8 @@ const TesAudit = () => {
                                                 ))}
                                             </select>
                                         </div>
-                                        <p>req1: {req2}</p> 
+                                        {/* <br/> */}
+                                        {/* <p>req1: {req2}</p>  */}
                                         <label className="col-sm-2 col-form-label">OR</label>
                                 </div>
                                 <div className="form-group row">
@@ -211,10 +150,8 @@ const TesAudit = () => {
                                                 className="custom-select"
                                                 name="example"
                                                 onChange={(event) => setReq3(event.target.value)}
-                                                // onChange={(event) => dataProjectHandler(event)}
                                                 style={{ paddingTop: "5px", marginTop: "10px" }}
                                             >
-                                                {/* <option value="-" disabled selected hidden>Please Choose Requestor Name or Choose - ...</option> */}
                                                 <option >-</option>
                                                 {title_dev.map((requestor) => (
                                                     <option value={requestor}>
@@ -223,18 +160,10 @@ const TesAudit = () => {
                                                 ))}
                                             </select>
                                         </div>
-                                        <p>req1: {req3}</p> 
+                                        {/* <br/> */}
+                                        {/* <p>req1: {req3}</p>  */}
                                 </div>
-
-                                <button
-                                className="btn btn-danger"
-                                // type='submit'
-                                onClick={dataProjectRequestor}
-                                >
-                                    save
-                                </button>
-                            </form>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">cek</button>
+                                <button type="button" onClick={dataProjectRequestor} class="btn btn-danger" data-toggle="modal" data-target="#modal-default">Kertas Kerja</button>
                             <div class="modal fade" id="modal-default">
                             <div class="modal-dialog">
                             <div class="modal-content">
@@ -247,22 +176,24 @@ const TesAudit = () => {
                             <div class="modal-body">
                                 <TesModal requestor_audit={exporData}/>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
                             </div>
 
                             </div>
 
                             </div>
+                            </form>
+                            
 
                             <form className='form-horizontal' onSubmit={handleSubmitPeriod}>
                                         <div className="form-group row">
                                         <label className="col-sm-2 col-form-label">Period</label>
                                         <div className="col-sm-10">
-                                            {/* <input className='input-periodCard' type='month' onChange={(month)=>setMonth(month)}/> */}
-                                            <MonthYearPicker
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month">Input Data Period 1</button>
+                                        <div class="modal fade" id="modal-month">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-body">
+                            <MonthYearPicker
                                             className='month-picker-card'
                                             selectedMonth={smonth}
                                             selectedYear={syear}
@@ -271,7 +202,7 @@ const TesAudit = () => {
                                             onChangeYear={(year) => setYear(year)}
                                             onChangeMonth={(month) => setMonth(month)}
                                             />
-                                            <p>Bulan: {smonth} tahun: {syear}</p> 
+
                                             <input type="text" 
                                             name="tgl_signoff"
                                             className="form-control" 
@@ -301,21 +232,142 @@ const TesAudit = () => {
                                             className="form-control" 
                                             variant="filled"
                                             placeholder="Revas Title" />
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
+                                            {/* <input className='input-periodCard' type='month' selectedMonth={smonth} onChange={(month)=>setMonth(month)}/> */}
+                                            
+                                            {/* <p>Bulan: {smonth} tahun: {syear}</p>  */}
+                                            <p>   </p>
+                                        </div>
+                                        
+                                        <label className="col-sm-2 col-form-label">Period 2</label>
+                                        <div className="col-sm-10">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month2">Input Data Periode 2</button>
+                                        <div class="modal fade" id="modal-month2">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-body">
+                            <MonthYearPicker
+                                            className='month-picker-card'
+                                            selectedMonth={smonth2}
+                                            selectedYear={syear2}
+                                            minYear={2018}
+                                            maxYear={2030}
+                                            onChangeYear={(year) => setYear2(year)}
+                                            onChangeMonth={(month) => setMonth2(month)}
+                                            />
+
+                                            <input type="text" 
+                                            name="tgl_signoff"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Tanggal Sign Off" />
+
+                                            <input type="text" 
+                                            name="req_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Name" />
+
+                                            <input type="text" 
+                                            name="req_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Title" />
+
+                                            <input type="text" 
+                                            name="revas_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Name" />
+
+                                            <input type="text" 
+                                            name="revas_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Title" />
+
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
+                                            {/* <input className='input-periodCard' type='month' selectedMonth={smonth} onChange={(month)=>setMonth(month)}/> */}
+                                            
+                                            {/* <p>Bulan: {smonth2} tahun: {syear2}</p>  */}
+                                            <p>   </p>
+                                        </div>
+
+                                        <label className="col-sm-2 col-form-label">Period 3</label>
+                                        <div className="col-sm-10">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month3">Input Data Periode 3</button>
+                                        <div class="modal fade" id="modal-month3">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-body">
+                            <MonthYearPicker
+                                            className='month-picker-card'
+                                            selectedMonth={smonth3}
+                                            selectedYear={syear3}
+                                            minYear={2018}
+                                            maxYear={2030}
+                                            onChangeYear={(year) => setYear3(year)}
+                                            onChangeMonth={(month) => setMonth3(month)}
+                                            />
+                                            <input type="text" 
+                                            name="tgl_signoff"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Tanggal Sign Off" />
+
+                                            <input type="text" 
+                                            name="req_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Name" />
+
+                                            <input type="text" 
+                                            name="req_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Title" />
+
+                                            <input type="text" 
+                                            name="revas_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Name" />
+
+                                            <input type="text" 
+                                            name="revas_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Title" />
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
+                                            {/* <input className='input-periodCard' type='month' selectedMonth={smonth} onChange={(month)=>setMonth(month)}/> */}
+                                            
+                                            {/* <p>Bulan: {smonth3} tahun: {syear3}</p>  */}
+                                            
                                         </div>
                                         </div>
                                 <button
                                 className="btn btn-danger"
                                 type='submit'
-                                onClick={handleSubmitAll}
+                                onClick={getPDF}
                                 >
-                                    send
+                                    PDF
                                 </button>
                             </form>
-
-
-  
-  
-  
         </div>
       </div>
     </div>

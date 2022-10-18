@@ -10,8 +10,8 @@ import './Projects.css';
 import { getRequestor } from './apiData';
 import * as XLSX from 'xlsx';
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 
 function Projects() {
@@ -49,6 +49,10 @@ function Projects() {
 
 
         setDataProject(response.data.result);
+
+        // const data = await getRequestor(keyword);
+        // console.log(data)
+        // setExportData(data);
       };
 
       const getProducts = async() =>{
@@ -65,58 +69,77 @@ function Projects() {
     const handleOnExport = () =>{
       var wb = XLSX.utils.book_new()
       var ws = XLSX.utils.json_to_sheet(exporData);
-      XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
+      XLSX.utils.book_append_sheet(wb, ws, "Project");
+      XLSX.utils.sheet_add_aoa(ws, 
+        [["No Nodin RFS/RFI", "Tgl Nodin RFS/RFI", "Subject Nodin RFS/RFI",
+          "Status", "Status RFC/ITR", "No Nodin RFC/ITR", "Tgl Nodin RFC/ITR",
+          "Subject Nodin RFC/ITR", "Requestor", "PIC Dev", "Type", "Nodin BO",
+          "Start FUT","FUT Done", "Notes", "Jumlah Test Case", "Dev Effort", 
+          "Project Type", "Services", "Brand", "PIC Tester 1",
+          "PIC Tester 2", "PIC Tester 3", "PIC Tester 4", "PIC Tester 5"
+      ]], 
+        { origin: "A1" });
+
+        // const max_width = exporData.reduce((w, r) => Math.max(w, r.name.length), 40);
+        ws["!cols"] = [ { wch: 30 } ];
+
       XLSX.writeFile(wb, "tesfile.xlsx");
   }
 
-  const cekcoba = () =>{
-    console.log(exporData)
-  }
+  // const cekcoba = () =>{
+  //   console.log(exporData)
+  // }
 
     
 
-    const DataSet = [
-      {
-        columns: [
-          {title: "Nomor Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Tanggal Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Subject Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Status", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Status RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Nomor Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Tanggal Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Subject Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Requestor", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "PIC Dev", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Type", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-          {title: "Nodin BO", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
-        ],
-        data: projects.map((data) => [
-          {value: data.no_nodin_rfsrfi, style: {font: {sz: "14"}}},
-          {value: data.date_nodin_rfsrfi, style: {font: {sz: "14"}}},
-          {value: data.subject_nodin_rfsrfi, style: {font: {sz: "14"}}},
-          {value: data.status, style: {font: {sz: "14"}}},
-          {value: data.detail_status, style: {font: {sz: "14"}}},
-          {value: data.no_nodin_rfcitr, style: {font: {sz: "14"}}},
-          {value: data.date_nodin_rfcitr, style: {font: {sz: "14"}}},
-          {value: data.subject_nodin_rfcitr, style: {font: {sz: "14"}}},
-          {value: data.title_dev, style: {font: {sz: "14"}}},
-          {value: data.pic_dev, style: {font: {sz: "14"}}},
-          {value: data.type_nodin, style: {font: {sz: "14"}}},
-          {value: data.no_nodin_bo, style: {font: {sz: "14"}}},
+    // const DataSet = [
+    //   {
+    //     columns: [
+    //       {title: "Nomor Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Tanggal Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Subject Nodin RFS/RFI", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Status", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Status RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Nomor Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Tanggal Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Subject Nodin RFC/ITR", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Requestor", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "PIC Dev", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Type", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //       {title: "Nodin BO", style: {font: {sz: "18", bold: true}}, width: {wch: 50}}, // width in characters
+    //     ],
+    //     data: projects.map((data) => [
+    //       {value: data.no_nodin_rfsrfi, style: {font: {sz: "14"}}},
+    //       {value: data.date_nodin_rfsrfi, style: {font: {sz: "14"}}},
+    //       {value: data.subject_nodin_rfsrfi, style: {font: {sz: "14"}}},
+    //       {value: data.status, style: {font: {sz: "14"}}},
+    //       {value: data.detail_status, style: {font: {sz: "14"}}},
+    //       {value: data.no_nodin_rfcitr, style: {font: {sz: "14"}}},
+    //       {value: data.date_nodin_rfcitr, style: {font: {sz: "14"}}},
+    //       {value: data.subject_nodin_rfcitr, style: {font: {sz: "14"}}},
+    //       {value: data.title_dev, style: {font: {sz: "14"}}},
+    //       {value: data.pic_dev, style: {font: {sz: "14"}}},
+    //       {value: data.type_nodin, style: {font: {sz: "14"}}},
+    //       {value: data.no_nodin_bo, style: {font: {sz: "14"}}},
 
-        ])
-      }
+    //     ])
+    //   }
       
-    ]
+    // ]
 
     const dataProjectHandler = async(event) =>{
-      const data = await getRequestor(event.target.value);
-      setKeyword(event.target.value)
+      event.preventDefault()
+      const data = await getRequestor(query);
+      // setKeyword(event.target.value)
       
       setExportData(data);
       console.log(data);
       console.log(exporData)
+
+      setPage(0);
+        setMsg("");
+        setKeyword(query);
+      // handleOnExport()
     }
     
     const changePage = ({ selected }) => {
@@ -130,12 +153,23 @@ function Projects() {
       }
     };
     
-      const searchData = (e) => {
+      const searchData =async(e) => {
         e.preventDefault();
+      //   const data = await getRequestor(query);
+      // // setKeyword(event.target.value)
+      
+      // setExportData(data);
+      // console.log(data);
+      // console.log(exporData)
+      //   console.log(query);
+      
         setPage(0);
         setMsg("");
         setKeyword(query);
+        console.log(query)
+        
         console.log(keyword)
+        // dataProjectHandler(e);
       };
 
       function refresh(){
@@ -174,56 +208,56 @@ function Projects() {
   
         <div class="col-sm-6">
         <div class="col-md-5 offset-md-0">
-          <form onSubmit={searchData}>
+          <form onSubmit={dataProjectHandler} >
             <div className="field has-addons">
             <div className="input-group ">
                 <input
                   type="search"
                   className="form-control form-control-lg"
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(event) => setQuery(event.target.value)}
                   placeholder="Search"
                 />
-                <button type="submit" className="btn btn-lg btn-default">
+                <button type="button" className="btn btn-lg btn-default" >
                 <i className="fas"><FaSearch/> </i>
                 </button>
               </div>
             </div>
           </form>
           <form>
-                  <select
+                  {/* <select
                     className="custom-select"
                     name="example"
-                    // value={projects}
+                    
                     onChange={(event) => dataProjectHandler(event)}
                     defaultValue="Choose....."
                     style={{ paddingTop: "5px", marginTop: "10px" }}
                   >
-                    {/* <option>--Select--</option> */}
+                    
                     {title_dev.map((requestor) => (
                       <option
                         value={requestor}
-                        // onChange={(event) => dataProjectHandler(event)}
+                        
                       >
                         {requestor}
                       </option>
                     ))}
-                  </select>
-                  <button type="submit" className="btn btn-lg btn-default" 
+                  </select> */}
+                  {/* <button type="submit" className="btn btn-lg btn-default" 
                   onClick= {refresh}
                   >
                 <i className="fas">refresh </i>
-                </button>
+                </button> */}
                 </form>
-                <button onClick={handleOnExport}>export</button>
-                <button onClick={cekcoba}>cek</button>
-                {projects.length !== 0 ? (
+                <button type="button" className="btn btn-danger" onClick={handleOnExport}>export</button>
+                {/* <button onClick={cekcoba}>cek</button> */}
+                {/* {projects.length !== 0 ? (
                          <ExcelFile 
                          filename="Project List" 
                          element={<button type="button" className="btn btn-success float-right m-3">Export Data</button>}>
                              <ExcelSheet dataSet={DataSet} name="project list"/>
                          </ExcelFile>
-                    ): null}           
+                    ): null}            */}
                 {/* <form onSubmit={searchData}> */}
                 {/* <button type="submit" className="btn btn-lg btn-default" 
                   onClick= {refresh}
@@ -251,6 +285,7 @@ function Projects() {
                       <th className='project-header'>PIC Dev</th>
                       <th className='project-header'>Type</th>
                       <th className='project-header'>Nodin BO</th>
+                      <th className='project-header'>Testing Progress</th>
                       <th className='project-header'>Options</th>
                   </tr>
               </thead>

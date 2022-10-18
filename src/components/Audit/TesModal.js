@@ -1,11 +1,29 @@
-import React from 'react'
+import React from 'react';
+import * as XLSX from 'xlsx';
 
 const TesModal = ({requestor_audit}) => {
+  const handleOnExport = () =>{
+    var wb = XLSX.utils.book_new()
+    var ws = XLSX.utils.json_to_sheet(requestor_audit);
+    XLSX.utils.book_append_sheet(wb, ws, "Project");
+    XLSX.utils.sheet_add_aoa(ws, 
+      [["Nodin Number", "Nodin Title", "Date",
+        "No Nodin RFS/RFI", "No Nodin RFC/ITR"
+    ]], 
+      { origin: "A1" });
+
+      // const max_width = exporData.reduce((w, r) => Math.max(w, r.name.length), 40);
+      ws["!cols"] = [ { wch: 30 } ];
+
+    XLSX.writeFile(wb, "KertasKerja.xlsx");
+}
+
   return (
     <div className='modalOptionsContainer '>
-    <div className="card-header">
-      <h3 className="card-title">Tabel</h3>
-    </div>
+      <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-danger" onClick={handleOnExport}>Download XLSX</button>
+                            </div>
     <table class="table table-bordered table-hover">
     <thead>
     <tr className='row-table'>
