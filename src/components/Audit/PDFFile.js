@@ -8,19 +8,18 @@ import './Audit.css';
 import {jsPDF} from "jspdf";
 import ReactDOMServer from "react-dom/server";
 
-
-const TesAudit = () => {
+const PDFFile = () => {
     const [requestors, setRequestors] = useState([]);
     const [keyword, setKeyword] = useState("");
 
     const [query, setQuery] = useState("");
 
     const [smonth, setMonth] = useState();
-    const [syear, setYear] = useState(2022);
+    const [syear, setYear] = useState("2022");
     const [smonth2, setMonth2] = useState();
-    const [syear2, setYear2] = useState(2022);
+    const [syear2, setYear2] = useState("2022");
     const [smonth3, setMonth3] = useState();
-    const [syear3, setYear3] = useState(2022);
+    const [syear3, setYear3] = useState("2022");
 
     const [title_dev, setTitle_dev] = useState([]);
     const [exporData, setExportData] = useState([]);
@@ -28,6 +27,7 @@ const TesAudit = () => {
     const[req2, setReq2] = useState("");
     const[req3, setReq3] = useState("");
     const bulan = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    const [tess, settes] = useState("hai");
 
     useEffect(() => {
         getProducts();
@@ -43,7 +43,7 @@ const TesAudit = () => {
         return;
         
     }
-    
+
     const dataProjectRequestor = async(event) => {
         event.preventDefault();
         const data = await cobaAudit(req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3)
@@ -65,7 +65,9 @@ const TesAudit = () => {
         e.preventDefault();
         
     };
-
+    const seluruh ={
+        marginLeft: "25%"
+    }
     const bagianAtas ={
         textAlign: "center",
         color: "green"
@@ -78,7 +80,8 @@ const TesAudit = () => {
       };
 
       const garis ={
-        border: "3px solid black"
+        border: "3px solid black",
+        width: "100%"
       }
 
       const mengetahui= {
@@ -99,24 +102,15 @@ const TesAudit = () => {
       const ttd_kanan ={
         marginLeft: "45%"
       }
-      const tableStyle = {
-        width: "100%",
-        color: "blue"
-      };
-      const headstyle = {
-        width: "100%",
-        background: "blue"
-      };
 
-    const HandlePDF = () =>{
-        <div>
-          {/* <p>tes</p>   */}
-       <div style={bagianAtas}>
-        <h3> BERITA ACARA PEKERJAAN PERUBAHAN PARAMETER</h3>
+      const Prints = () => (
+        <div style={{ display: "inline-block", flexWrap: "wrap" }}>
+          <div >
+        <p style={{fontSize: "20px", align: 'center'}}> BERITA ACARA PEKERJAAN PERUBAHAN PARAMETER</p>
         <p><strong>Periode {smonth} {syear}</strong></p>
        </div> 
-       <hr style={garis}></hr>
-       <div style={bagTengah}>
+       <hr style={{border:"3px solid black", width:"100%"}}></hr>
+       <div style={{marginLeft:"90"}}>
        <p>Berita Acara ini dibuat untuk menerangkan bahwa secara resmi periode 
             bulan {smonth} tahun {syear}, Departemen {req} telah melakukan
             lalalalla
@@ -142,24 +136,75 @@ const TesAudit = () => {
         nama abcdefghij
        </span>
        </p>
+        </div>
+      );
+      
+   
+
+    const print = () => {
+        var getContent = 
+        <div style={{ display: "inline-block", flexWrap: "wrap" }}>
+          <div >
+        <p style={{fontSize: "20px", align: 'center'}}> BERITA ACARA PEKERJAAN PERUBAHAN PARAMETER</p>
+        <p><strong>Periode {smonth} {syear}</strong></p>
+       </div> 
+       <hr style={{border:"3px solid black", width:"100%"}}></hr>
+       <div style={{marginLeft:"90"}}>
+       <p>Berita Acara ini dibuat untuk menerangkan bahwa secara resmi periode 
+            bulan {smonth} tahun {syear}, Departemen {req} telah melakukan
+            lalalalla
+       </p>
+       <p> Adapun dasar dari perubahan tersebut, dapat dilihat dalam lampiran. Demikian Berita Acara 
+        ini dapat dipergunakan semestinya.
+       </p>
        </div>
-    }
-    
-    const getPDF = () =>{
-        // const teks = renderToString(<HandlePDF/>)
-        const pdf = new jsPDF("p", "mm", "a4");
-        // doc.html(teks);
-        // doc.save("berita");
-        pdf.html(ReactDOMServer.renderToString(<HandlePDF/>), {
+       <div style={mengetahui}>
+        <p>Jakarta, .....</p>
+        <p> Mengetahui dan Menyetujui</p>
+       </div>
+       <p style={ttd}><strong>
+        namaaa sdksjdna
+       <span style={ttd_kanan}>
+        nama abcdefghij
+       </span>
+       </strong>
+       </p>
+       <p style={jbtn}>
+        namaaa sdksjdna
+       <span style={ttd_kanan}>
+        nama abcdefghij
+       </span>
+       </p>
+        </div>;
+        const pdf = new jsPDF("p", "px", "letter");
+        pdf.html(ReactDOMServer.renderToString(getContent), {
+            margin:[20,40, 20, 40],
             callback: function (pdf){
-                pdf.save("sample.pdf");
-            }
+                // pdf.save("sample.pdf");
+                window.open(pdf.output('bloburl'));
+            },
+            x: 30,
+            y: 10
         });
+        
+      };
+    
+    // const print = () =>{
+    //     var doc = new jsPDF(); 
+    //     var width = doc.internal.pageSize.getWidth()
+    //     doc.setFont(undefined, 'bold').text(width/2, 10, 'BERITA ACARA PEKERJAAN PERUBAHAN PARAMETER', { align: 'center' });
+    //     doc.text(width/2.8, 20, 'Periode');
+    //     doc.text(width/2.2, 20, smonth);
+    //     doc.text(width/2.1, 20, syear).setFont(undefined, 'normal');    
+    //     doc.lines([[2,2],[-2,2],[1,1,2,2,3,3],[2,1]], 212,110, [1,1], 'F', false)
+    //     doc.text(10, 40, 'Contact me at');    
+    //     doc.text(10, 30, 'I have just created a simple pdf using jspdf');
+    //     doc.text(50, 40, req);
+    //     doc.save('katara.pdf'); 
+    // }
 
-    }
 
-
-  return (
+  return(
     <div>
         <Header/>
         <Sidebar/>
@@ -205,8 +250,7 @@ const TesAudit = () => {
                                                 <option>-</option>
                                             </select>
                                         </div>
-                                        {/* <br/> <br/> */}
-                                        {/* <p>req1: {req}</p>  */}
+                                       
                                         <label className="col-sm-2 col-form-label">OR</label>
                                 </div>
                                 <div className="form-group row">
@@ -216,7 +260,7 @@ const TesAudit = () => {
                                                 className="custom-select"
                                                 name="example"
                                                 onChange={(event) => setReq2(event.target.value)}
-                                                // onChange={(event) => dataProjectHandler(event)}
+                                                
                                                 style={{ paddingTop: "5px", marginTop: "10px" }}
                                             ><option>-</option>
                                                 {title_dev.map((requestor) => (
@@ -226,8 +270,7 @@ const TesAudit = () => {
                                                 ))}
                                             </select>
                                         </div>
-                                        {/* <br/> */}
-                                        {/* <p>req1: {req2}</p>  */}
+                                        
                                         <label className="col-sm-2 col-form-label">OR</label>
                                 </div>
                                 <div className="form-group row">
@@ -247,8 +290,7 @@ const TesAudit = () => {
                                                 ))}
                                             </select>
                                         </div>
-                                        {/* <br/> */}
-                                        {/* <p>req1: {req3}</p>  */}
+                                       
                                 </div>
                                 <button type="button" onClick={dataProjectRequestor} class="btn btn-danger" data-toggle="modal" data-target="#modal-default">Kertas Kerja</button>
                             <div class="modal fade" id="modal-default">
@@ -280,16 +322,7 @@ const TesAudit = () => {
                             <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-body">
-                            {/* <MonthYearPicker
-                                            className='month-picker-card'
-                                            selectedMonth={smonth}
-                                            selectedYear={syear}
-                                            minYear={2018}
-                                            maxYear={2030}
-                                            onChangeYear={(year) => setYear(year)}
-                                            onChangeMonth={(month) => setMonth(month)}
-                                            /> */}
-                                            {/* <div className="card-headers p-2"> */}
+                            
                                             <ul className="nav nav-card-profile">
                                                 <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear} onChange={(e) => setYear(e.target.value)}></input></li>
                                                 <li className="nav-items"><select
@@ -297,7 +330,7 @@ const TesAudit = () => {
                                                 name="bulan"
                                                 placeholder='pilih'
                                                 onChange={(event) => setMonth(event.target.value)}
-                                                // style={{ paddingTop: "5px", marginTop: "10px" }}
+                                              
                                                 
                                             >   <option disabled selected>Bulan</option>
                                                 {bulan.map((bulans) => (
@@ -310,11 +343,7 @@ const TesAudit = () => {
                                                 
                                             </select></li>
                                             </ul>
-                                            {/* </div> */}
-                                            {/* <span>
-                                                <input type ='text' className="form-control" value={syear} onChange={(e) => setYear(e.target.value)}></input>
-                                                <input type ='text' value={smonth} onChange={(e) => setMonth(e.target.value)}></input>
-                                            </span> */}
+                                          
                                             <input type="text" 
                                             name="tgl_signoff"
                                             className="form-control" 
@@ -350,7 +379,7 @@ const TesAudit = () => {
                             </div>
 
                             </div>
-                                            {/* <input className='input-periodCard' type='month' selectedMonth={smonth} onChange={(month)=>setMonth(month)}/> */}
+                                            
                                             
                                             <p>Bulan: {smonth} tahun: {syear}</p> 
                                             <p>   </p>
@@ -363,15 +392,7 @@ const TesAudit = () => {
                             <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-body">
-                            {/* <MonthYearPicker
-                                            className='month-picker-card'
-                                            selectedMonth={smonth2}
-                                            selectedYear={syear2}
-                                            minYear={2018}
-                                            maxYear={2030}
-                                            onChangeYear={(year) => setYear2(year)}
-                                            onChangeMonth={(month) => setMonth2(month)}
-                                            /> */}
+
                                             <ul className="nav nav-card-profile">
                                                 <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear2} onChange={(e) => setYear2(e.target.value)}></input></li>
                                                 <li className="nav-items"><input type ='text' className="form-control" value={smonth2} onChange={(e) => setMonth2(e.target.value)}></input></li>
@@ -413,9 +434,7 @@ const TesAudit = () => {
                             </div>
 
                             </div>
-                                            {/* <input className='input-periodCard' type='month' selectedMonth={smonth} onChange={(month)=>setMonth(month)}/> */}
-                                            
-                                            {/* <p>Bulan: {smonth2} tahun: {syear2}</p>  */}
+
                                             <p>   </p>
                                         </div>
 
@@ -426,15 +445,7 @@ const TesAudit = () => {
                             <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-body">
-                            {/* <MonthYearPicker
-                                            className='month-picker-card'
-                                            selectedMonth={smonth3}
-                                            selectedYear={syear3}
-                                            minYear={2018}
-                                            maxYear={2030}
-                                            onChangeYear={(year) => setYear3(year)}
-                                            onChangeMonth={(month) => setMonth3(month)}
-                                            /> */}
+
                                             <ul className="nav nav-card-profile">
                                                 <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear3} onChange={(e) => setYear3(e.target.value)}></input></li>
                                                 <li className="nav-items"><input type ='text' className="form-control" value={smonth3} onChange={(e) => setMonth3(e.target.value)}></input></li>
@@ -474,26 +485,13 @@ const TesAudit = () => {
                             </div>
 
                             </div>
-                                            {/* <input className='input-periodCard' type='month' selectedMonth={smonth} onChange={(month)=>setMonth(month)}/> */}
-                                            
-                                            {/* <p>Bulan: {smonth3} tahun: {syear3}</p>  */}
                                             
                                         </div>
                                         </div>
                                 
                             </form>
-                            <button
-                                className="btn btn-danger"
-                                type='button'
-                                onClick={getPDF}
-                                >
-                                    PDF
-                                </button>
+                            <button onClick={print}>print</button>
 
-                            {/* <PDFDownloadLink document={<PDFFile textheader = {req}/>}fileName='form'> 
-      {({loading}) => (loading ? (<button>'loading doc...'</button>) : 
-                    (<button>'Download'</button>))}
-      </PDFDownloadLink> */}
         </div>
       </div>
     </div>
@@ -501,6 +499,131 @@ const TesAudit = () => {
     </div>
     </div>
   )
-}
+};
 
-export default TesAudit
+export default PDFFile;
+
+
+
+
+// import React, {useState} from "react";
+// import { Page, Text, Image, Document, StyleSheet } from "@react-pdf/renderer";
+// import LebronStretch from "../photos/lebron_transparent.png";
+
+// const styles = StyleSheet.create({
+//   body: {
+//     paddingTop: 35,
+//     paddingBottom: 65,
+//     paddingHorizontal: 35,
+//   },
+//   title: {
+//     fontSize: 24,
+//     textAlign: "center",
+//   },
+//   text: {
+//     margin: 12,
+//     fontSize: 14,
+//     textAlign: "justify",
+//     fontFamily: "Times-Roman",
+//   },
+//   image: {
+//     marginVertical: 15,
+//     marginHorizontal: 100,
+//   },
+//   header: {
+//     fontSize: 12,
+//     marginBottom: 20,
+//     textAlign: "center",
+//     color: "grey",
+//   },
+//   pageNumber: {
+//     position: "absolute",
+//     fontSize: 12,
+//     bottom: 30,
+//     left: 0,
+//     right: 0,
+//     textAlign: "center",
+//     color: "grey",
+//   },
+// });
+
+// const PDFFile = ({textheader}) => {
+//     const [isLoading, setIsLoading] = useState(false);
+
+//     console.log('boolean', isLoading)
+//   return (
+//     <Document>
+//       <Page style={styles.body}>
+//         <Text style={styles.header} fixed>{textheader}</Text>
+//         <Image style={styles.image} src={LebronStretch} />
+//         <Text style={styles.text}>
+//           Oh right. I forgot about the battle. Wow, you got that off the
+//           Internet? In my day, the Internet was only used to download
+//           pornography. I don't know what you did, Fry, but once again, you
+//           screwed up! Now all the planets are gonna start cracking wise about
+//           our mamas. She also liked to shut up! We'll go deliver this crate like
+//           professionals, and then we'll go home. In your time, yes, but nowadays
+//           shut up! Besides, these are adult stemcells, harvested from perfectly
+//           healthy adults whom I killed for their stemcells. And I'm his friend
+//           Jesus. Incidentally, you have a dime up your nose. Oh, you're a dollar
+//           naughtier than most. Bender, being God isn't easy. If you do too much,
+//           people get dependent on you, and if you do nothing, they lose hope.
+//           You have to use a light touch. Like a safecracker, or a pickpocket.
+//           And why did 'I' have to take a cab? Perhaps, but perhaps your
+//           civilization is merely the sewer of an even greater society above you!
+//           Why would a robot need to drink? Stop! Don't shoot fire stick in space
+//           canoe! Cause explosive decompression! I'm sure those windmills will
+//           keep them cool. No! I want to live! There are still too many things I
+//           don't own! Now that the, uh, garbage ball is in space, Doctor, perhaps
+//           you can help me with my sexual inhibitions? I feel like I was mauled
+//           by Jesus. Anyhoo, your net-suits will allow you to experience Fry's
+//           worm infested bowels as if you were actually wriggling through them.
+//           Bender, I didn't know you liked cooking. That's so cute. Who am I
+//           making this out to? Aww, it's true. I've been hiding it for so long.
+//           Are you crazy? I can't swallow that. Bite my shiny metal ass. Leela's
+//           gonna kill me. You know, I was God once. There, now he's trapped in a
+//           book I wrote: a crummy world of plot holes and spelling errors! Yes!
+//           In your face, Gandhi! This is the worst kind of discrimination: the
+//           kind against me! No, I'm Santa Claus! You are the last hope of the
+//           universe. I am the man with no name, Zapp Brannigan! Why would I want
+//           to know that? I guess if you want children beaten, you have to do it
+//           yourself. Oh, I think we should just stay friends. No, just a regular
+//           mistake. I'm Santa Claus! And then the battle's not so bad? I daresay
+//           that Fry has discovered the smelliest object in the known universe!
+//           No! The kind with looting and maybe starting a few fires! Bender, quit
+//           destroying the universe! So, how 'bout them Knicks? Yes! In your face,
+//           Gandhi! For one beautiful night I knew what it was like to be a
+//           grandmother. Subjugated, yet honored. Bite my shiny metal ass. You
+//           know the worst thing about being a slave? They make you work, but they
+//           don't pay you or let you go. There's no part of that sentence I didn't
+//           like! And when we woke up, we had these bodies. Oh sure! Blame the
+//           wizards! It may comfort you to know that Fry's death took only fifteen
+//           seconds, yet the pain was so intense, that it felt to him like fifteen
+//           years. And it goes without saying, it caused him to empty his bowels.
+//           You guys aren't Santa! You're not even robots. How dare you lie in
+//           front of Jesus? Hey, whatcha watching? No, I'm Santa Claus! If rubbin'
+//           frozen dirt in your crotch is wrong, hey I don't wanna be right. Oh,
+//           you're a dollar naughtier than most. Then we'll go with that data
+//           file! Fry, we have a crate to deliver. And why did 'I' have to take a
+//           cab? I guess if you want children beaten, you have to do it yourself.
+//           Say it in Russian! Anyhoo, your net-suits will allow you to experience
+//           Fry's worm infested bowels as if you were actually wriggling through
+//           them. And I'm his friend Jesus. Now what? Your best is an idiot! Quite
+//           possible. We live long and are celebrated poopers. Switzerland is
+//           small and neutral! We are more like Germany, ambitious and
+//           misunderstood! I guess because my parents keep telling me to be more
+//           ladylike. As though! You know the worst thing about being a slave?
+//           They make you work, but they don't pay you or let you go.
+//         </Text>
+//         <Text
+//           style={styles.pageNumber}
+//           render={({ pageNumber, totalPages }) =>
+//             `${pageNumber} / ${totalPages}`
+//           }
+//         />
+//       </Page>
+//     </Document>
+//   );
+// };
+
+// export default PDFFile;

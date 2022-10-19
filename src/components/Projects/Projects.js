@@ -5,7 +5,7 @@ import {FaSearch} from 'react-icons/fa';
 import ProjectList from './ProjectList';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
-import ReactExport from 'react-data-export';
+// import ReactExport from 'react-data-export';
 import './Projects.css';
 import { getRequestor } from './apiData';
 import * as XLSX from 'xlsx';

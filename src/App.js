@@ -9,6 +9,7 @@ import Audit from './components/Audit/Audit';
 import Tes from './components/Audit/Tes';
 import TesAudit from './components/Audit/TesAudit';
 import Teslagi from './components/Audit/teslagi';
+import PDFFile from './components/Audit/PDFFile'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/tes" exact element={<Tes />} />
         <Route path="/tesaudit" exact element={<TesAudit />} />
         <Route path="/teslagi" exact element={<Teslagi />} />
+        <Route path="/pdf" exact element={<PDFFile />} />
       </>
     </Routes>
   );

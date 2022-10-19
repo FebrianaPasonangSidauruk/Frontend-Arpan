@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
-import MonthYearPicker from 'react-month-year-picker';
+// import MonthYearPicker from 'react-month-year-picker';
 
 const Audit = () => {
     const [requestors, setRequestors] = useState([]);
@@ -196,7 +196,7 @@ const Audit = () => {
                         onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
                         placeholder="period" />
                         {/* <input className='input-periodCard' type='month' value= {month} onChange={m=>setMonth(m.target.value)}/> */}
-                        <MonthYearPicker
+                        {/* <MonthYearPicker
                           className='month-picker-card'
                           selectedMonth={smonth}
                           selectedYear={syear}
@@ -204,7 +204,7 @@ const Audit = () => {
                           maxYear={2030}
                           onChangeYear={(year) => setYear(year)}
                           onChangeMonth={(month) => setMonth(month)}
-                        />
+                        /> */}
                         {/* <DatePicker
                         selectedMonth={smonth}
                         selectedYear={syear}
