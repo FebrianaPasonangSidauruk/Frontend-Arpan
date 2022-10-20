@@ -1,7 +1,7 @@
 import React from 'react';
 import * as XLSX from 'xlsx';
 
-const TesModal = ({requestor_audit}) => {
+const ModalExcel = ({requestor_audit}) => {
   const handleOnExport = () =>{
     var wb = XLSX.utils.book_new()
     var ws = XLSX.utils.json_to_sheet(requestor_audit);
@@ -54,4 +54,4 @@ const TesModal = ({requestor_audit}) => {
   )
 }
 
-export default TesModal
+export default ModalExcel

@@ -2,68 +2,64 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
-import Tes from './Tes';
-import { v4 as uuidv4 } from 'uuid';
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
+import { cobaAudit } from './apiAudit';
+import ModalExcel from './ModalExcel';
+import './Audit.css';
+import {jsPDF} from "jspdf";
+import ReactDOMServer from "react-dom/server";
+import ModalPeriod1 from './ModalPeriod1';
+import {FaDownload} from 'react-icons/fa'
 
-// import MonthYearPicker from 'react-month-year-picker';
 
 const Audit = () => {
     const [requestors, setRequestors] = useState([]);
     const [keyword, setKeyword] = useState("");
+
     const [query, setQuery] = useState("");
+
     const [smonth, setMonth] = useState();
     const [syear, setYear] = useState(2022);
-    // const [startDate, setStartDate] = useState(2022);
+    const [smonth2, setMonth2] = useState();
+    const [syear2, setYear2] = useState(2022);
+    const [smonth3, setMonth3] = useState();
+    const [syear3, setYear3] = useState(2022);
 
-    // useEffect(() => {
-    //     getRequestor();
-    //   }, [keyword]);
+    const [tgl_signoff1, setTgl_signoff1] = useState("");
+    const [req_name1, setReq_name1] = useState("");
+    const [req_title1, setReq_title1] = useState("");
+    const [revas_name1, setRevas_name1] = useState("");
+    const [revas_title1, setRevas_title1] = useState("");
 
-    //   const getRequestor = async () => {
-    //     const response = await axios.get(
-    //       `http://localhost:5001/requestor?search_requestor=${keyword}`
-    //     );
-    //     setRequestors(response.data.resultRequestor);
-    //   };
+    const [title_dev, setTitle_dev] = useState([]);
+    const [exporData, setExportData] = useState([]);
+    const[req, setReq] = useState("");
+    const[req2, setReq2] = useState("");
+    const[req3, setReq3] = useState("");
+    const bulan = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
-    const [inputFieldsRequestor, setInputFieldsRequestor] = useState([
-        {idRequestor: uuidv4(), requestor: ''},
-    ]);
+    useEffect(() => {
+        getProducts();
+      }, []);
+
+      const getProducts = async() =>{
+        const res = await axios.get(`http://localhost:5001/getProject`);
+
+        const requestor_list = res.data.map((data) => data.title_dev);
+        setTitle_dev([...new Set(requestor_list)]);
+        console.log(title_dev);
+
+        return;
+        
+    }
     
-    const handleSubmitRequestor = (e) => {
-        e.preventDefault();
-        console.log("InputFieldsRequestor", inputFieldsRequestor);
+    const dataProjectRequestor = async(event) => {
+        event.preventDefault();
+        const data = await cobaAudit(req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3)
+        setExportData(data);
+        console.log(exporData)
+        console.log(data);
+        console.log("Req1 req2 re3 bulan tahun", req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3)
     };
-
-    const handleSubmitAll = (e) => {
-        e.preventDefault();
-        console.log("InputFieldsRequestor", inputFieldsRequestor);
-        console.log("InputFieldsPeriod", inputFieldsPeriod);
-    };
-
-    const handleChangeInputRequestor = (idRequestor, event) => {
-        const newInputFieldsRequestor = inputFieldsRequestor.map(i => {
-            if(idRequestor === i.idRequestor){
-                i[event.target.name] = event.target.value
-            }
-            return i;
-        })
-
-        setInputFieldsRequestor(newInputFieldsRequestor);
-    }
-
-    const handleAddFieldsRequestor = () =>{
-        setInputFieldsRequestor([...inputFieldsRequestor, {idRequestor: uuidv4(), requestor:''}])
-        // setRequestors([...requestors]);
-    }
-
-    const handleRemoveFieldsRequestor = idRequestor => {
-        const values = [...inputFieldsRequestor];
-        values.splice(values.findIndex(value => value.idRequestor === idRequestor), 1);
-        setInputFieldsRequestor(values);
-    }
 
     const submitrequestor= (e) =>{
         e.preventDefault();
@@ -72,224 +68,471 @@ const Audit = () => {
 
     }
 
-    //period
-    const [inputFieldsPeriod, setInputFieldsPeriod] = useState([
-        {idPeriod: uuidv4(), period: '', tgl_signoff:'', req_name:'', req_title:'', revas_name:'', revas_title:''},
-    ]);
     
     const handleSubmitPeriod = (e) => {
         e.preventDefault();
-        // setKeyword(query);
-        console.log("InputFieldsPeriod", inputFieldsPeriod);
-        // console.log("Requestor", requestors);
+        
     };
 
-    const handleChangeInputPeriod = (idPeriod, event) => {
-        const newInputFieldsPeriod = inputFieldsPeriod.map(a => {
-            if(idPeriod === a.idPeriod){
-                a[event.target.name] = event.target.value
+    const bagianAtas ={
+        textAlign: "center",
+        color: "green"
+    }
+    const bagTengah = {
+        // fontFamily: "sans-serif"
+        paddingTop: "3%",
+        marginLeft: "5%",
+        marginRight: "5%"
+      };
+
+      const garis ={
+        border: "3px solid black"
+      }
+
+      const mengetahui= {
+        paddingTop: "10%",
+        textAlign: "center"
+      };
+
+      const ttd = {
+        paddingTop: "10%",
+        marginLeft: "25",
+        textDecoration: "underline"
+      };
+      const jbtn = {
+        paddingTop: "10%",
+        marginLeft: "25"
+      };
+
+      const ttd_kanan ={
+        marginLeft: "45%"
+      }
+      const tableStyle = {
+        width: "100%",
+        color: "blue"
+      };
+      const headstyle = {
+        width: "100%",
+        background: "blue"
+      };
+
+    const HandlePDF = () =>{
+        <div>
+          {/* <p>tes</p>   */}
+       <div style={bagianAtas}>
+        <h3> BERITA ACARA PEKERJAAN PERUBAHAN PARAMETER</h3>
+        <p><strong>Periode {smonth} {syear}</strong></p>
+       </div> 
+       <hr style={garis}></hr>
+       <div style={bagTengah}>
+       <p>Berita Acara ini dibuat untuk menerangkan bahwa secara resmi periode 
+            bulan {smonth} tahun {syear}, Departemen {req} telah melakukan
+            lalalalla
+       </p>
+       <p> Adapun dasar dari perubahan tersebut, dapat dilihat dalam lampiran. Demikian Berita Acara 
+        ini dapat dipergunakan semestinya.
+       </p>
+       </div>
+       <div style={mengetahui}>
+        <p>Jakarta, .....</p>
+        <p> Mengetahui dan Menyetujui</p>
+       </div>
+       <p style={ttd}><strong>
+        namaaa sdksjdna
+       <span style={ttd_kanan}>
+        nama abcdefghij
+       </span>
+       </strong>
+       </p>
+       <p style={jbtn}>
+        namaaa sdksjdna
+       <span style={ttd_kanan}>
+        nama abcdefghij
+       </span>
+       </p>
+       </div>
+    }
+    
+    const getPDF = () =>{
+        // const teks = renderToString(<HandlePDF/>)
+        const pdf = new jsPDF("p", "mm", "a4");
+        // doc.html(teks);
+        // doc.save("berita");
+        pdf.html(ReactDOMServer.renderToString(<HandlePDF/>), {
+            callback: function (pdf){
+                pdf.save("sample.pdf");
             }
-            return a;
-        })
-
-        setInputFieldsPeriod(newInputFieldsPeriod);
-    }
-
-    const handleAddFieldsPeriod = () =>{
-        setInputFieldsPeriod([...inputFieldsPeriod, {idPeriod: uuidv4(), period: '', tgl_signoff:'', req_name:'', req_title:'', revas_name:'', revas_title:''}])
-        // setRequestors([...requestors]);
-    }
-
-    const handleRemoveFieldsPeriod = idPeriod => {
-        const values = [...inputFieldsPeriod];
-        values.splice(values.findIndex(value => value.idPeriod === idPeriod), 1);
-        setInputFieldsPeriod(values);
-    }
-
-    const submitPeriod= (e) =>{
-        e.preventDefault();
-        setKeyword(query);
-        // console.log("Period", periods);
+        });
 
     }
-
-    const handleChangeMonth= (month, year) =>{
-      setMonth(month)
-      console.log(smonth)
-        console.log(month)
-        console.log(year)
-    }
-
 
 
   return (
     <div>
         <Header/>
-      <Sidebar/>
-    <div className='content-wrapper'>
-    <section className="content-header">
-    <div className="container-fluid">
-    <div className="row mb-2">
-    <div className="col-sm-6">
-          <h1 className="m-0">Audit Feature</h1>
-        </div>
-        <div className="col-sm-6">
-          <ol className="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-            <li class="breadcrumb-item active">Audit</li>
-          </ol>
-        </div>
-    </div>
-    </div>
-    </section>
-    <div class="container-fluid">
-    <div class="row">
-    <div class="col-12">
-    <div class="card">
+        <Sidebar/>
+        <div className='content-wrapper'>
+                <section className="content-header">
+                    <div className="container-fluid">
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
+                                <h1 className="m-0">Audit Feature</h1>
+                            </div>
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                                    <li class="breadcrumb-item active">Audit</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
           
-          <form className='form-horizontal' onSubmit={handleSubmitRequestor}>
-            {inputFieldsRequestor.map(inputFieldRequestor => (
-                <div key={inputFieldRequestor.idRequestor}>
-                    <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Requestor</label>
-                      <div className="col-sm-10">
-                        <Tes/>
-                        {/* <input type="text" 
-                        name="requestor"
-                        className="form-control" 
-                        variant="filled"
-                        value={inputFieldRequestor.requestor}
-                        onChange={event => handleChangeInputRequestor(inputFieldRequestor.idRequestor, event)}
-                        placeholder="Requestor" /> */}
-                        <button className="offset-sm-1 col-sm-2" disabled={inputFieldsRequestor.length === 1} 
-                        onClick={() => handleRemoveFieldsRequestor(inputFieldRequestor.idRequestor)}> 
-                      - 
-                      </button >
+                            <form className='form-horizontal' >
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Requestor</label>
+                                        <div className="col-sm-8">
+                                            <select
+                                                className="custom-select"
+                                                name="example"
+                                                placeholder='pilih'
+                                                onChange={(event) => setReq(event.target.value)}
+                                                style={{ paddingTop: "5px", marginTop: "10px" }}
+                                            >
+                                                {title_dev.map((requestor) => (
+                                                    <option value={requestor}
+                                                    >
+                                                        {requestor}
+                                                    </option>
+                                                ))}
+                                                <option>-</option>
+                                            </select>
+                                        </div>
+                                        <label className="col-sm-2 col-form-label">OR</label>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Requestor 2</label>
+                                        <div className="col-sm-8">
+                                            <select
+                                                className="custom-select"
+                                                name="example"
+                                                onChange={(event) => setReq2(event.target.value)}
+                                                style={{ paddingTop: "5px", marginTop: "10px" }}
+                                            ><option>-</option>
+                                                {title_dev.map((requestor) => (
+                                                    <option value={requestor}>
+                                                        {requestor}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
 
-                      <button className="offset-sm-1 col-sm-2" onClick={handleAddFieldsRequestor}>
-                        + 
-                      </button>
-                      </div>
-                    </div>
-                </div>
-            ))}
-            <button
-            className="btn btn-danger"
-            type='submit'
-            onClick={handleSubmitRequestor}
-            >
-                send
-            </button>
-          </form>
+                                        <label className="col-sm-2 col-form-label">OR</label>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-sm-2 col-form-label">Requestor 3</label>
+                                        <div className="col-sm-8">
+                                            <select
+                                                className="custom-select"
+                                                name="example"
+                                                onChange={(event) => setReq3(event.target.value)}
+                                                style={{ paddingTop: "5px", marginTop: "10px" }}
+                                            >
+                                                <option >-</option>
+                                                {title_dev.map((requestor) => (
+                                                    <option value={requestor}>
+                                                        {requestor}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                </div>
+                                <button type="button" onClick={dataProjectRequestor} class="btn btn-danger" data-toggle="modal" data-target="#modal-default">Kertas Kerja</button>
+                            <div class="modal fade" id="modal-default">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                            <h4 class="modal-title">Update Project Tracking Record</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <ModalExcel requestor_audit={exporData}/>
+                            </div>
+                            </div>
 
-          <form className='form-horizontal' onSubmit={handleSubmitPeriod}>
-            {inputFieldsPeriod.map(inputFieldPeriod => (
-                <div key={inputFieldPeriod.idPeriod}>
-                    <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Period</label>
-                      <div className="col-sm-10">
-                        <input type="text" 
-                        name="period"
-                        className="form-control" 
-                        variant="filled"
-                        value={inputFieldPeriod.period}
-                        onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
-                        placeholder="period" />
-                        {/* <input className='input-periodCard' type='month' value= {month} onChange={m=>setMonth(m.target.value)}/> */}
-                        {/* <MonthYearPicker
-                          className='month-picker-card'
-                          selectedMonth={smonth}
-                          selectedYear={syear}
-                          minYear={2018}
-                          maxYear={2030}
-                          onChangeYear={(year) => setYear(year)}
-                          onChangeMonth={(month) => setMonth(month)}
-                        /> */}
-                        {/* <DatePicker
-                        selectedMonth={smonth}
-                        selectedYear={syear}
-                        selected={startDate} onChange={(date) =>   
-                          setStartDate(date)}
-                        onChangeYear={(year) => setYear(year)}
-                          onChangeMonth={(month) => setMonth(month)}
-                        dateFormat="MM/yyyy"
+                            </div>
 
-                        showMonthYearPicker
-                        showFullMonthYearPicker
-                      /> */}
-                        <p>Bulan: {smonth} tahun: {syear}</p> 
-                        <input type="text" 
-                        name="tgl_signoff"
-                        className="form-control" 
-                        variant="filled"
-                        value={inputFieldPeriod.tgl_signoff}
-                        onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
-                        placeholder="Tanggal Sign Off" />
+                            </div>
+                            </form>
+                            
 
-                        <input type="text" 
-                        name="req_name"
-                        className="form-control" 
-                        variant="filled"
-                        value={inputFieldPeriod.req_name}
-                        onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
-                        placeholder="Requestor Name" />
-
-                        <input type="text" 
-                        name="req_title"
-                        className="form-control" 
-                        variant="filled"
-                        value={inputFieldPeriod.req_title}
-                        onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
-                        placeholder="Requestor Title" />
-
-                        <input type="text" 
-                        name="revas_name"
-                        className="form-control" 
-                        variant="filled"
-                        value={inputFieldPeriod.revas_name}
-                        onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
-                        placeholder="Revas Name" />
-
-                        <input type="text" 
-                        name="revas_title"
-                        className="form-control" 
-                        variant="filled"
-                        value={inputFieldPeriod.revas_title}
-                        onChange={event => handleChangeInputPeriod(inputFieldPeriod.idPeriod, event)}
-                        placeholder="Revas Title" />
-
-                        <button className="offset-sm-1 col-sm-2" disabled={inputFieldsPeriod.length === 1} 
-                        onClick={() => handleRemoveFieldsPeriod(inputFieldPeriod.idPeriod)}> 
-
-                      - 
-                      </button >
-
-                      <button className="offset-sm-1 col-sm-2" onClick={handleAddFieldsPeriod}>
-                        + 
-                      </button>
-                      </div>
-                    </div>
-                </div>
-            ))}
-            <button
-            className="btn btn-danger"
-            type='submit'
-            onClick={handleSubmitAll}
-            >
-                send
-            </button>
-          </form>
+                            <form className='form-horizontal' onSubmit={handleSubmitPeriod}>
+                                        <div className="form-group row">
+                                        <label className="col-sm-2 col-form-label">Periode</label>
+                                        <div className="col-sm-10">
 
 
-  
-  
-  
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month">Input Data periode 1</button>
+                                        <div class="modal fade" id="modal-month">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-body">
+                                            <ul className="nav nav-card-profile">
+                                                <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear} onChange={(e) => setYear(e.target.value)}></input></li>
+                                                <li className="nav-items"><select
+                                                className="custom-select"
+                                                name="bulan"
+                                                placeholder='pilih'
+                                                onChange={(event) => setMonth(event.target.value)}
+                                                
+                                            >   <option disabled selected>Bulan</option>
+                                                {bulan.map((bulans) => (
+                                                    <option value={bulans}
+                                                    >
+                                                        {bulans}
+                                                    </option>
+                                                ))}
+                                                <option>-</option>
+                                                
+                                            </select></li>
+                                            </ul>
+                                            <input type="text" 
+                                            name="tgl_signoff"
+                                            className="form-control" 
+                                            variant="filled"
+                                            value={tgl_signoff1}
+                                            onChange={(e) => setTgl_signoff1(e.target.value)}
+                                            placeholder="Tanggal Sign Off" />
+
+                                            <input type="text" 
+                                            name="req_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            value={req_name1}
+                                            onChange={(e) => setReq_name1(e.target.value)}
+                                            placeholder="Requestor Name" />
+
+                                            <input type="text" 
+                                            name="req_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            value={req_title1}
+                                            onChange={(e) => setReq_title1(e.target.value)}
+                                            placeholder="Requestor Title" />
+
+                                            <input type="text" 
+                                            name="revas_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            value={revas_name1}
+                                            onChange={(e) => setRevas_name1(e.target.value)}
+                                            placeholder="Revas Name" />
+
+                                            <input type="text" 
+                                            name="revas_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            value={revas_title1}
+                                            onChange={(e) => setRevas_title1(e.target.value)}
+                                            placeholder="Revas Title" />
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
+                            <i className="nav-icon fas" style={{marginLeft:"2%", cursor:"pointer"}} data-toggle="modal" data-target="#modal-month-tes" ><FaDownload/></i>
+                            {/* <button type="button" class="btn btn-primary" style={{marginLeft:"2%"}} data-toggle="modal" data-target="#modal-month-tes"><FaDownload/></button> */}
+                                        <div class="modal fade" id="modal-month-tes">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-body">
+                                <ModalPeriod1 
+                                smonth={smonth} 
+                                syear={syear} 
+                                req={req}
+                                tgl_signoff1={tgl_signoff1}
+                                req_name1={req_name1}
+                                req_title1={req_title1}
+                                revas_name1={revas_name1}
+                                revas_title1={revas_title1}
+                                />
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
+                                            
+                                            {/* <p>Bulan: {smonth} tahun: {syear}</p>  */}
+                                            <p>   </p>
+                                        </div>
+                                        
+                                        <label className="col-sm-2 col-form-label">Periode</label>
+                                        <div className="col-sm-10">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month2">Input Data Periode 2</button>
+                                        <div class="modal fade" id="modal-month2">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-body">
+                            <ul className="nav nav-card-profile">
+                                                <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear2} onChange={(e) => setYear2(e.target.value)}></input></li>
+                                                <li className="nav-items"><select
+                                                className="custom-select"
+                                                name="bulan"
+                                                placeholder='pilih'
+                                                onChange={(event) => setMonth2(event.target.value)}
+                                                
+                                            >   <option disabled selected>Bulan</option>
+                                                {bulan.map((bulans) => (
+                                                    <option value={bulans}
+                                                    >
+                                                        {bulans}
+                                                    </option>
+                                                ))}
+                                                <option>-</option>
+                                                
+                                            </select></li>
+                                            </ul>
+
+                                            <input type="text" 
+                                            name="tgl_signoff"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Tanggal Sign Off" />
+
+                                            <input type="text" 
+                                            name="req_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Name" />
+
+                                            <input type="text" 
+                                            name="req_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Title" />
+
+                                            <input type="text" 
+                                            name="revas_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Name" />
+
+                                            <input type="text" 
+                                            name="revas_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Title" />
+
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
+                                            <p>   </p>
+                                        </div>
+
+                                        <label className="col-sm-2 col-form-label">Periode</label>
+                                        <div className="col-sm-10">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month3">Input Data Periode 3</button>
+                                        <div class="modal fade" id="modal-month3">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-body">
+                            <ul className="nav nav-card-profile">
+                                                <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear3} onChange={(e) => setYear3(e.target.value)}></input></li>
+                                                <li className="nav-items"><select
+                                                className="custom-select"
+                                                name="bulan"
+                                                placeholder='pilih'
+                                                onChange={(event) => setMonth3(event.target.value)}
+                                                
+                                            >   <option disabled selected>Bulan</option>
+                                                {bulan.map((bulans) => (
+                                                    <option value={bulans}
+                                                    >
+                                                        {bulans}
+                                                    </option>
+                                                ))}
+                                                <option>-</option>
+                                                
+                                            </select></li>
+                                            </ul>
+                                            <input type="text" 
+                                            name="tgl_signoff"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Tanggal Sign Off" />
+
+                                            <input type="text" 
+                                            name="req_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Name" />
+
+                                            <input type="text" 
+                                            name="req_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Requestor Title" />
+
+                                            <input type="text" 
+                                            name="revas_name"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Name" />
+
+                                            <input type="text" 
+                                            name="revas_title"
+                                            className="form-control" 
+                                            variant="filled"
+                                            placeholder="Revas Title" />
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
+                                            
+                                        </div>
+                                        </div>
+                                
+                            </form>
+                            {/* <button
+                                className="btn btn-danger"
+                                type='button'
+                                onClick={getPDF}
+                                >
+                                    PDF
+                                </button> */}
+
         </div>
       </div>
     </div>
       </div>
     </div>
-        </div>
+    </div>
   )
 }
 
