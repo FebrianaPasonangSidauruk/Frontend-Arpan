@@ -8,6 +8,8 @@ import UserProfile from './components/Profile/UserProfile';
 import Audit from './components/Audit/Audit';
 import PDFFile from './components/Audit/PDFFile'
 
+import TesProject from './components/Projects/TesProject';
+
 function App() {
   return (
     <Routes>
@@ -19,6 +21,7 @@ function App() {
         <Route path='/dashboard/audit' exact element={<Audit/>}/>
         {/* <Route path="/tesaudit" exact element={<TesAudit />} /> */}
         <Route path="/pdf" exact element={<PDFFile />} />
+        <Route path="/dashboard/tesproject" exact element={<TesProject />} />
       </>
     </Routes>
   );

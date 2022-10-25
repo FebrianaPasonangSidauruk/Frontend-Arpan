@@ -26,7 +26,7 @@ const UserProfile = () => {
   }, []);
 
 const getUserById = async () => {
-    const response = await axios.get(`http://localhost:5001/users/${id}`);
+    const response = await axios.get(`http://localhost:5010/users/${id}`);
     setName(response.data.name);
     setUsername(response.data.username);
     setEmail(response.data.email);
@@ -43,7 +43,7 @@ const getUserById = async () => {
     e.preventDefault();
     console.log("ya")
     try {
-      await axios.patch(`http://localhost:5001/users/${id}`, {
+      await axios.patch(`http://localhost:5010/users/${id}`, {
         name,
         username,
         email,

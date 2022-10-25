@@ -5,6 +5,7 @@ import './Options.css';
 
 function ProjectList({project}) {
   var index;
+  const [val, setVal] = useState();
   return (
     <>              
                     {/* <td>{index + 1}</td> */}
@@ -23,7 +24,7 @@ function ProjectList({project}) {
                     <td>{project.no_nodin_bo}</td>
                     <td>{project.testing_progress}</td>
                     <td>
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default"><i className="fas"><FaPencilAlt/> </i></button>
+                        <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#modal-default" value={val} onChange={(e) => setVal(project.id_project)}><i className="fas"><FaPencilAlt/> </i></button>
                     </td>
 
         <div class="modal fade" id="modal-default">
@@ -37,8 +38,8 @@ function ProjectList({project}) {
         </div>
         <div class="modal-body">
             <Options 
-            value={project.id_project}
-            project={project}/>
+            
+            project={project.id_project}/>
         </div>
         </div>
 

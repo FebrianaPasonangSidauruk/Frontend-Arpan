@@ -23,10 +23,11 @@ const Options = ({project}) => {
     const [pic_tester_4, setPic_tester_4] = useState('');
     const [pic_tester_5, setPic_tester_5] = useState('');
 
-    const id_project  = project.id_project;
+    const id_project  = project;
     
 
     useEffect(() => {
+      console.log('h')
         getDataById();
     }, []);
 
@@ -37,7 +38,7 @@ const Options = ({project}) => {
         console.log(id_project)
         console.log(testing_progress)
         try {
-          await axios.patch(`http://localhost:5001/datas/${id_project}`, {
+          await axios.patch(`http://localhost:5010/datas/${id_project}`, {
             testing_progress: testing_progress,
             no_nodin_rfsrfi: no_nodin_rfsrfi ,
             date_nodin_rfsrfi: date_nodin_rfsrfi ,
@@ -65,7 +66,7 @@ const Options = ({project}) => {
 
       const getDataById = async () => {
         console.log(id_project)
-        const response = await axios.get(`http://localhost:5001/datas/${id_project}`);
+        const response = await axios.get(`http://localhost:5010/datas/${id_project}`);
         setTesting_progress(response.data.testing_progress);
         setNo_nodin_rfsrfi(response.data.no_nodin_rfsrfi);
         setDate_nodin_rfsrfi(response.data.date_nodin_rfsrfi);

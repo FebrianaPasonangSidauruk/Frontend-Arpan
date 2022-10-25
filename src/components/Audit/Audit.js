@@ -15,6 +15,10 @@ const Audit = () => {
     const [requestors, setRequestors] = useState([]);
     const [keyword, setKeyword] = useState("");
 
+    const [show1, setShow1] = useState(true);
+    const [show2, setShow2] = useState(false);
+    const [show3, setShow3] = useState(false);
+
     const [query, setQuery] = useState("");
 
     const [smonth, setMonth] = useState();
@@ -42,7 +46,7 @@ const Audit = () => {
       }, []);
 
       const getProducts = async() =>{
-        const res = await axios.get(`http://localhost:5001/getProject`);
+        const res = await axios.get(`http://localhost:5010/getProject`);
 
         const requestor_list = res.data.map((data) => data.title_dev);
         setTitle_dev([...new Set(requestor_list)]);
@@ -252,24 +256,8 @@ const Audit = () => {
                                             </select>
                                         </div>
                                 </div>
-                                <button type="button" onClick={dataProjectRequestor} class="btn btn-danger" data-toggle="modal" data-target="#modal-default">Kertas Kerja</button>
-                            <div class="modal fade" id="modal-default">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                            <h4 class="modal-title">Update Project Tracking Record</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-                            <div class="modal-body">
-                                <ModalExcel requestor_audit={exporData}/>
-                            </div>
-                            </div>
-
-                            </div>
-
-                            </div>
+                               
+                            
                             </form>
                             
 
@@ -517,6 +505,35 @@ const Audit = () => {
                                             
                                         </div>
                                         </div>
+                                        <button type="button" onClick={dataProjectRequestor} class="btn btn-danger" data-toggle="modal" data-target="#modal-default">Kertas Kerja</button>
+                                        <div class="modal fade" id="modal-default">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                            <h4 class="modal-title">Update Project Tracking Record</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <ModalExcel 
+                                requestor_audit={exporData}
+                                smonth={smonth} 
+                                syear={syear}
+                                smonth2={smonth2}
+                                syear2={syear2}
+                                smonth3={smonth3} 
+                                syear3={syear3}
+                                req={req}
+                                req2={req2}
+                                req3={req3}
+                                />
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div>
                                 
                             </form>
                             {/* <button
