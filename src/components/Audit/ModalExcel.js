@@ -41,7 +41,7 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
     // setSelection(check);
 
     try {
-      await axios.patch(`http://localhost:5010/datas/${projid}`, {
+      await axios.patch(`datas/${projid}`, {
         selection: val
       });
     } catch (error) {

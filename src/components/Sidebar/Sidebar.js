@@ -3,8 +3,10 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useNavigate, Link } from 'react-router-dom';
 import {FaCubes, FaUserAlt, FaTools, FaUsersCog} from 'react-icons/fa'
-import {HiClipboardList, HiChat} from 'react-icons/hi'
+import {HiClipboardList, HiChat, HiDocumentDownload} from 'react-icons/hi'
 import {BsListCheck} from 'react-icons/bs'
+import {AiOutlineLineChart} from 'react-icons/ai'
+import {TbReportAnalytics} from 'react-icons/tb'
 import './Sidebar.css'
 import logo from '../img/logo-sidebar.png';
 
@@ -25,7 +27,7 @@ const Sidebar = () => {
  
     const refreshToken = async () => {
         try {
-            const response = await axios.get('http://localhost:5010/token');
+            const response = await axios.get('token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
             setName(decoded.name);
@@ -42,7 +44,7 @@ const Sidebar = () => {
     axiosJWT.interceptors.request.use(async (config) => {
         const currentDate = new Date();
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('http://localhost:5010/token');
+            const response = await axios.get('token');
             config.headers.Authorization = `Bearer ${response.data.accessToken}`;
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
@@ -55,7 +57,7 @@ const Sidebar = () => {
     });
  
     const getUsers = async () => {
-        const response = await axiosJWT.get('http://localhost:5010/users', {
+        const response = await axiosJWT.get('users', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -79,14 +81,14 @@ const Sidebar = () => {
             <Link to= '/dashboard' className='nav-link'>
               <i className="nav-icon fas fa-chart-pie" />
               <p>
-                Statistics
+                Dashboard
               </p>
             </Link>
           </li>
           <li className="nav-item">
           <Link to= '/dashboard/projectList' className='nav-link'>
           <i className="nav-icon fas"><BsListCheck/></i>
-                  <p>Project List</p>
+                  <p>Project Tracking</p>
                 </Link>
           </li>
           {/* <li className="nav-item menu-open">
@@ -131,10 +133,28 @@ const Sidebar = () => {
               </p>
             </Link>
           </li>
+          <li className="nav-item">
+          <Link to= '/dashboard/downloaddoc' className='nav-link'>
+          <i className="nav-icon fas"><HiDocumentDownload/></i>
+                  <p>Download Document</p>
+                </Link>
+          </li>
+          <li className="nav-item">
+          <Link to= '/dashboard/visualization' className='nav-link'>
+          <i className="nav-icon fas"><AiOutlineLineChart/></i>
+                  <p>Visualization</p>
+                </Link>
+          </li>
+          <li className="nav-item">
+          <Link to= '/dashboard/warehouse' className='nav-link'>
+          <i className="nav-icon fas"><TbReportAnalytics/></i>
+                  <p>Warehouse Reporting</p>
+                </Link>
+          </li>
 
           <li className="nav-item">
               {/* <Link to='/profile' className='nav-link'> */}
-              <a className='nav-link' href={`/profile/${users.id}`}>
+              <a className='nav-link' href={`/dashboard/profile/${users.id}`}>
               <i className="nav-icon fas" ><FaUserAlt/></i>
               <p>
                 User Profile

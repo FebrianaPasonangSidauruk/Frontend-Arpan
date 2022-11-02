@@ -18,7 +18,7 @@ const Header = () => {
  
     const refreshToken = async () => {
         try {
-            const response = await axios.get('http://localhost:5010/token');
+            const response = await axios.get('token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
             setName(decoded.name);
@@ -35,7 +35,7 @@ const Header = () => {
     axiosJWT.interceptors.request.use(async (config) => {
         const currentDate = new Date();
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('http://localhost:5010/token');
+            const response = await axios.get('token');
             config.headers.Authorization = `Bearer ${response.data.accessToken}`;
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
@@ -48,7 +48,7 @@ const Header = () => {
     });
  
     const getUsers = async () => {
-        const response = await axiosJWT.get('http://localhost:5010/users', {
+        const response = await axiosJWT.get('users', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -59,7 +59,7 @@ const Header = () => {
 
     const Logout = async () => {
         try {
-            await axios.delete('http://localhost:5010/logout');
+            await axios.delete('logout');
             navigate("/");
         } catch (error) {
             console.log(error);

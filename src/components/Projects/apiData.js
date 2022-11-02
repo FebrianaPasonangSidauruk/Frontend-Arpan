@@ -15,7 +15,7 @@ import axios from "axios";
     console.log('tes', keyword)
     try{
         const {data} = await axios.get(
-          `http://localhost:5010/requestor?search_requestor=${keyword}`
+          `requestor?search_requestor=${keyword}`
         );
         return data;
     } catch(error){

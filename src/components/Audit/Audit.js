@@ -34,6 +34,18 @@ const Audit = () => {
     const [revas_name1, setRevas_name1] = useState("");
     const [revas_title1, setRevas_title1] = useState("");
 
+    const [tgl_signoff2, setTgl_signoff2] = useState("");
+    const [req_name2, setReq_name2] = useState("");
+    const [req_title2, setReq_title2] = useState("");
+    const [revas_name2, setRevas_name2] = useState("");
+    const [revas_title2, setRevas_title2] = useState("");
+
+    const [tgl_signoff3, setTgl_signoff3] = useState("");
+    const [req_name3, setReq_name3] = useState("");
+    const [req_title3, setReq_title3] = useState("");
+    const [revas_name3, setRevas_name3] = useState("");
+    const [revas_title3, setRevas_title3] = useState("");
+
     const [title_dev, setTitle_dev] = useState([]);
     const [exporData, setExportData] = useState([]);
     const[req, setReq] = useState("");
@@ -46,7 +58,7 @@ const Audit = () => {
       }, []);
 
       const getProducts = async() =>{
-        const res = await axios.get(`http://localhost:5010/getProject`);
+        const res = await axios.get(`getProject`);
 
         const requestor_list = res.data.map((data) => data.title_dev);
         setTitle_dev([...new Set(requestor_list)]);
@@ -65,110 +77,11 @@ const Audit = () => {
         console.log("Req1 req2 re3 bulan tahun", req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3)
     };
 
-    const submitrequestor= (e) =>{
-        e.preventDefault();
-        setKeyword(query);
-        console.log("Requestor", requestors);
-
-    }
-
     
     const handleSubmitPeriod = (e) => {
         e.preventDefault();
         
     };
-
-    const bagianAtas ={
-        textAlign: "center",
-        color: "green"
-    }
-    const bagTengah = {
-        // fontFamily: "sans-serif"
-        paddingTop: "3%",
-        marginLeft: "5%",
-        marginRight: "5%"
-      };
-
-      const garis ={
-        border: "3px solid black"
-      }
-
-      const mengetahui= {
-        paddingTop: "10%",
-        textAlign: "center"
-      };
-
-      const ttd = {
-        paddingTop: "10%",
-        marginLeft: "25",
-        textDecoration: "underline"
-      };
-      const jbtn = {
-        paddingTop: "10%",
-        marginLeft: "25"
-      };
-
-      const ttd_kanan ={
-        marginLeft: "45%"
-      }
-      const tableStyle = {
-        width: "100%",
-        color: "blue"
-      };
-      const headstyle = {
-        width: "100%",
-        background: "blue"
-      };
-
-    const HandlePDF = () =>{
-        <div>
-          {/* <p>tes</p>   */}
-       <div style={bagianAtas}>
-        <h3> BERITA ACARA PEKERJAAN PERUBAHAN PARAMETER</h3>
-        <p><strong>Periode {smonth} {syear}</strong></p>
-       </div> 
-       <hr style={garis}></hr>
-       <div style={bagTengah}>
-       <p>Berita Acara ini dibuat untuk menerangkan bahwa secara resmi periode 
-            bulan {smonth} tahun {syear}, Departemen {req} telah melakukan
-            lalalalla
-       </p>
-       <p> Adapun dasar dari perubahan tersebut, dapat dilihat dalam lampiran. Demikian Berita Acara 
-        ini dapat dipergunakan semestinya.
-       </p>
-       </div>
-       <div style={mengetahui}>
-        <p>Jakarta, .....</p>
-        <p> Mengetahui dan Menyetujui</p>
-       </div>
-       <p style={ttd}><strong>
-        namaaa sdksjdna
-       <span style={ttd_kanan}>
-        nama abcdefghij
-       </span>
-       </strong>
-       </p>
-       <p style={jbtn}>
-        namaaa sdksjdna
-       <span style={ttd_kanan}>
-        nama abcdefghij
-       </span>
-       </p>
-       </div>
-    }
-    
-    const getPDF = () =>{
-        // const teks = renderToString(<HandlePDF/>)
-        const pdf = new jsPDF("p", "mm", "a4");
-        // doc.html(teks);
-        // doc.save("berita");
-        pdf.html(ReactDOMServer.renderToString(<HandlePDF/>), {
-            callback: function (pdf){
-                pdf.save("sample.pdf");
-            }
-        });
-
-    }
 
 
   return (
@@ -197,7 +110,7 @@ const Audit = () => {
                     <div class="col-12">
                         <div class="card">
           
-                            <form className='form-horizontal' >
+                            <form className='form-horizontal' style={{marginLeft:'1%', marginRight:'1%', marginTop:'1%'}}>
                                 <div className="form-group row">
                                     <label className="col-sm-2 col-form-label">Requestor</label>
                                         <div className="col-sm-8">
@@ -261,18 +174,35 @@ const Audit = () => {
                             </form>
                             
 
-                            <form className='form-horizontal' onSubmit={handleSubmitPeriod}>
+                            <form className='form-horizontal' style={{marginLeft:'1%', marginRight:'1%', marginTop:'1%'}}>
                                         <div className="form-group row">
                                         <label className="col-sm-2 col-form-label">Periode</label>
                                         <div className="col-sm-10">
 
 
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month">Input Data periode 1</button>
-                                        <div class="modal fade" id="modal-month">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-body">
-                                            <ul className="nav nav-card-profile">
+                                        <button type="button" class="btn btn-danger" style={{marginBottom:'1%'}}>Input Data periode 1</button>
+                                        <i className="nav-icon fas" style={{marginLeft:"2%", cursor:"pointer"}} data-toggle="modal" data-target="#modal-month-tes" ><FaDownload/></i>
+                                        <div class="modal fade" id="modal-month-tes">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-body">
+                                                <ModalPeriod1 
+                                                smonth={smonth} 
+                                                syear={syear} 
+                                                req={req}
+                                                tgl_signoff1={tgl_signoff1}
+                                                req_name1={req_name1}
+                                                req_title1={req_title1}
+                                                revas_name1={revas_name1}
+                                                revas_title1={revas_title1}
+                                                />
+                                            </div>
+                                            </div>
+
+                                            </div>
+
+                                            </div>
+                                        <ul className="nav nav-card-profile">
                                                 <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear} onChange={(e) => setYear(e.target.value)}></input></li>
                                                 <li className="nav-items"><select
                                                 className="custom-select"
@@ -291,6 +221,7 @@ const Audit = () => {
                                                 
                                             </select></li>
                                             </ul>
+                                            <div style={{width:'80%'}}>
                                             <input type="text" 
                                             name="tgl_signoff"
                                             className="form-control" 
@@ -330,51 +261,41 @@ const Audit = () => {
                                             value={revas_title1}
                                             onChange={(e) => setRevas_title1(e.target.value)}
                                             placeholder="Revas Title" />
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-                            </div>
-                            </div>
 
-                            </div>
-
-                            </div>
-                            <i className="nav-icon fas" style={{marginLeft:"2%", cursor:"pointer"}} data-toggle="modal" data-target="#modal-month-tes" ><FaDownload/></i>
-                            {/* <button type="button" class="btn btn-primary" style={{marginLeft:"2%"}} data-toggle="modal" data-target="#modal-month-tes"><FaDownload/></button> */}
-                                        <div class="modal fade" id="modal-month-tes">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-body">
-                                <ModalPeriod1 
-                                smonth={smonth} 
-                                syear={syear} 
-                                req={req}
-                                tgl_signoff1={tgl_signoff1}
-                                req_name1={req_name1}
-                                req_title1={req_title1}
-                                revas_name1={revas_name1}
-                                revas_title1={revas_title1}
-                                />
-                            </div>
-                            </div>
-
-                            </div>
-
-                            </div>
-                                            
-                                            {/* <p>Bulan: {smonth} tahun: {syear}</p>  */}
+                                            </div>
+                                        
                                             <p>   </p>
                                         </div>
+
+                                        {/* periode2 */}
                                         
                                         <label className="col-sm-2 col-form-label">Periode</label>
                                         <div className="col-sm-10">
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month2">Input Data Periode 2</button>
-                                        <div class="modal fade" id="modal-month2">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-body">
-                            <ul className="nav nav-card-profile">
+                                        <button type="button" class="btn btn-danger" style={{marginBottom:'1%'}} onClick={() => setShow2(!show2)}>Input Data Periode 2</button>
+                                        <i className="nav-icon fas" style={{marginLeft:"2%", cursor:"pointer"}} data-toggle="modal" data-target="#modal-month-tes2" ><FaDownload/></i>
+                                        <div class="modal fade" id="modal-month-tes2">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-body">
+                                                <ModalPeriod1 
+                                                smonth={smonth2} 
+                                                syear={syear2} 
+                                                req={req}
+                                                tgl_signoff1={tgl_signoff2}
+                                                req_name1={req_name2}
+                                                req_title1={req_title2}
+                                                revas_name1={revas_name2}
+                                                revas_title1={revas_title2}
+                                                />
+                                            </div>
+                                            </div>
+
+                                            </div>
+
+                                            </div>
+                                            { show2? 
+                                            <div>
+                                        <ul className="nav nav-card-profile">
                                                 <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear2} onChange={(e) => setYear2(e.target.value)}></input></li>
                                                 <li className="nav-items"><select
                                                 className="custom-select"
@@ -393,58 +314,82 @@ const Audit = () => {
                                                 
                                             </select></li>
                                             </ul>
-
+                                            <div style={{width:'80%'}}>
                                             <input type="text" 
                                             name="tgl_signoff"
                                             className="form-control" 
                                             variant="filled"
+                                            value={tgl_signoff2}
+                                            onChange={(e) => setTgl_signoff2(e.target.value)}
                                             placeholder="Tanggal Sign Off" />
 
                                             <input type="text" 
                                             name="req_name"
                                             className="form-control" 
                                             variant="filled"
+                                            value={req_name2}
+                                            onChange={(e) => setReq_name2(e.target.value)}
                                             placeholder="Requestor Name" />
 
                                             <input type="text" 
                                             name="req_title"
                                             className="form-control" 
                                             variant="filled"
+                                            value={req_title2}
+                                            onChange={(e) => setReq_title2(e.target.value)}
                                             placeholder="Requestor Title" />
 
                                             <input type="text" 
                                             name="revas_name"
                                             className="form-control" 
                                             variant="filled"
+                                            value={revas_name2}
+                                            onChange={(e) => setRevas_name2(e.target.value)}
                                             placeholder="Revas Name" />
 
                                             <input type="text" 
                                             name="revas_title"
                                             className="form-control" 
                                             variant="filled"
+                                            value={revas_title2}
+                                            onChange={(e) => setRevas_title2(e.target.value)}
                                             placeholder="Revas Title" />
-
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-                            </div>
-                            </div>
-
-                            </div>
-
-                            </div>
+                                            </div>
+                                            </div>
+                                            :null}
+                                        
                                             <p>   </p>
                                         </div>
 
+                                        {/* periode3 */}
+
                                         <label className="col-sm-2 col-form-label">Periode</label>
                                         <div className="col-sm-10">
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-month3">Input Data Periode 3</button>
-                                        <div class="modal fade" id="modal-month3">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-body">
-                            <ul className="nav nav-card-profile">
+                                        <button type="button" class="btn btn-danger" style={{marginBottom:'1%'}} onClick={() => setShow3(!show3)}>Input Data Periode 3</button>
+                                        <i className="nav-icon fas" style={{marginLeft:"2%", cursor:"pointer"}} data-toggle="modal" data-target="#modal-month-tes3" ><FaDownload/></i>
+                                        <div class="modal fade" id="modal-month-tes3">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-body">
+                                                <ModalPeriod1 
+                                                smonth={smonth3} 
+                                                syear={syear3} 
+                                                req={req}
+                                                tgl_signoff1={tgl_signoff3}
+                                                req_name1={req_name3}
+                                                req_title1={req_title3}
+                                                revas_name1={revas_name3}
+                                                revas_title1={revas_title3}
+                                                />
+                                            </div>
+                                            </div>
+
+                                            </div>
+
+                                            </div>
+                                        { show3? 
+                                        <div>
+                                        <ul className="nav nav-card-profile">
                                                 <li className="nav-items"><input type ='text' className="form-control" placeholder='Tahun' value={syear3} onChange={(e) => setYear3(e.target.value)}></input></li>
                                                 <li className="nav-items"><select
                                                 className="custom-select"
@@ -463,49 +408,54 @@ const Audit = () => {
                                                 
                                             </select></li>
                                             </ul>
+                                            <div style={{width:'80%'}}>
                                             <input type="text" 
                                             name="tgl_signoff"
                                             className="form-control" 
                                             variant="filled"
+                                            value={tgl_signoff3}
+                                            onChange={(e) => setTgl_signoff3(e.target.value)}
                                             placeholder="Tanggal Sign Off" />
 
                                             <input type="text" 
                                             name="req_name"
                                             className="form-control" 
                                             variant="filled"
+                                            value={req_name3}
+                                            onChange={(e) => setReq_name3(e.target.value)}
                                             placeholder="Requestor Name" />
 
                                             <input type="text" 
                                             name="req_title"
                                             className="form-control" 
                                             variant="filled"
+                                            value={req_title3}
+                                            onChange={(e) => setReq_title3(e.target.value)}
                                             placeholder="Requestor Title" />
 
                                             <input type="text" 
                                             name="revas_name"
                                             className="form-control" 
                                             variant="filled"
+                                            value={revas_name3}
+                                            onChange={(e) => setRevas_name3(e.target.value)}
                                             placeholder="Revas Name" />
 
                                             <input type="text" 
                                             name="revas_title"
                                             className="form-control" 
                                             variant="filled"
+                                            value={revas_title3}
+                                            onChange={(e) => setRevas_title3(e.target.value)}
                                             placeholder="Revas Title" />
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-                            </div>
-                            </div>
-
-                            </div>
-
-                            </div>
+                                            </div>
+                                            </div>
+                                            :null
+                                        }
                                             
                                         </div>
                                         </div>
-                                        <button type="button" onClick={dataProjectRequestor} class="btn btn-danger" data-toggle="modal" data-target="#modal-default">Kertas Kerja</button>
+                                        <button type="button" onClick={dataProjectRequestor} class="btn btn-danger" data-toggle="modal" data-target="#modal-default" style={{marginBottom:'1%'}}>Kertas Kerja</button>
                                         <div class="modal fade" id="modal-default">
                             <div class="modal-dialog">
                             <div class="modal-content">

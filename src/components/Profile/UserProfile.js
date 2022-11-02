@@ -26,7 +26,7 @@ const UserProfile = () => {
   }, []);
 
 const getUserById = async () => {
-    const response = await axios.get(`http://localhost:5010/users/${id}`);
+    const response = await axios.get(`users/${id}`);
     setName(response.data.name);
     setUsername(response.data.username);
     setEmail(response.data.email);
@@ -43,7 +43,7 @@ const getUserById = async () => {
     e.preventDefault();
     console.log("ya")
     try {
-      await axios.patch(`http://localhost:5010/users/${id}`, {
+      await axios.patch(`users/${id}`, {
         name,
         username,
         email,
@@ -95,7 +95,7 @@ const getUserById = async () => {
               </div>
               <h3 className="profile-username text-center">{name}</h3>
               <p className="text-muted text-center">{employee_title}</p>
-              <ul className="list-group list-group-unbordered mb-3">
+              {/* <ul className="list-group list-group-unbordered mb-3">
                 <li className="list-group-item">
                   <b>Request Done</b> <a className="float-right">3</a>
                 </li>
@@ -108,7 +108,7 @@ const getUserById = async () => {
                 <li className="list-group-item">
                   <b>Not Started Yet</b> <a className="float-right">100</a>
                 </li>
-              </ul>
+              </ul> */}
             </div>
           </div>
         </div>
@@ -117,7 +117,7 @@ const getUserById = async () => {
             <div className="card-headers p-2">
               <ul className="nav nav-card-profile">
                 <li className="nav-items"><a className="nav-link" href="#activity" data-toggle="tab">Profile</a></li>
-                <li className="nav-items"><a className="nav-link" href="#settings" data-toggle="tab">User Account</a></li>
+                {/* <li className="nav-items"><a className="nav-link" href="#settings" data-toggle="tab">User Account</a></li> */}
               </ul>
             </div>
             <div className="card-body">
@@ -180,7 +180,7 @@ const getUserById = async () => {
                   </form>
                 </div>
 
-                <div className="tab-pane" id="settings">
+                {/* <div className="tab-pane" id="settings">
                   <form className="form-horizontal" onSubmit={updateUser}>
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Username</label>
@@ -200,7 +200,7 @@ const getUserById = async () => {
                       </div>
                     </div>
                   </form>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
