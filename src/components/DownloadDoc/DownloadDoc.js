@@ -63,7 +63,7 @@ const DownloadDoc = () => {
         </div> */}
     
     </div>
-    <a href='file:///C:/feby/index.html'  target='_blank' >tes</a>
+    <a href='file:///\\FEBRIANAPASONAN\Users\tes'  target='_blank' >tes</a>
     <button type="button" class="btn btn-danger" style={{width:'15%', marginLeft:'40%', alignItems:'center', marginBottom:'1%'}} onClick={openFile}>Download Document</button>
     
     <section class="side-warehouse">

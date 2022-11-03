@@ -133,12 +133,12 @@ const Sidebar = () => {
               </p>
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
           <Link to= '/dashboard/downloaddoc' className='nav-link'>
           <i className="nav-icon fas"><HiDocumentDownload/></i>
                   <p>Download Document</p>
                 </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
           <Link to= '/dashboard/visualization' className='nav-link'>
           <i className="nav-icon fas"><AiOutlineLineChart/></i>
@@ -148,7 +148,7 @@ const Sidebar = () => {
           <li className="nav-item">
           <Link to= '/dashboard/warehouse' className='nav-link'>
           <i className="nav-icon fas"><TbReportAnalytics/></i>
-                  <p>Warehouse Reporting</p>
+                  <p>Warehouse</p>
                 </Link>
           </li>
 
