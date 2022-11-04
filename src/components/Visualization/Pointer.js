@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 
-const Visualization = () => {
+const Pointer = () => {
   return (
     <div>
     <Header/>
@@ -12,12 +12,13 @@ const Visualization = () => {
 <div className="container-fluid">
   <div className="row mb-2">
     <div className="col-sm-6">
-      <h1>Visualization</h1>
+      <h1>Pointer Department</h1>
     </div>
     <div className="col-sm-6">
       <ol className="breadcrumb float-sm-right">
         <li className="breadcrumb-item"><a href="#">Home</a></li>
         <li className="breadcrumb-item active">Visualization</li>
+        <li className="breadcrumb-item active">Pointer</li>
       </ol>
     </div>
   </div>
@@ -40,4 +41,4 @@ const Visualization = () => {
   )
 }
 
-export default Visualization
+export default Pointer

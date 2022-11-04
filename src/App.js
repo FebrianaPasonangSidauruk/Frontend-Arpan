@@ -9,10 +9,13 @@ import Audit from './components/Audit/Audit';
 import DownloadDoc from './components/DownloadDoc/DownloadDoc';
 import Visualization from './components/Visualization/Visualization';
 import WarehouseReporting from './components/WarehouseReporting/WarehouseReporting';
+import Prepaid from './components/Visualization/Prepaid';
+import Pointer from './components/Visualization/Pointer';
+import DigitalVAS from './components/Visualization/DigitalVAS';
+import Basi from './components/Visualization/Basi';
 
 import PDFFile from './components/Audit/PDFFile'
 
-import TesProject from './components/Projects/Projects';
 
 function App() {
   return (
@@ -24,12 +27,12 @@ function App() {
         <Route path='/dashboard/profile/:id' exact element={<UserProfile/>}/>
         <Route path='/dashboard/audit' exact element={<Audit/>}/>
         <Route path='/dashboard/downloaddoc' exact element={<DownloadDoc/>}/>
-        <Route path='/dashboard/visualization' exact element={<Visualization/>}/>
+        <Route path='/dashboard/visualization/prepaid' exact element={<Prepaid/>}/>
+        <Route path='/dashboard/visualization/pointer' exact element={<Pointer/>}/>
+        <Route path='/dashboard/visualization/digitalvas' exact element={<DigitalVAS/>}/>
+        <Route path='/dashboard/visualization/basi' exact element={<Basi/>}/>
         <Route path='/dashboard/warehouse' exact element={<WarehouseReporting/>}/>
-
-        {/* <Route path="/tesaudit" exact element={<TesAudit />} /> */}
         <Route path="/pdf" exact element={<PDFFile />} />
-        {/* <Route path="/dashboard/tesproject" exact element={<TesProject />} /> */}
       </>
     </Routes>
   );

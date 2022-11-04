@@ -2,25 +2,13 @@ import React from 'react'
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import login from '../img/login.png'
-// import * as child from 'child_process'
 import axios from 'axios';
-// import shellExec from 'shell-exec'
-// import { execSync } from 'child_process';
 
 const DownloadDoc = () => {
-  // const openFile = () => {
-    
-  // }
 
 
   const openFile = async() =>{
     await axios.get(`getshell`);
-    // child.exec('explorer \\FEBRIANAPASONAN\Users\tes')
-    // execSync('explorer \\FEBRIANAPASONAN\Users\tes', { encoding: 'utf-8' });
-    // window.open('file:///FEBRIANAPASONAN\Users\tes')
-    // shellExec('explorer \\FEBRIANAPASONAN\Users\tes');
-    // shellExec('start .');
-    // window.location.href= 'file:////FEBRIANAPASONAN/Users/tes'
   }
 
   return (
@@ -58,9 +46,6 @@ const DownloadDoc = () => {
         </label>
     <br/>
     <br/>
-    {/* <div className="col-sm-10">
-        
-        </div> */}
     
     </div>
     <a href='file:///\\FEBRIANAPASONAN\Users\tes'  target='_blank' >tes</a>

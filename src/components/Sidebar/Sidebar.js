@@ -139,11 +139,46 @@ const Sidebar = () => {
                   <p>Download Document</p>
                 </Link>
           </li> */}
-          <li className="nav-item">
+          {/* <li className="nav-item">
           <Link to= '/dashboard/visualization' className='nav-link'>
           <i className="nav-icon fas"><AiOutlineLineChart/></i>
                   <p>Visualization</p>
                 </Link>
+          </li> */}
+          <li className="nav-item menu-open">
+            <a href='#' className="nav-link">
+              <i className="nav-icon fas"><AiOutlineLineChart/></i>
+              <p>
+                Visualization
+                <i className="fas fa-angle-left right" />
+              </p>
+            </a>
+            <ul className="nav nav-treeview">
+              <li className="nav-item">
+              <Link to= '/dashboard/visualization/prepaid' className='nav-link'>
+                  <i className="far fa-circle nav-icon" />
+                  <p>Prepaid</p>
+                </Link>
+              </li>
+              <li className="nav-item">
+              <Link to= '/dashboard/visualization/digitalvas' className='nav-link'>
+                  <i className="far fa-circle nav-icon" />
+                  <p>Digital and VAS</p>
+                </Link>
+              </li>
+              <li className="nav-item">
+              <Link to= '/dashboard/visualization/pointer' className='nav-link'>
+                  <i className="far fa-circle nav-icon" />
+                  <p>Pointer</p>
+                </Link>
+              </li>
+              <li className="nav-item">
+              <Link to= '/dashboard/visualization/basi' className='nav-link'>
+                  <i className="far fa-circle nav-icon" />
+                  <p>BASI</p>
+                </Link>
+              </li>
+            </ul>
           </li>
           <li className="nav-item">
           <Link to= '/dashboard/warehouse' className='nav-link'>

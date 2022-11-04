@@ -10,7 +10,7 @@ import './Dashboard.css'
 
 const Dashboard = () => {
   const statePieDaily = {
-    labels: ['RFS', 'RFI', 'RFC', 'ITR'],
+    labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
     datasets:[
         {
         data: [1,2,1,1],
@@ -20,7 +20,7 @@ const Dashboard = () => {
   }
   
   const statePieWeekly = {
-    labels: ['RFS', 'RFI', 'RFC', 'ITR'],
+    labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
     datasets:[
         {
         data: [2,4,5,8],
@@ -30,7 +30,7 @@ const Dashboard = () => {
   }
 
   const statePieMonth = {
-    labels: ['RFS', 'RFI', 'RFC', 'ITR'],
+    labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
     datasets:[
         {
         data: [17,16,13,15],
@@ -40,7 +40,7 @@ const Dashboard = () => {
   }
 
   const statePieYearly = {
-    labels: ['RFS', 'RFI', 'RFC', 'ITR'],
+    labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
     datasets:[
         {
         data: [30,80,45,20],
@@ -79,32 +79,18 @@ const Dashboard = () => {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
 datasets: [
   {
-    label: 'RFS',
-    data: [21, 35, 75, 51, 41, 47, 56, 53, 68, 75, 63, 52],
+    label: '2021',
+    data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
     fill: false, // for Line chart
     backgroundColor: '#f56954',
     borderColor: '#f56954' // for Line chart
   },
   {
-    label: 'RFI',
-    data: [41, 79, 57, 47, 63, 71, 54, 59, 46, 60, 52, 78],
+    label: '2022',
+    data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
     fill: false, // for Line chart
     backgroundColor: '#00a65a',
     borderColor: '#00a65a' // for Line chart
-  },
-  {
-    label: 'RFC',
-    data: [25, 49, 61, 37, 53, 61, 33, 58, 29, 46, 59, 63],
-    fill: false, // for Line chart
-    backgroundColor: '#f39c12',
-    borderColor: '#f39c12' // for Line chart
-  },
-  {
-    label: 'ITR',
-    data: [31, 29, 47, 67, 57, 55, 63, 73, 80, 37, 48, 67],
-    fill: false, // for Line chart
-    backgroundColor: '#00c0ef',
-    borderColor: '#00c0ef' // for Line chart
   }
 ]
   }
@@ -202,7 +188,7 @@ datasets: [
         <div className="col-md-6">
         <div className="card card-danger">
           <div className="card-header">
-            <h3 className="card-title">Pie Chart</h3>
+            <h3 className="card-title">Request Statistics per Division</h3>
 
           </div>
           <div className="card-body-table">
@@ -222,7 +208,7 @@ datasets: [
         <div className="col-md-6">
         <div className="card card-danger">
         <div className="card-header">
-          <h3 className="card-title">Line Chart</h3>
+          <h3 className="card-title">All Requests YoY</h3>
         </div>
         <div className="card-body">
           {/* <div className="chart"> */}
