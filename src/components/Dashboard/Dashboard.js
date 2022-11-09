@@ -7,13 +7,120 @@ import {FaShareAlt, FaBalanceScale} from 'react-icons/fa'
 import PieChart from '../Chart/PieChart';
 import LineChart from '../Chart/LineChart';
 import './Dashboard.css'
+import axios from 'axios';
 
 const Dashboard = () => {
+  const [valueReq, setValueReq] = useState({});
+  const [tes, setTes] = useState([]);
+  const [rfs, setRfs] = useState(0);
+  const [rfi, setRfi] = useState(0);
+  const [rfc, setRfc] = useState(0);
+  const [itr, setItr] = useState(0);
+  // const [chartDataPie, setChartDataPie] = useState({})
+  
+  // let coba =[]
+
+  const [data, setData]= useState({
+    datasets:[{
+      data: [10, 20, 30, 40],
+      backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+    },
+  ],
+  labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI']
+  });
+
+  
+  useEffect(()=>{
+    fetchData();
+  }, [])
+  useEffect(()=>{
+    dboardtop();
+  }, [])
+  
+
+
+  const fetchData = () =>  {
+    axios.get(`piechartdashboard`).then(res => {
+      const resp = res.data;
+      return resp
+    }).then((resp) => {
+      console.log("resss", resp)
+      const label = [];
+      const datas = [];
+      for(var i of resp) {
+          // label.push(i.name);
+          datas.push(i.value)
+      }
+      setData(
+        {
+          datasets: [{
+              data:datas,
+              backgroundColor:[
+                '#f56954', '#00a65a', '#f39c12', '#00c0ef'
+              ]
+          },
+        ],
+        labels:['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'], 
+      }
+      )
+      // setChartDataPie(setData)
+      console.log(data)
+      // console.log(chartDataPie)
+
+    }).catch(e => {
+      console.log("error", e)
+    }) 
+  }
+
+  const dboardtop = async () =>{
+    const response = await axios.get(`getdboardtop`);
+    setRfs(response.data.rfs);
+    setRfi(response.data.rfi);
+    setRfc(response.data.rfc);
+    setItr(response.data.itr);
+    console.log(response)
+  }
+
+  console.log('rfs', rfs)
+  
+
+  const piechart =() =>{
+    let valreq = [];
+      axios.get(`piechartdashboard`)
+      .then(res=>{
+          console.log(res)
+            for (const dataObj of res.data){
+              valreq.push(parseInt(dataObj.value))
+            }
+            
+            setTes(valreq)
+            setValueReq({
+              labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
+              datasets:[
+                {
+                data: valreq,
+                backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+                }
+              ]
+            });
+            // setValueReq(res.data.value)
+        })
+    .catch(error=>{
+      console.log(error)
+    });
+    console.log(valueReq)
+    console.log(valreq)
+    console.log(tes)
+    
+  }
+
+  
+
   const statePieDaily = {
     labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
     datasets:[
         {
-        data: [1,2,1,1],
+        data: tes,
         backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
         }
       ]
@@ -49,29 +156,13 @@ const Dashboard = () => {
       ]
   }
 
-  const [chartDataPie, setChartDataPie] = useState(statePieDaily)
+  // setChartDataPie(setData)
+  const [chartDataPie, setChartDataPie] = useState({})
+  console.log('data', data)
+  console.log(valueReq)
+  console.log(statePieDaily)
+  console.log(chartDataPie)
 
-  var clickHandlerTime;
-
-  const clickHandlerDaily = () =>{
-    // clickHandlerTime = {statePieDaily}
-    <PieChart chartData ={statePieDaily}/>
-  }
-
-  const clickHandlerMonthly = () =>{
-    clickHandlerTime = {statePieMonth}
-    // clickHandlerTime = <PieChart chartData ={statePieDaily}/>
-  }
-
-  const clickHandlerWeekly = () =>{
-    clickHandlerTime = {statePieWeekly}
-    // clickHandlerTime = <PieChart chartData ={statePieDaily}/>
-  }
-
-  const clickHandlerYearly= () =>{
-    clickHandlerTime = {statePieYearly}
-    // clickHandlerTime = <PieChart chartData ={statePieDaily}/>
-  }
   
 
 
@@ -111,7 +202,7 @@ datasets: [
             <li className="breadcrumb-item"><a href="#">Home</a></li>
           </ol>
         </div>
-        <div className="card-body-table">
+        {/* <div className="card-body-table">
         <div className="col-sm-12 filterpie">
             <ol className="breadcrumb float-sm-right">
             <li className="breadcrumb-item-">
@@ -125,13 +216,9 @@ datasets: [
               </div>
             </div>
             </li>
-            {/* <li className="breadcrumb-item-"><button className='filter-btn-chart' onClick= {() => setChartDataPie(statePieDaily)}>Daily </button></li>
-            <li className="breadcrumb-item-"><button className='filter-btn-chart'  onClick= {() => setChartDataPie(statePieWeekly)} >Weekly </button></li>
-            <li className="breadcrumb-item-"><button className='filter-btn-chart'  onClick= {() => setChartDataPie(statePieMonth)}> Monthly </button></li>
-            <li className="breadcrumb-item-"><button className='filter-btn-chart'  onClick= {() => setChartDataPie(statePieYearly)}> Yearly</button></li> */}
           </ol>
         </div>
-      </div>
+      </div> */}
       </div>
       
     </div>
@@ -142,7 +229,7 @@ datasets: [
         <div className="col-lg-3 col-6">
           <div className="small-box bg-danger">
             <div className="inner">
-              <h3>7</h3>
+              <h3>{rfs}</h3>
               <p>RFS</p>
             </div>
             <div className="icon">
@@ -155,7 +242,7 @@ datasets: [
           <div className="small-box bg-danger">
             <div className="inner">
               {/* <h3>12<sup style={{fontSize: 20}}>%</sup></h3> */}
-              <h3>6</h3>
+              <h3>{rfi}</h3>
               <p>RFI</p>
             </div>
             <div className="icon">
@@ -166,7 +253,7 @@ datasets: [
         <div className="col-lg-3 col-6">
           <div className="small-box bg-danger">
             <div className="inner">
-              <h3>3</h3>
+              <h3>{rfc}</h3>
               <p>RFC</p>
             </div>
             <div className="icon">
@@ -177,7 +264,7 @@ datasets: [
         <div className="col-lg-3 col-6">
           <div className="small-box bg-danger">
             <div className="inner">
-              <h3>5</h3>
+              <h3>{itr}</h3>
               <p>ITR</p>
             </div>
             <div className="icon">
@@ -192,15 +279,7 @@ datasets: [
 
           </div>
           <div className="card-body-table">
-              <PieChart chartDataPie ={chartDataPie}/>
-          {/* <div className="col-sm-6 filterpie">
-            <ol className="breadcrumb float-sm-right">
-            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieDaily)}>Daily</button></li>
-            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieWeekly)} >Weekly</button></li>
-            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieMonth)}>Monthly</button></li>
-            <li className="breadcrumb-item"><button onClick= {() => setChartDataPie(statePieYearly)}>Yearly</button></li>
-          </ol>
-        </div> */}
+              <PieChart chartDataPie ={data}/>
           </div>
         </div>
         
