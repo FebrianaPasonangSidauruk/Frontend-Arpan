@@ -9,10 +9,10 @@ import Audit from './components/Audit/Audit';
 import DownloadDoc from './components/DownloadDoc/DownloadDoc';
 import Visualization from './components/Visualization/Visualization';
 import WarehouseReporting from './components/WarehouseReporting/WarehouseReporting';
-import Prepaid from './components/Visualization/Prepaid';
-import Pointer from './components/Visualization/Pointer';
-import DigitalVAS from './components/Visualization/DigitalVAS';
-import Basi from './components/Visualization/Basi';
+import Prepaid from './components/Visualization/Prepaid/Prepaid';
+import Pointer from './components/Visualization/Pointer/Pointer';
+import DigitalVAS from './components/Visualization/DigitalVAS/DigitalVAS';
+import Basi from './components/Visualization/Basi/Basi';
 
 import PDFFile from './components/Audit/PDFFile'
 
