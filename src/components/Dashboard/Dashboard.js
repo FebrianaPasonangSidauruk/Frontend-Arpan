@@ -118,10 +118,8 @@ const Dashboard = () => {
       return resp
     }).then((resp) => {
       console.log("resss", resp)
-      const label = [];
       const datas = [];
       for(var i of resp) {
-          // label.push(i.name);
           datas.push(i.value)
       }
       setData(
@@ -137,9 +135,7 @@ const Dashboard = () => {
       }
       )
       setChartDataPie(data)
-      // setChartDataPie(setData)
       console.log(data)
-      // console.log(chartDataPie)
 
     }).catch(e => {
       console.log("error", e)
@@ -245,7 +241,7 @@ const Dashboard = () => {
             <li className="breadcrumb-item"><a href="#">Home</a></li>
           </ol>
         </div>
-        <div className="card-body-table">
+        {/* <div className="card-body-table">
         <div className="col-sm-12 filterpie">
             <ol className="breadcrumb float-sm-right">
             <li className="breadcrumb-item-">
@@ -261,7 +257,7 @@ const Dashboard = () => {
             </li>
           </ol>
         </div>
-      </div>
+      </div> */}
       </div>
       
     </div>
