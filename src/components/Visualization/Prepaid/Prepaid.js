@@ -1,8 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Header from '../../Header/Header';
 import Sidebar from '../../Sidebar/Sidebar';
+import PiechartPrepaid from './PiechartPrepaid';
 
 const Prepaid = () => {
+  const [data, setData]= useState({
+    datasets:[{
+      data: [10, 20, 30, 40],
+      backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+    },
+  ],
+  labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI']
+  });
+
+  useEffect(()=>{
+    fetchData();
+  }, []);
+
+  const fetchData = () =>  {
+    axios.get(`getpiechartprepaid`).then(res => {
+      const resp = res.data;
+      return resp
+    }).then((resp) => {
+      console.log("resss", resp)
+      const datas = [];
+      const labels =[];
+      for(var i of resp) {
+          datas.push(i.counter)
+          labels.push(i.department)
+      }
+      setData(
+        {
+          datasets: [{
+              data:datas,
+              backgroundColor:[
+                '#f56954', '#00a65a', '#f39c12', '#00c0ef'
+              ]
+          },
+        ],
+        labels:labels, 
+      }
+      )
+      setChartDataPie(data)
+      console.log(data)
+
+    }).catch(e => {
+      console.log("error", e)
+    }) 
+  }
+
+  const [chartDataPie, setChartDataPie] = useState(data)
+
   return (
     <div>
     <Header/>
@@ -29,9 +78,20 @@ const Prepaid = () => {
 <div className="container-fluid">
 <div className="row">
 <div className="col-12">
-<div className="card">
+{/* <div className="card">
 
-</div>
+</div> */}
+<div className="col-md-12">
+  <div className="card card-danger">
+          <div className="card-header">
+            <h3 className="card-title">Request Statistics per Department (RFS +RFI)</h3>
+
+          </div>
+          <div className="card-body-table" style={{width:'60%', marginLeft:'25%'}}>
+              <PiechartPrepaid chartDataPie ={data}/>
+          </div>
+        </div>
+        </div>
 </div>
 </div>
 </div>

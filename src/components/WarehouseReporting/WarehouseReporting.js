@@ -38,7 +38,7 @@ fileUploadHandler = (event) => {
       headers: { 'content-type': 'multipart/form-data' }
   }
 
-  axios.post(`upload`, formData, config)
+  axios.post(`uploadproject`, formData, config)
   .then (res => {
       console.log(res.data);
       console.log(this.state.filename);
