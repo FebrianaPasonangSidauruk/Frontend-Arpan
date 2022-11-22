@@ -34,7 +34,7 @@ const PDFFile = () => {
       }, []);
 
       const getProducts = async() =>{
-        const res = await axios.get(`getProject`);
+        const res = await axios.get(`getAllProject`);
 
         const requestor_list = res.data.map((data) => data.title_dev);
         setTitle_dev([...new Set(requestor_list)]);

@@ -63,7 +63,7 @@ function Project() {
 
       const getProjects = async () => {
         const response = await axios.get(
-          `projects?search_query=${keyword}&page=${page}&limit=${limit}`
+          `projectTracking?search_query=${keyword}&page=${page}&limit=${limit}`
         );
         setProjects(response.data.result);
         setPage(response.data.page);
@@ -79,7 +79,7 @@ function Project() {
       };
 
       const getProducts = async() =>{
-        const res = await axios.get(`getProject`);
+        const res = await axios.get(`getAllProject`);
 
         const requestor_list = res.data.map((data) => data.title_dev);
         // console.log(requestor_list);
@@ -132,7 +132,7 @@ function Project() {
         console.log(id_project)
         console.log(testing_progress)
         try {
-          await axios.patch(`datas/${id_project}`, {
+          await axios.patch(`datasProject/${id_project}`, {
             testing_progress: testing_progress,
             no_nodin_rfsrfi: no_nodin_rfsrfi ,
             date_nodin_rfsrfi: date_nodin_rfsrfi ,
@@ -165,7 +165,7 @@ function Project() {
         console.log(val)
         setId_project(projid)
         console.log(id_project)
-        const response = await axios.get(`datas/${projid}`);
+        const response = await axios.get(`datasProject/${projid}`);
         setTesting_progress(response.data.testing_progress);
         setNo_nodin_rfsrfi(response.data.no_nodin_rfsrfi);
         setDate_nodin_rfsrfi(response.data.date_nodin_rfsrfi);

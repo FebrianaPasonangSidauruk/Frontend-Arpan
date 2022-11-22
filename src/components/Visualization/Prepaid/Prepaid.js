@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from '../../Header/Header';
 import Sidebar from '../../Sidebar/Sidebar';
 import PiechartPrepaid from './PiechartPrepaid';
+import LineChartPrepaid from './LineChartPrepaid';
 
 const Prepaid = () => {
   const [data, setData]= useState({
@@ -11,12 +12,50 @@ const Prepaid = () => {
       backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
     },
   ],
-  labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI']
+  // labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI']
+  });
+
+  const [linedata, setLinedata]= useState({
+    datasets:[
+      {
+      label:'Home and Bundling Development',
+      data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
+      fill: false, // for Line chart
+      backgroundColor: '#f56954',
+      borderColor: '#f56954' // for Line chart
+    },
+    {
+      label: 'Jawa and Bali Nusra Development',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: '#00a65a',
+      borderColor: '#00a65a' // for Line chart
+    },
+    {
+      label: 'Product Catalogue Management',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: '#f39c12',
+      borderColor: '#f39c12' // for Line chart
+    },
+    {
+      label: 'Sumatera and Pamasuka Development',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: '#00c0ef',
+      borderColor: '#00c0ef' // for Line chart
+    }
+
+  ],
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
   });
 
   useEffect(()=>{
     fetchData();
   }, []);
+  useEffect(()=>{
+    linechart();
+  }, [])
 
   const fetchData = () =>  {
     axios.get(`getpiechartprepaid`).then(res => {
@@ -28,7 +67,7 @@ const Prepaid = () => {
       const labels =[];
       for(var i of resp) {
           datas.push(i.counter)
-          labels.push(i.department)
+          // labels.push(i.department)
       }
       setData(
         {
@@ -39,7 +78,7 @@ const Prepaid = () => {
               ]
           },
         ],
-        labels:labels, 
+        // labels:labels, 
       }
       )
       setChartDataPie(data)
@@ -49,6 +88,67 @@ const Prepaid = () => {
       console.log("error", e)
     }) 
   }
+
+  const linechart = () =>{
+    axios.get(`getlinechartprepaid`).then(res =>{
+      const resp = res.data;
+      return resp
+    }).then((resp)=>{
+      console.log("resss line chart", resp)
+      const datas = [];
+      let index = 0;
+      let datasTemp = [];
+      for(var i of resp) {
+        for(var j of Object.values(i)){
+          datasTemp.push(j)
+        }
+        datas.push(datasTemp);
+        datasTemp = [];
+        index++;
+          // datas.push(i.value)
+      }
+      console.log("dataa", datas);
+      setLinedata(
+        {
+          datasets:[
+            {
+              label:'Home and Bundling Development',
+              data: datas[0],
+              fill: false, // for Line chart
+              backgroundColor: '#f56954',
+              borderColor: '#f56954' // for Line chart
+            },
+            {
+              label: 'Jawa and Bali Nusra Development',
+              data: datas[1],
+              fill: false, // for Line chart
+              backgroundColor: '#00a65a',
+              borderColor: '#00a65a' // for Line chart
+            },
+            {
+              label: 'Product Catalogue Management',
+              data: datas[2],
+              fill: false, // for Line chart
+              backgroundColor: '#f39c12',
+              borderColor: '#f39c12' // for Line chart
+            },
+            {
+              label: 'Sumatera and Pamasuka Development',
+              data: datas[3],
+              fill: false, // for Line chart
+              backgroundColor: '#00c0ef',
+              borderColor: '#00c0ef' // for Line chart
+            }
+        ],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        })
+        // console.log(linedata)
+
+        }).catch(err => {
+        console.log("error", err)
+      })
+    }
+
 
   const [chartDataPie, setChartDataPie] = useState(data)
 
@@ -88,8 +188,12 @@ const Prepaid = () => {
 
           </div>
           <div className="card-body-table" style={{width:'60%', marginLeft:'25%'}}>
+              <LineChartPrepaid chartDataLine ={linedata}/>
+          </div>
+          <div className="card-body-table" style={{width:'60%', marginLeft:'25%'}}>
               <PiechartPrepaid chartDataPie ={data}/>
           </div>
+          
         </div>
         </div>
 </div>

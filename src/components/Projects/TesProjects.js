@@ -44,7 +44,7 @@ function TesProjects() {
 
       const getProjects = async () => {
         const response = await axios.get(
-          `projects?search_query=${keyword}&page=${page}&limit=${limit}`
+          `projectTracking?search_query=${keyword}&page=${page}&limit=${limit}`
         );
         setProjects(response.data.result);
         setPage(response.data.page);
@@ -60,7 +60,7 @@ function TesProjects() {
       };
 
       const getProducts = async() =>{
-        const res = await axios.get(`getProject`);
+        const res = await axios.get(`getAllProject`);
 
         const requestor_list = res.data.map((data) => data.title_dev);
         setTitle_dev([...new Set(requestor_list)]);

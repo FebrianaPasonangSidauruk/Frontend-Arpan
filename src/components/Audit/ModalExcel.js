@@ -41,7 +41,7 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
     // setSelection(check);
 
     try {
-      await axios.patch(`datas/${projid}`, {
+      await axios.patch(`datasProject/${projid}`, {
         selection: val
       });
     } catch (error) {
@@ -58,6 +58,19 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
     setExportData(data);
     console.log(data);
     console.log(exporData)
+
+    var wb = XLSX.utils.book_new()
+    var ws = XLSX.utils.json_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, "Project");
+    XLSX.utils.sheet_add_aoa(ws, 
+      [["Nodin Number", "Nodin Title", "Date",
+        "No Nodin RFS/RFI", "No Nodin RFC/ITR"
+    ]], 
+      { origin: "A1" });
+      ws["!cols"] = [ { wch: 30 } ];
+
+    XLSX.writeFile(wb, "KertasKerja.xlsx");
+    // handleOnExport();
 
     // setPage(0);
     //   setMsg("");
@@ -86,14 +99,14 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
   return (
     <div className='modalOptionsContainer '>
       <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" onClick={dataProjectHandler}>Save</button>
-                            <button type="button" class="btn btn-danger" onClick={handleOnExport}>Download XLSX</button>
+                            {/* <button type="button" class="btn btn-default" onClick={dataProjectHandler}>Save</button> */}
+                            <button type="button" class="btn btn-danger" onClick={dataProjectHandler}>Download XLSX</button>
                             </div>
     <table class="table table-bordered table-hover">
     <thead>
     <tr className='row-table'>
                       <th className='project-header'>No</th>
-                      <th className='project-header'>id</th>
+                      {/* <th className='project-header'>id</th> */}
                       <th className='project-header'>Nodin Number</th>
                       <th className='project-header'>Nodin Title</th>
                       <th className='project-header'>Date</th>
@@ -106,7 +119,7 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
         {requestor_audit.map((audit, index)=>(
             <tr key={audit.id_project}>
             <td>{index + 1}</td>
-            <td>{audit.id_project}</td>
+            {/* <td>{audit.id_project}</td> */}
             <td>{audit.no_nodin_bo}</td>
             <td>{audit.subject_nodin_rfsrfi}</td>
             <td>{audit.date_nodin_rfsrfi}</td>

@@ -38,7 +38,7 @@ const Options = ({project}) => {
         console.log(id_project)
         console.log(testing_progress)
         try {
-          await axios.patch(`datas/${id_project}`, {
+          await axios.patch(`datasProject/${id_project}`, {
             testing_progress: testing_progress,
             no_nodin_rfsrfi: no_nodin_rfsrfi ,
             date_nodin_rfsrfi: date_nodin_rfsrfi ,
@@ -66,7 +66,7 @@ const Options = ({project}) => {
 
       const getDataById = async () => {
         console.log(id_project)
-        const response = await axios.get(`datas/${id_project}`);
+        const response = await axios.get(`datasProject/${id_project}`);
         setTesting_progress(response.data.testing_progress);
         setNo_nodin_rfsrfi(response.data.no_nodin_rfsrfi);
         setDate_nodin_rfsrfi(response.data.date_nodin_rfsrfi);
