@@ -4,6 +4,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import login from '../img/login.png'
 import axios from 'axios';
 import { useState } from 'react';
+import ModalMessage from './ModalMessage';
 
 const WarehouseReporting = () => {
 
@@ -19,6 +20,18 @@ const WarehouseReporting = () => {
     let filename = event.target.files[0].name;
     console.log(filename);
   }
+  const refreshPage = ()=>{
+    // window.location.reload();
+    // console.log(message)
+    setTimeout(function() {
+      // Value when user clicked
+      
+      alert(message);
+      window.location.reload();
+      // Most recent value
+      // alert(messageRef.current);
+    }, 2000);
+ }
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -36,51 +49,12 @@ const WarehouseReporting = () => {
         console.log(res.data); // message
         console.log(formData);
         setMessage(res.data.message)
+        refreshPage();
     })
-    console.log(message)
+    // console.log(message)
 
   }
 
-//   state = {
-//     selectedFile: null,
-//     filename: '',
-//     message: ''
-// }
-
-
-// fileSelectedHandler = (event) => {
-//   let file = event.target.files[0].name;
-//   this.setState({
-//       selectedFile: event.target.files[0],
-//       filename: document.getElementById('file').value
-//   })
-//   console.log(file);
-// }
-
-// fileUploadHandler = (event) => {
-
-//   event.preventDefault();
-
-//   let formData = new FormData();
-
-//   formData.append('filename', this.state.filename);
-//   formData.append('file', this.state.selectedFile);
-
-//   const config = {     
-//       headers: { 'content-type': 'multipart/form-data' }
-//   }
-
-//   axios.post(`uploadproject`, formData, config)
-//   .then (res => {
-//       console.log(res.data); // message
-//       console.log(this.state.filename);
-//       console.log(formData);
-//       this.setState({message:res.data});
-//       console.log(message);
-//   })
-// }
-
-  // render(){
   return (
     <div>
         <Header/>
@@ -145,7 +119,7 @@ const WarehouseReporting = () => {
 
         </div>
             
-            <img src={login} style={{width:'30%', float:'right', marginLeft:'40%'}} className="image-warehouse" alt=""/>
+            {/* <img src={login} style={{width:'30%', float:'right', marginLeft:'40%'}} className="image-warehouse" alt=""/> */}
         </section>
 
         {/* upload file */}
@@ -169,8 +143,28 @@ const WarehouseReporting = () => {
                     />
                     <br></br>
                      <button className="btn btn-danger" style={{marginLeft:'5.5%', width:'7%', marginBottom:'1%'}} type="submit" >Update</button>
+                     {/* <div class="modal fade" id="modal-message">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                            <h4 class="modal-title">Message</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            <ModalMessage message = {message}/>
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div> */}
           </form>
-          <p>{message}</p>
+          {/* <div className='modal-body'>
+            <ModalMessage message = {message}/>
+          </div> */}
+          {/* <p>{message}</p> */}
         </div>
     </div>
     </div>
@@ -181,6 +175,5 @@ const WarehouseReporting = () => {
     </div>
   )
 }
-// }
 
 export default WarehouseReporting

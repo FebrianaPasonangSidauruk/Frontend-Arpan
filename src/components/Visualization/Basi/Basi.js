@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Header from '../../Header/Header';
 import Sidebar from '../../Sidebar/Sidebar';
 import PieChartBasi from './PieChartBasi';
+import LineChartBasi from './LineChartBasi';
 import axios from 'axios';
 const Basi = () => {
   const [data, setData]= useState({
@@ -10,12 +11,50 @@ const Basi = () => {
       backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
     },
   ],
-  labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI']
+  // labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI']
+  });
+
+  const [linedata, setLinedata]= useState({
+    datasets:[
+      {
+      label:'Consumer Campaign Development',
+      data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
+      fill: false, // for Line chart
+      backgroundColor: '#00a65a',
+      borderColor: '#00a65a' // for Line chart
+    },
+    {
+      label: 'Consumer Loyalty System Development',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: '#f39c12',
+      borderColor: '#f39c12' // for Line chart
+    },
+    {
+      label: 'Consumer Analytics and Reporting Development',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: 'f56954',
+      borderColor: 'f56954' // for Line chart
+    },
+    {
+      label: 'System Integration',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: '#00c0ef',
+      borderColor: '#00c0ef' // for Line chart
+    }
+
+  ],
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
   });
 
   useEffect(()=>{
     fetchData();
-  }, [])
+  }, []);
+  useEffect(()=>{
+    linechart();
+  }, []);
 
   const fetchData = () =>  {
     axios.get(`getpiechartbasi`).then(res => {
@@ -36,7 +75,7 @@ const Basi = () => {
               ]
           },
         ],
-        labels:['Consumer Analytics and Reporting Development', 'Consumer Campaign Development', 'Consumer Loyalty System Development', 'System Integration'], 
+        // labels:['Consumer Analytics and Reporting Development', 'Consumer Campaign Development', 'Consumer Loyalty System Development', 'System Integration'], 
       }
       )
       setChartDataPie(data)
@@ -45,7 +84,68 @@ const Basi = () => {
     }).catch(e => {
       console.log("error", e)
     }) 
-  }
+  };
+
+  const linechart = () =>{
+    axios.get(`getlinechartbasi`).then(res =>{
+      const resp = res.data;
+      return resp
+    }).then((resp)=>{
+      console.log("resss line chart", resp)
+      const datas = [];
+      let index = 0;
+      let datasTemp = [];
+      for(var i of resp) {
+        for(var j of Object.values(i)){
+          datasTemp.push(j)
+        }
+        datas.push(datasTemp);
+        datasTemp = [];
+        index++;
+          // datas.push(i.value)
+      }
+      console.log("dataa", datas);
+      setLinedata(
+        {
+          datasets:[
+            {
+              label:'Consumer Campaign Development',
+              data: datas[0],
+              fill: false, // for Line chart
+              backgroundColor: '#f56954',
+              borderColor: '#f56954' // for Line chart
+            },
+            {
+              label: 'Consumer Loyalty System Development',
+              data: datas[1],
+              fill: false, // for Line chart
+              backgroundColor: '#00a65a',
+              borderColor: '#00a65a' // for Line chart
+            },
+            {
+              label: 'Consumer Analytics and Reporting Development',
+              data: datas[2],
+              fill: false, // for Line chart
+              backgroundColor: '#f39c12',
+              borderColor: '#f39c12' // for Line chart
+            },
+            {
+              label: 'System Integration',
+              data: datas[3],
+              fill: false, // for Line chart
+              backgroundColor: '#00c0ef',
+              borderColor: '#00c0ef' // for Line chart
+            }
+        ],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        })
+        // console.log(linedata)
+
+        }).catch(err => {
+        console.log("error", err)
+      })
+    }
+
 
   const [chartDataPie, setChartDataPie] = useState(data)
 
@@ -83,6 +183,9 @@ const Basi = () => {
           <div className="card-header">
             <h3 className="card-title">Request Statistics per Department (RFS +RFI)</h3>
 
+          </div>
+          <div className="card-body-table" style={{width:'60%', marginLeft:'25%'}}>
+              <LineChartBasi chartDataLine ={linedata}/>
           </div>
           <div className="card-body-table" style={{width:'60%', marginLeft:'25%'}}>
               <PieChartBasi chartDataPie ={data}/>
