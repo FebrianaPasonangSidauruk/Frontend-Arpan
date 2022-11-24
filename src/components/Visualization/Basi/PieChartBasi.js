@@ -3,6 +3,8 @@ import { Pie } from "react-chartjs-2";
 // import './PieChart.css'
 import { Chart as ChartJS } from "chart.js/auto";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart } from "chart.js";
+Chart.register(ChartDataLabels);
 
 function PieChartBasi({ chartDataPie }) {
 
@@ -12,15 +14,41 @@ function PieChartBasi({ chartDataPie }) {
    data={chartDataPie} 
   options={
     {
-    legend:{
-      display:true,
-      position:'center',
-      padding: {
-        right: 2
-      },
-    }
+      plugins: {
+        datalabels: {
+          display: true,
+          color: "white",
+          align: "end",
+          padding: {
+            right: 2
+          },
+          labels: {
+            padding: { top: 10 },
+            title: {
+              font: {
+                weight: "bold"
+              }
+            }
+          },
+          formatter: (value, context) =>{
+            // console.log('tes', value);
+            console.log(context.chart.data.datasets[0].data);
+            const datapoints = context.chart.data.datasets[0].data;
+            function totalSum(total, datapoint){
+              return total + datapoint;
+            }
+            const totalValue = datapoints.reduce(totalSum, 0);
+            const percentageValue = (value / totalValue * 100).toFixed(1);
+            const display = [`${value}`, `${percentageValue}%`]
+            return display;
+          }
+        },
+        tooltip: {
+          enabled: false
+        }
+      }
   }}
-  plugins={[ChartDataLabels]}
+  // plugins={[ChartDataLabels]}
   />
   <br/>
   </div>

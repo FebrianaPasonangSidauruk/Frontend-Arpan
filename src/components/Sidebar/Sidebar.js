@@ -175,7 +175,7 @@ const Sidebar = () => {
               <li className="nav-item">
               <Link to= '/dashboard/visualization/basi' className='nav-link'>
                   <i className="far fa-circle nav-icon" />
-                  <p>BASI</p>
+                  <p>BuASI</p>
                 </Link>
               </li>
             </ul>

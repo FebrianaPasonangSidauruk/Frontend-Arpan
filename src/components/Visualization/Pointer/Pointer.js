@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from '../../Header/Header';
 import Sidebar from '../../Sidebar/Sidebar';
 import PieChartPointer from './PieChartPointer';
+import LineChartPointer from './LineChartPointer';
 
 const Pointer = () => {
   const [data, setData]= useState({
@@ -11,11 +12,42 @@ const Pointer = () => {
       backgroundColor:['#f56954', '#00a65a', '#f39c12']
     },
   ],
-  labels: ['Prepaid', 'Digital & VAS', 'POINTER']
+  // labels: ['Prepaid', 'Digital & VAS', 'POINTER']
+  });
+
+  const [linedata, setLinedata]= useState({
+    datasets:[
+      {
+      label:'Roaming and Interconnect Development',
+      data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
+      fill: false, // for Line chart
+      backgroundColor: '#00a65a',
+      borderColor: '#00a65a' // for Line chart
+    },
+    {
+      label: 'Postpaid Product Development',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: '#f39c12',
+      borderColor: '#f39c12' // for Line chart
+    },
+    {
+      label: 'Channel and Acquisition Development',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, // for Line chart
+      backgroundColor: '#f56954',
+      borderColor: '#f56954' // for Line chart
+    }
+
+  ],
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
   });
 
   useEffect(()=>{
     fetchData();
+  }, []);
+  useEffect(()=>{
+    linechart();
   }, []);
 
   const fetchData = () =>  {
@@ -39,7 +71,7 @@ const Pointer = () => {
               ]
           },
         ],
-        labels:labels, 
+        // labels:labels, 
       }
       )
       setChartDataPie(data)
@@ -48,7 +80,60 @@ const Pointer = () => {
     }).catch(e => {
       console.log("error", e)
     }) 
-  }
+  };
+
+  const linechart = () =>{
+    axios.get(`getlinechartpointer`).then(res =>{
+      const resp = res.data;
+      return resp
+    }).then((resp)=>{
+      console.log("resss line chart", resp)
+      const datas = [];
+      let index = 0;
+      let datasTemp = [];
+      for(var i of resp) {
+        for(var j of Object.values(i)){
+          datasTemp.push(j)
+        }
+        datas.push(datasTemp);
+        datasTemp = [];
+        index++;
+          // datas.push(i.value)
+      }
+      console.log("dataa", datas);
+      setLinedata(
+        {
+          datasets:[
+            {
+              label:'Roaming and Interconnect Development',
+              data: datas[0],
+              fill: false, // for Line chart
+              backgroundColor: '#00a65a',
+              borderColor: '#00a65a' // for Line chart
+            },
+            {
+              label: 'Postpaid Product Development',
+              data: datas[1],
+              fill: false, // for Line chart
+              backgroundColor: '#f39c12',
+              borderColor: '#f39c12' // for Line chart
+            },
+            {
+              label: 'Channel and Acquisition Development',
+              data: datas[2],
+              fill: false, // for Line chart
+              backgroundColor: '#f56954',
+              borderColor: '#f56954' // for Line chart
+            }
+        ],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        })
+        // console.log(linedata)
+
+        }).catch(err => {
+        console.log("error", err)
+      })
+    }
 
   const [chartDataPie, setChartDataPie] = useState(data)
 
@@ -86,6 +171,9 @@ const Pointer = () => {
           <div className="card-header">
             <h3 className="card-title">Request Statistics per Department (RFS +RFI)</h3>
 
+          </div>
+          <div className="card-body-table" style={{width:'60%', marginLeft:'25%'}}>
+              <LineChartPointer chartDataLine ={linedata}/>
           </div>
           <div className="card-body-table" style={{width:'60%', marginLeft:'25%'}}>
               <PieChartPointer chartDataPie ={data}/>
