@@ -11,9 +11,9 @@ const WarehouseReporting = () => {
   const [file, setFile] = useState();
   const [message, setMessage] = useState('');
 
-   const openFile = async() =>{
-    await axios.get(`getshell`);
-  }
+  //  const openFile = async() =>{
+  //   await axios.get(`getshell`);
+  // }
 
   function handleChange(event) {
     setFile(event.target.files[0]);
@@ -96,7 +96,7 @@ const WarehouseReporting = () => {
 
     <label className="col-sm-10 col-form-label" style={{marginLeft:'1%'}}>
         <h5><strong>
-        Akses Download Document dengan menekan tombol di bawah ini :
+        Akses Download Document dengan ikuti langkahnya melalui tombol di bawah ini :
         </strong>
         </h5>
         </label>
@@ -105,17 +105,33 @@ const WarehouseReporting = () => {
     
     
     {/* <a href='file:///\\FEBRIANAPASONAN\Users\tes'  target='_blank' >tes</a> */}
-    <button type="button" class="btn btn-danger" style={{width:'15%', marginLeft:'1%', alignItems:'center', marginBottom:'1%', marginTop:'-2%'}} onClick={openFile}>Download Document</button>
-    
+    <button type="button" data-toggle="modal" data-target="#modal-message" class="btn btn-danger" style={{width:'15%', marginLeft:'1%', alignItems:'center', marginBottom:'1%', marginTop:'-2%'}}>Download Document</button>
+    <div class="modal fade" id="modal-message">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                            <h4 class="modal-title">Langkah Download Dokumen RFS/RFI/RFC/ITR</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            <ModalMessage/>
+                            </div>
+                            </div>
+
+                            </div>
+
+              </div> 
     
     <section class="side-warehouse">
         <div className='notes-warehouse' >
-            <h2>Notes</h2>
+            {/* <h2>Notes</h2>
             <ul className='warehouse-notes' style={{listStyleType:'disc'}}>
   <li className='warehouse-notes'>Hanya bisa dibuka via Intranet</li>
   <li className='warehouse-notes'>Searching by Nodin No di Folder Proses</li>
   <li className='warehouse-notes'>Please DO NOT EDIT folder JUST DOWNLOAD</li>
-</ul>
+</ul> */}
 
         </div>
             
@@ -133,7 +149,7 @@ const WarehouseReporting = () => {
         </label>
 
           <form onSubmit={handleSubmit} className='updatedata' style={{backgroundColor:'white'}} encType="multipart/form">
-          <input style={{ width:'30%', marginLeft:'1%', backgroundColor:'white'}}
+          <input style={{ width:'30%', backgroundColor:'white'}}
                         type="file" 
                         name="file" 
                         id="file" 
@@ -142,29 +158,8 @@ const WarehouseReporting = () => {
                         onChange={handleChange}
                     />
                     <br></br>
-                     <button className="btn btn-danger" style={{marginLeft:'5.5%', width:'7%', marginBottom:'1%'}} type="submit" >Update</button>
-                     {/* <div class="modal fade" id="modal-message">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                            <h4 class="modal-title">Message</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-                            <div class="modal-body">
-                            <ModalMessage message = {message}/>
-                            </div>
-                            </div>
-
-                            </div>
-
-                            </div> */}
+                     <button className="btn btn-danger" style={{marginLeft:'4.5%', width:'7%', marginBottom:'1%'}} type="submit" >Update</button>
           </form>
-          {/* <div className='modal-body'>
-            <ModalMessage message = {message}/>
-          </div> */}
-          {/* <p>{message}</p> */}
         </div>
     </div>
     </div>
