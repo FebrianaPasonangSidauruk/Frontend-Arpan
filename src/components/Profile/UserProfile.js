@@ -18,6 +18,8 @@ const UserProfile = () => {
   const [sub_directorate, setSubDirectorate] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
   const {id} = useParams()
 
@@ -26,16 +28,17 @@ const UserProfile = () => {
   }, []);
 
 const getUserById = async () => {
-    const response = await axios.get(`users/${id}`);
+    const response = await axios.get(`userAccount/${id}`);
     setName(response.data.name);
     setUsername(response.data.username);
-    setEmail(response.data.email);
     setEmployeeTitle(response.data.employee_title);
     setDepartment(response.data.department);
     setDivision(response.data.division);
     setSubDirectorate(response.data.sub_directorate);
     setPhone(response.data.phone);
     setAddress(response.data.address);
+
+    console.log(response)
     // setUsers(response.data);
   };
 
@@ -43,10 +46,9 @@ const getUserById = async () => {
     e.preventDefault();
     console.log("ya")
     try {
-      await axios.patch(`users/${id}`, {
+      await axios.patch(`userAccount/${id}`, {
         name,
         username,
-        email,
         employee_title,
         department,
         division,
@@ -58,6 +60,19 @@ const getUserById = async () => {
       console.log(error);
     }
   };
+
+  const resetPassword = async (event) => {
+    event.preventDefault();
+    console.log('reset pass');
+    try{
+      await axios.patch(`resetPasswordAccount/${id}`, {
+        password,
+        confirmPassword
+      });
+    }catch(error){
+      console.log(error);
+    }
+  }
 
   
 
@@ -95,20 +110,6 @@ const getUserById = async () => {
               </div>
               <h3 className="profile-username text-center">{name}</h3>
               <p className="text-muted text-center">{employee_title}</p>
-              {/* <ul className="list-group list-group-unbordered mb-3">
-                <li className="list-group-item">
-                  <b>Request Done</b> <a className="float-right">3</a>
-                </li>
-                <li className="list-group-item">
-                  <b>In Progress</b> <a className="float-right">4</a>
-                </li>
-                <li className="list-group-item">
-                  <b>BA Defect</b> <a className="float-right">2</a>
-                </li>
-                <li className="list-group-item">
-                  <b>Not Started Yet</b> <a className="float-right">100</a>
-                </li>
-              </ul> */}
             </div>
           </div>
         </div>
@@ -117,7 +118,7 @@ const getUserById = async () => {
             <div className="card-headers p-2">
               <ul className="nav nav-card-profile">
                 <li className="nav-items"><a className="nav-link" href="#activity" data-toggle="tab">Profile</a></li>
-                {/* <li className="nav-items"><a className="nav-link" href="#settings" data-toggle="tab">User Account</a></li> */}
+                <li className="nav-items"><a className="nav-link" href="#settings" data-toggle="tab">User Account</a></li>
               </ul>
             </div>
             <div className="card-body">
@@ -154,12 +155,12 @@ const getUserById = async () => {
                       <p className="text-muted text-center">{sub_directorate}</p>
                       </div>
                     </div>
-                    <div className="form-group row">
+                    {/* <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Email</label>
                       <div className="col-sm-10">
                       <p className="text-muted text-center">{email}</p>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Phone</label>
                       <div className="col-sm-10">
@@ -180,18 +181,18 @@ const getUserById = async () => {
                   </form>
                 </div>
 
-                {/* <div className="tab-pane" id="settings">
-                  <form className="form-horizontal" onSubmit={updateUser}>
+                <div className="tab-pane" id="settings">
+                  <form className="form-horizontal" onSubmit={resetPassword}>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Username</label>
+                      <label className="col-sm-2 col-form-label">password</label>
                       <div className="col-sm-10">
-                        <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
+                        <input type="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Password" />
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Email</label>
+                      <label className="col-sm-2 col-form-label">Confirm Password</label>
                       <div className="col-sm-10">
-                        <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                        <input type="password" className="form-control" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} placeholder="Confirm Password" />
                       </div>
                     </div>
                     <div className="form-group row">
@@ -200,7 +201,7 @@ const getUserById = async () => {
                       </div>
                     </div>
                   </form>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>

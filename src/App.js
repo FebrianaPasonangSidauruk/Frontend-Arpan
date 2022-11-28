@@ -13,7 +13,7 @@ import Prepaid from './components/Visualization/Prepaid/Prepaid';
 import Pointer from './components/Visualization/Pointer/Pointer';
 import DigitalVAS from './components/Visualization/DigitalVAS/DigitalVAS';
 import Basi from './components/Visualization/Basi/Basi';
-
+import UserManagement from './components/UserManagement/UserManagement';
 import PDFFile from './components/Audit/PDFFile'
 
 
@@ -32,6 +32,7 @@ function App() {
         <Route path='/dashboard/visualization/digitalvas' exact element={<DigitalVAS/>}/>
         <Route path='/dashboard/visualization/basi' exact element={<Basi/>}/>
         <Route path='/dashboard/warehouse' exact element={<WarehouseReporting/>}/>
+        <Route path='/dashboard/usermanagement' exact element={<UserManagement/>}/>
         <Route path="/pdf" exact element={<PDFFile />} />
       </>
     </Routes>

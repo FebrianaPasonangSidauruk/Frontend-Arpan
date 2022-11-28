@@ -16,7 +16,7 @@ const Login = () => {
     const Auth = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('login', {
+            await axios.post('loginAccount', {
                 username: username,
                 password: password
             });

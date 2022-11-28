@@ -294,7 +294,8 @@ function Project() {
               <tbody>
                 {projects.map((project, index) => (
                   <tr key={project.id_project}>
-                    <td>{project.id_project}</td>
+                    {/* <td>{project.id_project}</td> */}
+                    <td>{index + 1}</td>
                     <td>{project.no_nodin_rfsrfi}</td>
                     <td>{project.date_nodin_rfsrfi}</td>
                     <td>{project.subject_nodin_rfsrfi}</td>

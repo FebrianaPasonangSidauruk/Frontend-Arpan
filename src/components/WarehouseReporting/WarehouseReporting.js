@@ -1,19 +1,64 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
+import jwt_decode from "jwt-decode";
+import { useNavigate, Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import login from '../img/login.png'
 import axios from 'axios';
-import { useState } from 'react';
 import ModalMessage from './ModalMessage';
 
 const WarehouseReporting = () => {
 
   const [file, setFile] = useState();
   const [message, setMessage] = useState('');
+  const [users, setUsers] = useState([]);
+  const [token, setToken] = useState('');
+    const [expire, setExpire] = useState('');
+    const navigate = useNavigate();
 
-  //  const openFile = async() =>{
-  //   await axios.get(`getshell`);
-  // }
+  useEffect(() => {
+    // setUserId(localStorage.getItem("uuid"));
+      refreshToken();
+      getUsers();
+  }, []);
+
+  const refreshToken = async () => {
+    try {
+        const response = await axios.get('tokenAccount');
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setExpire(decoded.exp);
+    } catch (error) {
+        if (error.response) {
+            navigate("/");
+        }
+    }
+}
+
+const axiosJWT = axios.create();
+
+axiosJWT.interceptors.request.use(async (config) => {
+    const currentDate = new Date();
+    if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get('tokenAccount');
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setExpire(decoded.exp);
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
+const getUsers = async () => {
+    const response = await axiosJWT.get('userAccount', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    setUsers(response.data);
+}
 
   function handleChange(event) {
     setFile(event.target.files[0]);
@@ -21,15 +66,10 @@ const WarehouseReporting = () => {
     console.log(filename);
   }
   const refreshPage = ()=>{
-    // window.location.reload();
-    // console.log(message)
     setTimeout(function() {
-      // Value when user clicked
       
       alert(message);
       window.location.reload();
-      // Most recent value
-      // alert(messageRef.current);
     }, 2000);
  }
 
@@ -51,8 +91,6 @@ const WarehouseReporting = () => {
         setMessage(res.data.message)
         refreshPage();
     })
-    // console.log(message)
-
   }
 
   return (
@@ -140,27 +178,30 @@ const WarehouseReporting = () => {
 
         {/* upload file */}
 
-        <div>
-        <label className="col-sm-10 col-form-label" style={{marginLeft:'1%'}}>
-        <h5><strong>
-        Import/Update Data :
-        </strong>
-        </h5>
-        </label>
+  {users && (users.role === "quality" || users.role === "admin") && (
+    <div>
+    <label className="col-sm-10 col-form-label" style={{marginLeft:'1%'}}>
+    <h5><strong>
+    Import/Update Data :
+    </strong>
+    </h5>
+    </label>
 
-          <form onSubmit={handleSubmit} className='updatedata' style={{backgroundColor:'white'}} encType="multipart/form">
-          <input style={{ width:'30%', backgroundColor:'white'}}
-                        type="file" 
-                        name="file" 
-                        id="file" 
-                        placeholder="Upload your file" 
-                        // onChange={this.fileSelectedHandler}
-                        onChange={handleChange}
-                    />
-                    <br></br>
-                     <button className="btn btn-danger" style={{marginLeft:'4.5%', width:'7%', marginBottom:'1%'}} type="submit" >Update</button>
-          </form>
-        </div>
+      <form onSubmit={handleSubmit} className='updatedata' style={{backgroundColor:'white'}} encType="multipart/form">
+      <input style={{ width:'30%', backgroundColor:'white'}}
+                    type="file" 
+                    name="file" 
+                    id="file" 
+                    placeholder="Upload your file" 
+                    // onChange={this.fileSelectedHandler}
+                    onChange={handleChange}
+                />
+                <br></br>
+                 <button className="btn btn-danger" style={{marginLeft:'4.5%', width:'7%', marginBottom:'1%'}} type="submit" >Update</button>
+      </form>
+    </div>
+  )}
+        
     </div>
     </div>
     </div>

@@ -20,14 +20,14 @@ const Sidebar = () => {
     const [userId, setUserId] = useState("");
  
     useEffect(() => {
-      setUserId(localStorage.getItem("id"));
+      setUserId(localStorage.getItem("uuid"));
         refreshToken();
         getUsers();
     }, []);
  
     const refreshToken = async () => {
         try {
-            const response = await axios.get('token');
+            const response = await axios.get('tokenAccount');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
             setName(decoded.name);
@@ -44,7 +44,7 @@ const Sidebar = () => {
     axiosJWT.interceptors.request.use(async (config) => {
         const currentDate = new Date();
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('token');
+            const response = await axios.get('tokenAccount');
             config.headers.Authorization = `Bearer ${response.data.accessToken}`;
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
@@ -57,7 +57,7 @@ const Sidebar = () => {
     });
  
     const getUsers = async () => {
-        const response = await axiosJWT.get('users', {
+        const response = await axiosJWT.get('userAccount', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -91,39 +91,6 @@ const Sidebar = () => {
                   <p>Project Tracking</p>
                 </Link>
           </li>
-          {/* <li className="nav-item menu-open">
-            <a href='#' className="nav-link">
-              <i className="nav-icon fas"><BsListCheck/></i>
-              <p>
-                Project Tracking
-                <i className="fas fa-angle-left right" />
-              </p>
-            </a>
-            <ul className="nav nav-treeview">
-              <li className="nav-item">
-              <Link to= '/projects' className='nav-link'>
-                  <i className="far fa-circle nav-icon" />
-                  <p>Project List</p>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">
-                  <i className="far fa-circle nav-icon" />
-                  <p>Task Assignment</p>
-                </a>
-              </li>
-            </ul>
-          </li> */}
-
-
-          {/* <li className="nav-item">
-            <a href="#" className="nav-link">
-              <i className="nav-icon fas"><FaCubes/> </i>
-              <p>
-                Product List
-              </p>
-            </a>
-          </li> */}
 
           <li className="nav-item">
             <Link to= '/dashboard/audit' className='nav-link'>
@@ -133,18 +100,6 @@ const Sidebar = () => {
               </p>
             </Link>
           </li>
-          {/* <li className="nav-item">
-          <Link to= '/dashboard/downloaddoc' className='nav-link'>
-          <i className="nav-icon fas"><HiDocumentDownload/></i>
-                  <p>Download Document</p>
-                </Link>
-          </li> */}
-          {/* <li className="nav-item">
-          <Link to= '/dashboard/visualization' className='nav-link'>
-          <i className="nav-icon fas"><AiOutlineLineChart/></i>
-                  <p>Visualization</p>
-                </Link>
-          </li> */}
           <li className="nav-item menu-open">
             <a href='#' className="nav-link">
               <i className="nav-icon fas"><AiOutlineLineChart/></i>
@@ -189,7 +144,7 @@ const Sidebar = () => {
 
           <li className="nav-item">
               {/* <Link to='/profile' className='nav-link'> */}
-              <a className='nav-link' href={`/dashboard/profile/${users.id}`}>
+              <a className='nav-link' href={`/dashboard/profile/${users.uuid}`}>
               <i className="nav-icon fas" ><FaUserAlt/></i>
               <p>
                 User Profile
@@ -198,30 +153,34 @@ const Sidebar = () => {
               {/* </Link> */}
           </li>
 
-          <li className="nav-item">
-            <br/>
-            <a className='nav-link'>
-            <i className="nav-icon fas" ><FaTools/></i>
-              <p>
-                Administrator Menu
-              </p></a></li>
-          <li className="nav-item">
-            <a href="#" className="nav-link">
-              <i className="nav-icon far"><FaUsersCog/> </i>
-              <p>
-                User Management
-              </p>
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a href="#" className="nav-link">
-              <i className="nav-icon far"><HiChat/> </i>
-              <p>
-                Feedback/Report
-              </p>
-            </a>
-          </li>
+            {users && users.role === "admin" && (
+              <div>
+              <li className="nav-item">
+                <br/>
+                <a className='nav-link'>
+                <i className="nav-icon fas" ><FaTools/></i>
+                  <p>
+                    Administrator Menu
+                  </p></a></li>
+              <li className="nav-item">
+              <Link to= '/dashboard/usermanagement' className='nav-link'>
+                  <i className="nav-icon far"><FaUsersCog/> </i>
+                  <p>
+                    User Management
+                  </p>
+                  </Link>
+              </li>
+    
+              <li className="nav-item">
+              <Link to= '/dashboard/usermanagement' className='nav-link'>
+                  <i className="nav-icon far"><HiChat/> </i>
+                  <p>
+                    Feedback/Report
+                  </p>
+                </Link>
+              </li>
+              </div>
+            )}
         </ul>
       </nav>
     </div>
