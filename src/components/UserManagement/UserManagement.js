@@ -5,8 +5,10 @@ import {FaSearch} from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import './UserManagement.css';
-import {FaPencilAlt} from 'react-icons/fa'
-import {FaDownload} from 'react-icons/fa'
+import {FaPencilAlt} from 'react-icons/fa';
+import {MdPersonAddAlt1} from 'react-icons/md';
+import ModalCreateAcc from './ModalCreateAcc';
+import {AiFillDelete} from 'react-icons/ai'
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -29,7 +31,11 @@ const UserManagement = () => {
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [uuidUser, setUuidUser] = useState('')
     // const {id} = useParams()
+
+    const [initPass, setInitPass] = useState('password123')
+    const [val, setVal] = useState();
 
     useEffect(()=>{
         getUserManagement()
@@ -66,6 +72,49 @@ const UserManagement = () => {
         
         console.log(keyword)
       };
+
+      const updateUserAccount = async (event) =>{
+        event.preventDefault();
+        console.log(uuidUser)
+        try{
+          await axios.patch(`userAccount/${uuidUser}`,{
+            name : name,
+            username : username,
+            role : role,
+            employee_title : employee_title,
+            department : department,
+            division : division,
+            sub_directorate : sub_directorate,
+            phone : phone,
+            address : address,
+            password : password
+          });
+        } catch (error){
+          console.log(error);
+        }
+      }
+
+      const deleteUserAccount = async ()=>{
+        
+      }
+
+      const getUserByUUID = async(useruuid)=>{
+        console.log(useruuid);
+        setVal(useruuid)
+        setUuidUser(useruuid)
+        const response = await axios.get(`userAccount/${useruuid}`);
+        setName(response.data.name);
+        setUsername(response.data.username);
+        setRole(response.data.role);
+        setEmployeeTitle(response.data.employee_title);
+        setDepartment(response.data.department);
+        setDivision(response.data.division);
+        setSubDirectorate(response.data.sub_directorate);
+        setPhone(response.data.phone);
+        setAddress(response.data.address);
+        setPassword(response.data.password);
+
+      }
 
   return (
     <div>
@@ -111,15 +160,41 @@ const UserManagement = () => {
               <i className="fas"><FaSearch/> </i>
                 {/* Search */}
               </button>
-              
+              <button type="button" className="btn btn-lg btn-danger" data-toggle='modal' data-target='#modal-createAcc'>
+                <i className="fas"><MdPersonAddAlt1/> </i>
+                </button> 
             </div>
           </div>
         </form>
+        
         </div>
         </div>
 
+        <div class="modal fade" id="modal-createAcc">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">Create Account</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <ModalCreateAcc/>
+        </div>
+        </div>
+        </div>
+
+        </div>
+
+        
+
         <div style={{marginLeft:'1%', marginRight:'1%'}}>
+        
         <div className='table-container  mt-5'>
+        {/* <button type="button" className="btn btn-lg btn-danger" style={{}}>
+                <i className="fas"><p style={{fontSize:'80%'}}>Create Account </p></i>
+                </button>  */}
           <table className="table table-bordered table-hover">
             <thead>
                  <tr className='row-table'>
@@ -139,16 +214,113 @@ const UserManagement = () => {
                   <td>{user.name}</td>
                   <td>{user.role}</td>
                   <td>
-                        <button type="button" class="btn btn-default"><i className="fas"><FaPencilAlt/> </i></button>
+                        <button type="button" class="btn btn-default" onClick={() => getUserByUUID(user.uuid)} data-toggle="modal" data-target="#modal-default" onChange={() => setVal(user.uuid)}><i className="fas"><FaPencilAlt/> </i></button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-default"><i className="fas"><FaPencilAlt/> </i></button>
+                        <button type="button" class="btn btn-default"><i className="fas"><AiFillDelete/> </i></button>
                     </td>
  
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">Update User Account</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <div className='modalOptionsContainer'>
+
+          <div className="card-header">
+              <h3 className="card-title">User Account</h3>
+            </div>
+            <table class="table ">
+              <tr>
+              <th>Name</th>
+              {/* <td>{name}</td> */}
+              <td>
+              <input type="text" className="form-control" value={name} onChange={(event) => setName(event.target.value)} placeholder="...." />
+                </td>
+              </tr>
+              <tr>
+              <th>Username</th>
+              {/* <td>{username}</td> */}
+              <td>
+              <input type="text" className="form-control" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="...." />
+                </td>
+              </tr>
+              <tr>
+              <th>Role</th>
+              {/* <td>{role}</td> */}
+              <td>
+              <input type="text" className="form-control" value={role} onChange={(event) => setRole(event.target.value)} placeholder="...." />
+                </td>
+              </tr>
+              <tr>
+              <th>Password</th>
+              {/* <td>{password}</td> */}
+              <td>
+              <input type="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="...." />
+                </td>
+              </tr>
+            </table>
+
+            <div className="card-header">
+              <h3 className="card-title">Details </h3>
+            </div>
+            <table class="table ">
+              <tr>
+              <th>Employee Title</th>
+              <td>{employee_title}</td>
+              {/* <td>
+              <input type="text" className="form-control" value={employee_title} onChange={(event) => setEmployeeTitle(event.target.value)} placeholder="...." />
+                </td> */}
+              </tr>
+              <tr>
+              <th>Department</th>
+              <td>{department}</td>
+              </tr>
+              <tr>
+              <th>Division</th>
+              <td>{division}</td>
+              </tr>
+              <tr>
+              <th>Sub Directorate</th>
+              <td>{sub_directorate}</td>
+              </tr>
+            </table>
+
+            <div className="card-header">
+              <h3 className="card-title">Other Details </h3>
+            </div>
+            <table class="table ">
+              <tr>
+              <th>Address</th>
+              <td>{address}</td>
+              </tr>
+              <tr>
+              <th>Phone</th>
+              <td>{phone}</td>
+              </tr>
+            </table>
+            
+            <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onClick={updateUserAccount} data-dismiss="modal">Save changes</button>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+
+          </div>
           </div>
           <p>
             Showing {rows ? page + 1 : 0} of {pages} pages from {rows} records
