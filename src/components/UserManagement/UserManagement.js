@@ -73,6 +73,10 @@ const UserManagement = () => {
         console.log(keyword)
       };
 
+      const refreshPage = ()=>{
+        window.location.reload();
+    }
+
       const updateUserAccount = async (event) =>{
         event.preventDefault();
         console.log(uuidUser)
@@ -89,13 +93,33 @@ const UserManagement = () => {
             address : address,
             password : password
           });
+          refreshPage();
         } catch (error){
           console.log(error);
         }
       }
 
-      const deleteUserAccount = async ()=>{
-        
+      const changePass = async(event)=>{
+        event.preventDefault();
+        try{
+          await axios.patch(`resetPasswordAccountAdm/${uuidUser}`, {
+            password
+          });
+          refreshPage();
+        }catch(error){
+          console.log(error);
+        }
+      }
+
+      const deleteUserAccount = async (event)=>{
+        event.preventDefault();
+        console.log(uuidUser)
+        try{
+          await axios.delete(`deleteusers/${uuidUser}`);
+          refreshPage();
+        } catch (error){
+          console.log(error)
+        }
       }
 
       const getUserByUUID = async(useruuid)=>{
@@ -217,7 +241,7 @@ const UserManagement = () => {
                         <button type="button" class="btn btn-default" onClick={() => getUserByUUID(user.uuid)} data-toggle="modal" data-target="#modal-default" onChange={() => setVal(user.uuid)}><i className="fas"><FaPencilAlt/> </i></button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-default"><i className="fas"><AiFillDelete/> </i></button>
+                        <button type="button" class="btn btn-default" onClick={() => getUserByUUID(user.uuid)} data-toggle="modal" data-target="#modal-delete"><i className="fas"><AiFillDelete/> </i></button>
                     </td>
  
                 </tr>
@@ -262,13 +286,13 @@ const UserManagement = () => {
               <input type="text" className="form-control" value={role} onChange={(event) => setRole(event.target.value)} placeholder="...." />
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
               <th>Password</th>
-              {/* <td>{password}</td> */}
+              <td>{password}</td>
               <td>
               <input type="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="...." />
                 </td>
-              </tr>
+              </tr> */}
             </table>
 
             <div className="card-header">
@@ -313,6 +337,49 @@ const UserManagement = () => {
             <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onClick={updateUserAccount} data-dismiss="modal">Save changes</button>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+
+          </div>
+
+          <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">Update User Account</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <div className='modalOptionsContainer'>
+
+          <div className="card-header">
+              <h3 className="card-title">Are you sure you want to delete this account?</h3>
+            </div>
+            <table class="table ">
+              <tr>
+              <th>Name</th>
+              <td>{name}</td>
+              </tr>
+              <tr>
+              <th>Username</th>
+              <td>{username}</td>
+              </tr>
+              <tr>
+              <th>Role</th>
+              <td>{role}</td>
+              </tr>
+            </table>
+
+            
+            <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onClick={deleteUserAccount} data-dismiss="modal">Delete</button>
         </div>
         </div>
         </div>

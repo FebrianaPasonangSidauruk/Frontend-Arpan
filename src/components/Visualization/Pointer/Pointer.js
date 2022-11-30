@@ -9,7 +9,7 @@ const Pointer = () => {
   const [data, setData]= useState({
     datasets:[{
       data: [10, 20, 30],
-      backgroundColor:['#f56954', '#00a65a', '#f39c12']
+      backgroundColor:['#00a65a', '#f39c12', '#f56954']
     },
   ],
   // labels: ['Prepaid', 'Digital & VAS', 'POINTER']
@@ -18,22 +18,22 @@ const Pointer = () => {
   const [linedata, setLinedata]= useState({
     datasets:[
       {
-      label:'Roaming and Interconnect Development',
+      label:'Channel and Acquisition Development',
       data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
       fill: false, // for Line chart
       backgroundColor: '#00a65a',
       borderColor: '#00a65a' // for Line chart
     },
     {
-      label: 'Postpaid Product Development',
+      label: 'Roaming and Interconnect Development ',
       data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
       fill: false, // for Line chart
       backgroundColor: '#f39c12',
       borderColor: '#f39c12' // for Line chart
     },
     {
-      label: 'Channel and Acquisition Development',
-      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      label: 'Postpaid Product Development ',
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       fill: false, // for Line chart
       backgroundColor: '#f56954',
       borderColor: '#f56954' // for Line chart
@@ -67,7 +67,7 @@ const Pointer = () => {
           datasets: [{
               data:datas,
               backgroundColor:[
-                '#f56954', '#00a65a', '#f39c12'
+                '#00a65a', '#f39c12', '#f56954'
               ]
           },
         ],
@@ -90,7 +90,9 @@ const Pointer = () => {
       console.log("resss line chart", resp)
       const datas = [];
       let index = 0;
+      
       let datasTemp = [];
+      // var i = 1;
       for(var i of resp) {
         for(var j of Object.values(i)){
           datasTemp.push(j)
@@ -100,26 +102,35 @@ const Pointer = () => {
         index++;
           // datas.push(i.value)
       }
+
+      const labels =[];
+      for(var i of resp) {
+          labels.push(i.department)
+      }
       console.log("dataa", datas);
+      
+      if (typeof(labels[2]) == "undefined"){
+        labels[2] = 'Postpaid Product Development'
+      }
       setLinedata(
         {
           datasets:[
             {
-              label:'Roaming and Interconnect Development',
+              label:labels[0],
               data: datas[0],
               fill: false, // for Line chart
               backgroundColor: '#00a65a',
               borderColor: '#00a65a' // for Line chart
             },
             {
-              label: 'Postpaid Product Development',
+              label: labels[1],
               data: datas[1],
               fill: false, // for Line chart
               backgroundColor: '#f39c12',
               borderColor: '#f39c12' // for Line chart
             },
             {
-              label: 'Channel and Acquisition Development',
+              label: labels[2],
               data: datas[2],
               fill: false, // for Line chart
               backgroundColor: '#f56954',

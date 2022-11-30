@@ -26,7 +26,7 @@ const Dashboard = () => {
       backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
     },
   ],
-  labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BuASI']
+  labels: ['Prepaid', 'Digital & VAS', 'BuASI', 'POINTER']
   });
 
   //Line Chart
@@ -131,7 +131,7 @@ const Dashboard = () => {
               ]
           },
         ],
-        labels:['Prepaid', 'Digital & VAS', 'POINTER', 'BuASI'], 
+        labels:['Prepaid', 'Digital & VAS', 'BuASI', 'POINTER'], 
       }
       )
       setChartDataPie(data)
