@@ -19,6 +19,7 @@ const UserProfile = () => {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [msg, setMsg] = useState("");
   const {id} = useParams()
 
   useEffect(() => {
@@ -38,7 +39,6 @@ const getUserById = async () => {
     setPassword(response.data.password);
 
     console.log(response)
-    // setUsers(response.data);
   };
 
   const refreshPage = ()=>{
@@ -49,7 +49,7 @@ const getUserById = async () => {
     e.preventDefault();
     console.log("ya")
     try {
-      await axios.patch(`userAccount/${id}`, {
+      await axios.patch(`updateUserAccount/${id}`, {
             name : name,
             username : username,
             employee_title : employee_title,
@@ -61,7 +61,9 @@ const getUserById = async () => {
       });
       refreshPage();
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        setMsg(error.response.data.msg);
+    }
     }
   };
 
@@ -75,7 +77,9 @@ const getUserById = async () => {
       });
       refreshPage();
     }catch(error){
-      console.log(error);
+      if (error.response) {
+        setMsg(error.response.data.msg);
+    }
     }
   }
 
@@ -147,11 +151,7 @@ const getUserById = async () => {
                         <input type="password" className="form-control" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} placeholder="Confirm Password" />
                       </div>
                     </div>
-                    {/* <div className="form-group row">
-                      <div className="offset-sm-2 col-sm-10">
-                        <button type="submit" className="btn btn-danger">Submit</button>
-                      </div>
-                    </div> */}
+                    <p className="has-text-centered has-text-danger">{msg}</p>
                     <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <button type="submit" className="btn btn-danger">Submit</button>
@@ -169,34 +169,11 @@ const getUserById = async () => {
 
             <div className="card-headers p-2">
               <ul className="nav nav-card-profile">
-                {/* <li className="nav-items"><a className="nav-link" href="#settings" data-toggle="tab">User Account</a></li> */}
                 <li className="nav-items"><a className="nav-link" href="#activity" data-toggle="tab">Profile</a></li>
               </ul>
             </div>
             <div className="card-body">
               <div className="tab-content">
-
-                {/* <div className=" active tab-pane" id="settings">
-                  <form className="form-horizontal" onSubmit={resetPassword}>
-                    <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">password</label>
-                      <div className="col-sm-10">
-                        <input type="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Password" />
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">Confirm Password</label>
-                      <div className="col-sm-10">
-                        <input type="password" className="form-control" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} placeholder="Confirm Password" />
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <div className="offset-sm-2 col-sm-10">
-                        <button type="submit" className="btn btn-danger">Submit</button>
-                      </div>
-                    </div>
-                  </form>
-                </div> */}
 
                 <div className="active tab-pane" id="activity">
                 <form className="form-horizontal" onSubmit={updateUser}>
@@ -242,6 +219,8 @@ const getUserById = async () => {
                         <input type="text" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Address" />
                       </div>
                     </div>
+                    <p className="has-text-centered has-text-danger">{msg}</p>
+
                     <div className="form-group row">
                       <div className="offset-sm-2 col-sm-10">
                         <button type="submit" className="btn btn-danger">Save Changes</button>

@@ -7,14 +7,23 @@ const ModalMessage = () => {
     <div>
 
       <ul className='warehouse-notes' style={{listStyleType:'disc'}}>
-        <li style={{marginLeft:'5%'}}>Buka file explorer di laptop Anda</li>
-        <li style={{marginLeft:'5%'}}>Copy paste link berikut di file explorer : 
-                                      <br/> <a href = "\\10.59.70.27\Scale_Up_Robot\ROB-050-MKT-PSR-EndtoEndTrackingAutomationForReadinessAndInspectionE-NodinRequest\User\Processed">
-                                        \\10.59.70.27\Scale_Up_Robot\ROB-050-MKT-PSR-EndtoEndTrackingAutomationForReadinessAndInspectionE-NodinRequest\User\Processed</a>
-                                        <br/>
-                                        <img src={poin3} style={{width:'80%'}}alt=""/>
+        <li style={{marginLeft:'5%'}}>Pastikan connect VPN</li>
+        <li style={{marginLeft:'5%'}}>Klik kanan di 'My Computer'</li>
+        <li style={{marginLeft:'5%'}}>Klik 'Map Network Drive'</li>
+        <li style={{marginLeft:'5%'}}>Isi field 'folder' : 
+                                      <br/> <a href = "\\RPASHAREPAPP1\Scale_Up_Robot\ROB-050-MKT-PSR-EndtoEndTrackingAutomationForReadinessAndInspectionE-NodinRequest\User\Processed">
+                                      \\RPASHAREPAPP1\Scale_Up_Robot\ROB-050-MKT-PSR-EndtoEndTrackingAutomationForReadinessAndInspectionE-NodinRequest\User\Processed</a>
                                       </li>
-        <li style={{marginLeft:'5%'}}>Login dengan user LDAP.</li>
+        <li style={{marginLeft:'5%'}}>Centang kedua kotak</li>
+        <li style={{marginLeft:'5%'}}>Klik 'Finish'</li>
+        <li style={{marginLeft:'5%'}}>Masukan :
+                <ul>
+                      <li>Username : Telkomsel\<b>domain</b></li>
+                      <li>Password : <b>pass domain</b></li>
+                </ul>
+                <br/>
+                <img src={poin3} style={{width:'80%'}}alt=""/>
+        </li>
         <li style={{marginLeft:'5%'}}>Pilih dokumen yang diinginkan pada folder yang tersedia.
                                       <br/>
                                       <img src={poin4} style={{width:'80%'}}alt=""/>

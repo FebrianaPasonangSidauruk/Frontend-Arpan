@@ -19,6 +19,7 @@ const UserManagement = () => {
     const [keyword, setKeyword] = useState("");
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
+    const [message, setMessage] = useState('');
 
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
@@ -32,9 +33,7 @@ const UserManagement = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [uuidUser, setUuidUser] = useState('')
-    // const {id} = useParams()
 
-    const [initPass, setInitPass] = useState('password123')
     const [val, setVal] = useState();
 
     useEffect(()=>{
@@ -54,11 +53,11 @@ const UserManagement = () => {
       const changePage = ({ selected }) => {
         setPage(selected);
         if (selected === 9) {
-          setMsg(
+          setMessage(
             "Jika tidak menemukan data yang Anda cari, silahkan cari data dengan kata kunci spesifik!"
           );
         } else {
-          setMsg("");
+          setMessage("");
         }
       };
 
@@ -66,7 +65,7 @@ const UserManagement = () => {
         e.preventDefault();
       
         setPage(0);
-        setMsg("");
+        setMessage("");
         setKeyword(query);
         console.log(query)
         
@@ -95,7 +94,9 @@ const UserManagement = () => {
           });
           refreshPage();
         } catch (error){
-          console.log(error);
+          if (error.response) {
+            setMsg(error.response.data.msg);
+        }
         }
       }
 
@@ -216,9 +217,6 @@ const UserManagement = () => {
         <div style={{marginLeft:'1%', marginRight:'1%'}}>
         
         <div className='table-container  mt-5'>
-        {/* <button type="button" className="btn btn-lg btn-danger" style={{}}>
-                <i className="fas"><p style={{fontSize:'80%'}}>Create Account </p></i>
-                </button>  */}
           <table className="table table-bordered table-hover">
             <thead>
                  <tr className='row-table'>
@@ -267,32 +265,29 @@ const UserManagement = () => {
             <table class="table ">
               <tr>
               <th>Name</th>
-              {/* <td>{name}</td> */}
               <td>
               <input type="text" className="form-control" value={name} onChange={(event) => setName(event.target.value)} placeholder="...." />
                 </td>
               </tr>
               <tr>
               <th>Username</th>
-              {/* <td>{username}</td> */}
               <td>
               <input type="text" className="form-control" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="...." />
                 </td>
               </tr>
               <tr>
               <th>Role</th>
-              {/* <td>{role}</td> */}
               <td>
               <input type="text" className="form-control" value={role} onChange={(event) => setRole(event.target.value)} placeholder="...." />
                 </td>
               </tr>
-              {/* <tr>
+              <tr>
               <th>Password</th>
-              <td>{password}</td>
+              {/* <td>{password}</td> */}
               <td>
               <input type="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="...." />
                 </td>
-              </tr> */}
+              </tr>
             </table>
 
             <div className="card-header">
@@ -333,7 +328,8 @@ const UserManagement = () => {
               <td>{phone}</td>
               </tr>
             </table>
-            
+            <p className="has-text-centered has-text-danger">{msg}</p>
+
             <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onClick={updateUserAccount} data-dismiss="modal">Save changes</button>
@@ -392,7 +388,7 @@ const UserManagement = () => {
           <p>
             Showing {rows ? page + 1 : 0} of {pages} pages from {rows} records
           </p>
-          <p className="has-text-centered has-text-danger">{msg}</p>
+          <p className="has-text-centered has-text-danger">{message}</p>
           <nav
             className="pagination is-centered"
             key={rows}

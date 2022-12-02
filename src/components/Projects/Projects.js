@@ -2,13 +2,11 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import ReactPaginate from "react-paginate";
 import {FaSearch} from 'react-icons/fa';
-import ProjectList from './ProjectList';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import './Projects.css';
 import { getRequestor } from './apiData';
 import * as XLSX from 'xlsx';
-import Options from './Options';
 import {FaPencilAlt} from 'react-icons/fa'
 import {FaDownload} from 'react-icons/fa'
 

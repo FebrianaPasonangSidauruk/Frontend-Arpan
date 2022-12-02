@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import jwt_decode from "jwt-decode";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
-import login from '../img/login.png'
 import axios from 'axios';
 import ModalMessage from './ModalMessage';
 
@@ -142,7 +141,6 @@ const getUsers = async () => {
     <br/>
     
     
-    {/* <a href='file:///\\FEBRIANAPASONAN\Users\tes'  target='_blank' >tes</a> */}
     <button type="button" data-toggle="modal" data-target="#modal-message" class="btn btn-danger" style={{width:'15%', marginLeft:'1%', alignItems:'center', marginBottom:'1%', marginTop:'-2%'}}>Download Document</button>
     <div class="modal fade" id="modal-message">
                             <div class="modal-dialog">
@@ -164,16 +162,9 @@ const getUsers = async () => {
     
     <section class="side-warehouse">
         <div className='notes-warehouse' >
-            {/* <h2>Notes</h2>
-            <ul className='warehouse-notes' style={{listStyleType:'disc'}}>
-  <li className='warehouse-notes'>Hanya bisa dibuka via Intranet</li>
-  <li className='warehouse-notes'>Searching by Nodin No di Folder Proses</li>
-  <li className='warehouse-notes'>Please DO NOT EDIT folder JUST DOWNLOAD</li>
-</ul> */}
 
         </div>
             
-            {/* <img src={login} style={{width:'30%', float:'right', marginLeft:'40%'}} className="image-warehouse" alt=""/> */}
         </section>
 
         {/* upload file */}
@@ -193,7 +184,6 @@ const getUsers = async () => {
                     name="file" 
                     id="file" 
                     placeholder="Upload your file" 
-                    // onChange={this.fileSelectedHandler}
                     onChange={handleChange}
                 />
                 <br></br>
