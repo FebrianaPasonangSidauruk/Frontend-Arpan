@@ -10,16 +10,12 @@ import './Dashboard.css'
 import axios from 'axios';
 
 const Dashboard = () => {
-  const [valueReq, setValueReq] = useState({});
-  const [tes, setTes] = useState([]);
   const [rfs, setRfs] = useState(0);
   const [rfi, setRfi] = useState(0);
   const [rfc, setRfc] = useState(0);
   const [itr, setItr] = useState(0);
-  // const [chartDataPie, setChartDataPie] = useState({})
-  
-  // let coba =[]
 
+  //pie chart
   const [data, setData]= useState({
     datasets:[{
       data: [10, 20, 30, 40],
@@ -35,16 +31,16 @@ const Dashboard = () => {
       {
       label:'2021',
       data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#f56954',
-      borderColor: '#f56954' // for Line chart
+      borderColor: '#f56954' 
     },
     {
       label: '2022',
       data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#00a65a',
-      borderColor: '#00a65a' // for Line chart
+      borderColor: '#00a65a' 
     }
   ],
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
@@ -62,12 +58,13 @@ const Dashboard = () => {
   }, [])
 
 
+  //line chart
   const linechart = () =>{
     axios.get(`linechartdashboard`).then(res =>{
       const resp = res.data;
       return resp
     }).then((resp)=>{
-      console.log("resss line chart", resp)
+      // console.log("resp line chart", resp)
       const datas = [];
       let index = 0;
       let datasTemp = [];
@@ -78,7 +75,6 @@ const Dashboard = () => {
         datas.push(datasTemp);
         datasTemp = [];
         index++;
-          // datas.push(i.value)
       }
       console.log("dataa", datas);
       setLinedata(
@@ -87,31 +83,27 @@ const Dashboard = () => {
             {
             label:'2021',
             data: datas[1],
-            fill: false, // for Line chart
+            fill: false, 
             backgroundColor: '#f56954',
-            borderColor: '#f56954' // for Line chart
+            borderColor: '#f56954' 
           },
           {
             label: '2022',
             data: datas[0],
-            fill: false, // for Line chart
+            fill: false, 
             backgroundColor: '#00a65a',
-            borderColor: '#00a65a' // for Line chart
+            borderColor: '#00a65a'
           }
         ],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         })
-        // console.log(linedata)
 
         }).catch(err => {
         console.log("error", err)
       })
     }
 
-  
-  
-
-
+    //pie chart
   const fetchData = () =>  {
     axios.get(`piechartdashboard`).then(res => {
       const resp = res.data;
@@ -151,79 +143,8 @@ const Dashboard = () => {
     console.log(response)
   }
 
-  console.log('rfs', rfs)
-  
-
-  const piechart =() =>{
-    let valreq = [];
-      axios.get(`piechartdashboard`)
-      .then(res=>{
-          console.log(res)
-            for (const dataObj of res.data){
-              valreq.push(parseInt(dataObj.value))
-            }
-            
-            setTes(valreq)
-            setValueReq({
-              labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
-              datasets:[
-                {
-                data: valreq,
-                backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
-                }
-              ]
-            });
-            // setValueReq(res.data.value)
-        })
-    .catch(error=>{
-      console.log(error)
-    });
-    console.log(valueReq)
-    console.log(valreq)
-    console.log(tes)
-    
-  }
-
-  
-
-  const statePieDaily = {
-    labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
-    datasets:[
-        {
-        data: [2,6,11,8],
-        backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
-        }
-      ]
-  }
-  
-  const statePieWeekly = {
-    labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
-    datasets:[
-        {
-        data: [2,4,5,8],
-        backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
-        }
-      ]
-  }
-
-  const statePieMonth = {
-    labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI'],
-    datasets:[
-        {
-        data: [17,16,13,15],
-        backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
-        }
-      ]
-  }
-
-  // setChartDataPie(setData)
   const [chartDataPie, setChartDataPie] = useState(data)
-  console.log('data', data)
-  console.log(valueReq)
-  console.log(statePieDaily)
-  console.log(chartDataPie)
-
-  
+  console.log('data pie chart', chartDataPie)
 
   return (
     <div>
@@ -241,23 +162,6 @@ const Dashboard = () => {
             <li className="breadcrumb-item"><a href="#">Home</a></li>
           </ol>
         </div>
-        {/* <div className="card-body-table">
-        <div className="col-sm-12 filterpie">
-            <ol className="breadcrumb float-sm-right">
-            <li className="breadcrumb-item-">
-            <div class="dropdownFilter">
-              <button class="dropbtnFilter">Filter</button>
-              <div class="dropdown-content-filter">
-                <a onClick= {() => setData(statePieDaily)}>Daily</a>
-                <a onClick= {() => setData(statePieWeekly)}>Weekly</a>
-                <a onClick= {() => setData(statePieMonth)}>Monthly</a>
-                <a onClick= {() => setData(data)}>Yearly</a>
-              </div>
-            </div>
-            </li>
-          </ol>
-        </div>
-      </div> */}
       </div>
       
     </div>
@@ -274,13 +178,11 @@ const Dashboard = () => {
             <div className="icon">
               <i className="ion"><SiReadthedocs/> </i>
             </div>
-            {/* <a href="#" className="small-box-footer">More info <i className="fas fa-arrow-circle-right" /></a> */}
           </div>
         </div>
         <div className="col-lg-3 col-6">
           <div className="small-box bg-danger">
             <div className="inner">
-              {/* <h3>12<sup style={{fontSize: 20}}>%</sup></h3> */}
               <h3>{rfi}</h3>
               <p>RFI</p>
             </div>
@@ -329,14 +231,10 @@ const Dashboard = () => {
           <h3 className="card-title">All Requests YoY</h3>
         </div>
         <div className="card-body">
-          {/* <div className="chart"> */}
               <LineChart chartData={linedata}/>
-          {/* </div> */}
         </div>
       </div>
       </div>
-
-
       </div>
       </div>
       </section>

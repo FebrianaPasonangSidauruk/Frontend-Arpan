@@ -31,8 +31,7 @@ function PieChart({ chartDataPie }) {
             }
           },
           formatter: (value, context) =>{
-            // console.log('tes', value);
-            console.log(context.chart.data.datasets[0].data);
+            // console.log(context.chart.data.datasets[0].data);
             const datapoints = context.chart.data.datasets[0].data;
             function totalSum(total, datapoint){
               return total + datapoint;
@@ -48,7 +47,6 @@ function PieChart({ chartDataPie }) {
         }
       }
   }}
-  // plugins={[ChartDataLabels]}
   />
   <br/>
   </div>

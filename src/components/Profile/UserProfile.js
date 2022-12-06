@@ -1,14 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import './UserProfile.css'
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from 'axios';
 import profilePict from '../img/profile.jpg';
 
 const UserProfile = () => {
-
-    const [users, setUsers] = useState([]);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [employee_title, setEmployeeTitle] = useState("");
@@ -83,10 +81,7 @@ const getUserById = async () => {
     }
   }
 
-  
-
-  console.log("tes");
-  console.log(id)
+  console.log("id user",id)
 
   return (
     <div>

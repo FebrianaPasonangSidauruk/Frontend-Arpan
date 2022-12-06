@@ -31,16 +31,12 @@ function Project() {
     const [pic_tester_3, setPic_tester_3] = useState('');
     const [pic_tester_4, setPic_tester_4] = useState('');
     const [pic_tester_5, setPic_tester_5] = useState('');
-
     const [id_project, setId_project] = useState();
 
-
-  const [val, setVal] = useState();
+    const [val, setVal] = useState();
     const [title_dev, setTitle_dev] = useState([]);
     const [exporData, setExportData] = useState([]);
     const [dataProject, setDataProject] = useState([]);
-
-
 
     const [projects, setProjects] = useState([]);
     const [page, setPage] = useState(0);
@@ -59,6 +55,7 @@ function Project() {
           getProducts();
         }, []);
 
+      //get the project data that the user is looking for
       const getProjects = async () => {
         const response = await axios.get(
           `projectTracking?search_query=${keyword}&page=${page}&limit=${limit}`
@@ -67,20 +64,13 @@ function Project() {
         setPage(response.data.page);
         setPages(response.data.totalPage);
         setRows(response.data.totalRows);
-
-
         setDataProject(response.data.result);
-
-        // const data = await getRequestor(keyword);
-        // console.log(data)
-        // setExportData(data);
       };
 
+      //get all project 
       const getProducts = async() =>{
         const res = await axios.get(`getAllProject`);
-
         const requestor_list = res.data.map((data) => data.title_dev);
-        // console.log(requestor_list);
         setTitle_dev([...new Set(requestor_list)]);
         console.log(title_dev);
 
@@ -88,6 +78,7 @@ function Project() {
         
     }
 
+    //export to excel
     const handleOnExport = () =>{
       var wb = XLSX.utils.book_new()
       var ws = XLSX.utils.json_to_sheet(exporData);
@@ -101,34 +92,28 @@ function Project() {
           "PIC Tester 2", "PIC Tester 3", "PIC Tester 4", "PIC Tester 5"
       ]], 
         { origin: "A1" });
-
-        // const max_width = exporData.reduce((w, r) => Math.max(w, r.name.length), 40);
         ws["!cols"] = [ { wch: 30 } ];
-
       XLSX.writeFile(wb, "tesfile.xlsx");
   }
 
+  //handle the project data that user is looking for (send parameter query to api data)
     const dataProjectHandler = async(event) =>{
       event.preventDefault()
       const data = await getRequestor(query);
-      // setKeyword(event.target.value)
-      
       setExportData(data);
       console.log(data);
       console.log(exporData)
 
-      setPage(0);
+        setPage(0);
         setMsg("");
         setKeyword(query);
-      // handleOnExport()
     }
 
+    //update testing progress
     const updateData = async (e) => {
         e.preventDefault();
-        // id = users.id 
-        console.log("ya")
-        console.log(id_project)
-        console.log(testing_progress)
+        console.log("id project", id_project)
+        console.log("testing progress",testing_progress)
         try {
           await axios.patch(`datasProject/${id_project}`, {
             testing_progress: testing_progress,
@@ -156,13 +141,11 @@ function Project() {
         }
       };
 
-    const nih =async(projid) => {
-        console.log(projid)
-        // setVal(1);
+      //get project data selected and displayed to user
+    const getProjSelected =async(projid) => {
+        console.log("id project", projid)
         setVal(projid);
-        console.log(val)
         setId_project(projid)
-        console.log(id_project)
         const response = await axios.get(`datasProject/${projid}`);
         setTesting_progress(response.data.testing_progress);
         setNo_nodin_rfsrfi(response.data.no_nodin_rfsrfi);
@@ -195,24 +178,6 @@ function Project() {
         setMsg("");
       }
     };
-    
-      const searchData =async(e) => {
-        e.preventDefault();
-      
-        setPage(0);
-        setMsg("");
-        setKeyword(query);
-        console.log(query)
-        
-        console.log(keyword)
-      };
-
-      function refresh(){
-        setPage(0);
-        setMsg("");
-        setKeyword("");
-        console.log(keyword)
-      }
 
   return (
     <div>
@@ -263,7 +228,6 @@ function Project() {
               </div>
             </div>
           </form>
-                {/* <button type="button" className="btn btn-danger" onClick={handleOnExport}>export</button> */}
           </div>
           </div>
           
@@ -308,7 +272,7 @@ function Project() {
                     <td>{project.no_nodin_bo}</td>
                     <td>{project.testing_progress}</td>
                     <td>
-                        <button type="button" onClick={() => nih(project.id_project)} onChange={() => setVal(project.id_project)} class="btn btn-default" data-toggle="modal" data-target="#modal-default" ><i className="fas"><FaPencilAlt/> </i></button>
+                        <button type="button" onClick={() => getProjSelected(project.id_project)} onChange={() => setVal(project.id_project)} class="btn btn-default" data-toggle="modal" data-target="#modal-default" ><i className="fas"><FaPencilAlt/> </i></button>
                     </td>
 
 
@@ -432,7 +396,6 @@ function Project() {
               className="pagination is-centered"
               key={rows}
               role="navigation"
-            //   aria-label="pagination"
             >
               <ReactPaginate
                 previousLabel={"< Prev"}

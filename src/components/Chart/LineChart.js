@@ -1,31 +1,17 @@
 import React from "react";
-import { Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from "chart.js";
 Chart.register(ChartDataLabels);
 
 function LineChart({ chartData }) {
-  console.log(chartData, "linecharat")
+  console.log(chartData, "linechart")
   return (
     <div className="Line-chart">
   <Line 
   data={chartData} 
   options={{
-    // maintainAspectRatio: false,
-  // scales: {
-  //   x: {
-  //     grid: {
-  //       display: false
-  //     }
-  //   },
-  //   y: {
-  //     display: false,
-  //     grid: {
-  //       display: false
-  //     }
-  //   }
-  // },
   plugins: {
     legend: {
       display: true
@@ -65,28 +51,6 @@ function LineChart({ chartData }) {
   }
 }
   }
-  // plugins={{
-  //   datalabels: {
-  //     display: true,
-  //     color: "black",
-  //     align: "end",
-  //     padding: {
-  //       right: 2
-  //     },
-  //     labels: {
-  //       padding: { top: 10 },
-  //       title: {
-  //         font: {
-  //           weight: "bold"
-  //         }
-  //       },
-  //       value: {
-  //         color: "green"
-  //       }
-  //     },
-  //   }
-  // }
-  // }
   />
   </div>
   );

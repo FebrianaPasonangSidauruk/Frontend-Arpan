@@ -1,7 +1,7 @@
 import axios from "axios";
 
    export const getRequestor = async (keyword) => {
-    console.log('tes', keyword)
+    console.log('keyword', keyword)
     try{
         const {data} = await axios.get(
           `requestorProject?search_requestor=${keyword}`

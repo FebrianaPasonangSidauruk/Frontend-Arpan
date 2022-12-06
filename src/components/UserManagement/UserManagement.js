@@ -31,7 +31,6 @@ const UserManagement = () => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [uuidUser, setUuidUser] = useState('')
 
     const [val, setVal] = useState();
@@ -40,6 +39,7 @@ const UserManagement = () => {
         getUserManagement()
     }, [page, keyword]);
 
+    //get a list of users
     const getUserManagement = async () => {
         const response = await axios.get(
           `getUserManagement?search_query=${keyword}&page=${page}&limit=${limit}`
@@ -97,18 +97,6 @@ const UserManagement = () => {
           if (error.response) {
             setMsg(error.response.data.msg);
         }
-        }
-      }
-
-      const changePass = async(event)=>{
-        event.preventDefault();
-        try{
-          await axios.patch(`resetPasswordAccountAdm/${uuidUser}`, {
-            password
-          });
-          refreshPage();
-        }catch(error){
-          console.log(error);
         }
       }
 
@@ -297,9 +285,6 @@ const UserManagement = () => {
               <tr>
               <th>Employee Title</th>
               <td>{employee_title}</td>
-              {/* <td>
-              <input type="text" className="form-control" value={employee_title} onChange={(event) => setEmployeeTitle(event.target.value)} placeholder="...." />
-                </td> */}
               </tr>
               <tr>
               <th>Department</th>

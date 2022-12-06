@@ -5,8 +5,6 @@ import './Login.css';
 import {FaLock, FaUserAlt} from 'react-icons/fa';
 import loginPic from '../img/login-left.svg';
 
-
-
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -51,9 +49,6 @@ const Login = () => {
                                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                                     <i className="fa-lock-login"><FaLock/></i>
                                 </div>
-                                <span className='form-input-regist'>
-                                    Don't have an account yet? <Link to="/register"> <a>Register Here</a></Link>
-                                </span>
                                 <button className="submit">Login</button>
                             </form>
                 </div>

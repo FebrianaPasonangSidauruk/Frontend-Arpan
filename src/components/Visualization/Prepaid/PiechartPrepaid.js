@@ -1,6 +1,5 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
-// import './PieChart.css'
 import { Chart as ChartJS } from "chart.js/auto";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from "chart.js";
@@ -47,7 +46,6 @@ function PiechartPrepaid({ chartDataPie }) {
         }
       }
   }}
-  // plugins={[ChartDataLabels]}
   />
   <br/>
   </div>

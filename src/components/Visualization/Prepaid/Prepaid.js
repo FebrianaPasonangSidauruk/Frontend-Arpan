@@ -6,44 +6,46 @@ import PiechartPrepaid from './PiechartPrepaid';
 import LineChartPrepaid from './LineChartPrepaid';
 
 const Prepaid = () => {
+
+  //pie chart
   const [data, setData]= useState({
     datasets:[{
       data: [10, 20, 30, 40],
       backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
     },
   ],
-  // labels: ['Prepaid', 'Digital & VAS', 'POINTER', 'BASI']
   });
 
+  //line chart
   const [linedata, setLinedata]= useState({
     datasets:[
       {
       label:'Home and Bundling Development',
       data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#f56954',
-      borderColor: '#f56954' // for Line chart
+      borderColor: '#f56954' 
     },
     {
       label: 'Jawa and Bali Nusra Development',
       data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#00a65a',
-      borderColor: '#00a65a' // for Line chart
+      borderColor: '#00a65a'
     },
     {
       label: 'Product Catalogue Management',
       data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#f39c12',
-      borderColor: '#f39c12' // for Line chart
+      borderColor: '#f39c12' 
     },
     {
       label: 'Sumatera and Pamasuka Development',
       data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#00c0ef',
-      borderColor: '#00c0ef' // for Line chart
+      borderColor: '#00c0ef' 
     }
 
   ],
@@ -57,17 +59,16 @@ const Prepaid = () => {
     linechart();
   }, [])
 
+  //pie chart function
   const fetchData = () =>  {
     axios.get(`getpiechartprepaid`).then(res => {
       const resp = res.data;
       return resp
     }).then((resp) => {
-      console.log("resss", resp)
+      console.log("resp pie chart", resp)
       const datas = [];
-      const labels =[];
       for(var i of resp) {
           datas.push(i.counter)
-          // labels.push(i.department)
       }
       setData(
         {
@@ -78,7 +79,6 @@ const Prepaid = () => {
               ]
           },
         ],
-        // labels:labels, 
       }
       )
       setChartDataPie(data)
@@ -89,12 +89,13 @@ const Prepaid = () => {
     }) 
   }
 
+  //line chart function
   const linechart = () =>{
     axios.get(`getlinechartprepaid`).then(res =>{
       const resp = res.data;
       return resp
     }).then((resp)=>{
-      console.log("resss line chart", resp)
+      console.log("resp line chart", resp)
       const datas = [];
       let index = 0;
       let datasTemp = [];
@@ -105,7 +106,6 @@ const Prepaid = () => {
         datas.push(datasTemp);
         datasTemp = [];
         index++;
-          // datas.push(i.value)
       }
       console.log("dataa", datas);
       setLinedata(
@@ -114,35 +114,34 @@ const Prepaid = () => {
             {
               label:'Home and Bundling Development',
               data: datas[0],
-              fill: false, // for Line chart
+              fill: false, 
               backgroundColor: '#f56954',
-              borderColor: '#f56954' // for Line chart
+              borderColor: '#f56954' 
             },
             {
               label: 'Jawa and Bali Nusra Development',
               data: datas[1],
-              fill: false, // for Line chart
+              fill: false, 
               backgroundColor: '#00a65a',
-              borderColor: '#00a65a' // for Line chart
+              borderColor: '#00a65a' 
             },
             {
               label: 'Product Catalogue Management',
               data: datas[2],
-              fill: false, // for Line chart
+              fill: false, 
               backgroundColor: '#f39c12',
-              borderColor: '#f39c12' // for Line chart
+              borderColor: '#f39c12' 
             },
             {
               label: 'Sumatera and Pamasuka Development',
               data: datas[3],
-              fill: false, // for Line chart
+              fill: false, 
               backgroundColor: '#00c0ef',
-              borderColor: '#00c0ef' // for Line chart
+              borderColor: '#00c0ef' 
             }
         ],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         })
-        // console.log(linedata)
 
         }).catch(err => {
         console.log("error", err)
@@ -178,9 +177,7 @@ const Prepaid = () => {
 <div className="container-fluid">
 <div className="row">
 <div className="col-12">
-{/* <div className="card">
 
-</div> */}
 <div className="col-md-12">
   <div className="card card-danger">
           <div className="card-header">

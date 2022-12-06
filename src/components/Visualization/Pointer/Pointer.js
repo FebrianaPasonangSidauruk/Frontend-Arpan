@@ -6,37 +6,39 @@ import PieChartPointer from './PieChartPointer';
 import LineChartPointer from './LineChartPointer';
 
 const Pointer = () => {
+
+  //pie chart
   const [data, setData]= useState({
     datasets:[{
       data: [10, 20, 30],
       backgroundColor:['#00a65a', '#f39c12', '#f56954']
     },
   ],
-  // labels: ['Prepaid', 'Digital & VAS', 'POINTER']
   });
 
+  //line chart
   const [linedata, setLinedata]= useState({
     datasets:[
       {
       label:'Channel and Acquisition Development',
       data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#00a65a',
-      borderColor: '#00a65a' // for Line chart
+      borderColor: '#00a65a' 
     },
     {
       label: 'Roaming and Interconnect Development ',
       data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#f39c12',
-      borderColor: '#f39c12' // for Line chart
+      borderColor: '#f39c12' 
     },
     {
       label: 'Postpaid Product Development ',
       data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      fill: false, // for Line chart
+      fill: false, 
       backgroundColor: '#f56954',
-      borderColor: '#f56954' // for Line chart
+      borderColor: '#f56954' 
     }
 
   ],
@@ -50,12 +52,13 @@ const Pointer = () => {
     linechart();
   }, []);
 
+  //pie chart function
   const fetchData = () =>  {
     axios.get(`getpiechartpointer`).then(res => {
       const resp = res.data;
       return resp
     }).then((resp) => {
-      console.log("resss", resp)
+      console.log("resp pie chart", resp)
       const datas = [];
       const labels =[];
       for(var i of resp) {
@@ -71,7 +74,6 @@ const Pointer = () => {
               ]
           },
         ],
-        // labels:labels, 
       }
       )
       setChartDataPie(data)
@@ -82,17 +84,17 @@ const Pointer = () => {
     }) 
   };
 
+  //line chart function
   const linechart = () =>{
     axios.get(`getlinechartpointer`).then(res =>{
       const resp = res.data;
       return resp
     }).then((resp)=>{
-      console.log("resss line chart", resp)
+      console.log("resp line chart", resp)
       const datas = [];
       let index = 0;
       
       let datasTemp = [];
-      // var i = 1;
       for(var i of resp) {
         for(var j of Object.values(i)){
           datasTemp.push(j)
@@ -100,7 +102,6 @@ const Pointer = () => {
         datas.push(datasTemp);
         datasTemp = [];
         index++;
-          // datas.push(i.value)
       }
 
       const labels =[];
@@ -118,28 +119,27 @@ const Pointer = () => {
             {
               label:labels[0],
               data: datas[0],
-              fill: false, // for Line chart
+              fill: false, 
               backgroundColor: '#00a65a',
-              borderColor: '#00a65a' // for Line chart
+              borderColor: '#00a65a' 
             },
             {
               label: labels[1],
               data: datas[1],
-              fill: false, // for Line chart
+              fill: false, 
               backgroundColor: '#f39c12',
-              borderColor: '#f39c12' // for Line chart
+              borderColor: '#f39c12' 
             },
             {
               label: labels[2],
               data: datas[2],
-              fill: false, // for Line chart
+              fill: false, 
               backgroundColor: '#f56954',
-              borderColor: '#f56954' // for Line chart
+              borderColor: '#f56954' 
             }
         ],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         })
-        // console.log(linedata)
 
         }).catch(err => {
         console.log("error", err)
@@ -174,9 +174,6 @@ const Pointer = () => {
 <div className="container-fluid">
 <div className="row">
 <div className="col-12">
-{/* <div className="card">
-
-</div> */}
 <div className="col-md-12">
   <div className="card card-danger">
           <div className="card-header">

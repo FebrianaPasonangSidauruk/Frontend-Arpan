@@ -4,13 +4,9 @@ import axios from 'axios';
 import { filterselection } from './apiModalExcel';
 
 const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, syear3, req, req2, req3}) => {
-  const [check, setCheck]= useState(true);
   const [selection, setSelection]= useState(false);
-  const [selection1, setSelection1]= useState(true);
-  const [
-    reqAudit, setReqaudit] = useState([]);
+  const [reqAudit, setReqaudit] = useState([]);
   const [exporData, setExportData] = useState([]);
-  // console.log(selected);
 
   useEffect(() => {
     setReqaudit(
@@ -28,18 +24,9 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
     )
   }, [])
 
-
-
-  
-
-
   const handleSelection =async(projid,value) =>{
-    let val =(Number(value)) %2 ;
-    console.log(projid)
-    // setChecked(e.target.checked);
-    console.log(value,"sad",val)
-    // setSelection(check);
-
+    let val =(Number(value));
+    console.log('id',projid, 'value in boolean', value,"or",val)
     try {
       await axios.patch(`datasProject/${projid}`, {
         selection: val
@@ -51,14 +38,10 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
   }
 
   const dataProjectHandler = async() =>{
-    // event.preventDefault()
-    const data = await filterselection(req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3);
-    // setKeyword(event.target.value)
-    
+    const data = await filterselection(req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3);   
     setExportData(data);
-    console.log(data);
-    console.log(exporData)
-
+    // console.log(data);
+    // console.log(exporData)
     var wb = XLSX.utils.book_new()
     var ws = XLSX.utils.json_to_sheet(data);
     XLSX.utils.book_append_sheet(wb, ws, "Project");
@@ -70,43 +53,17 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
       ws["!cols"] = [ { wch: 30 } ];
 
     XLSX.writeFile(wb, "KertasKerja.xlsx");
-    // handleOnExport();
-
-    // setPage(0);
-    //   setMsg("");
-    //   setKeyword(query);
-    // handleOnExport()
   }
-
-
-
-  const handleOnExport = () =>{
-    var wb = XLSX.utils.book_new()
-    var ws = XLSX.utils.json_to_sheet(exporData);
-    XLSX.utils.book_append_sheet(wb, ws, "Project");
-    XLSX.utils.sheet_add_aoa(ws, 
-      [["Nodin Number", "Nodin Title", "Date",
-        "No Nodin RFS/RFI", "No Nodin RFC/ITR"
-    ]], 
-      { origin: "A1" });
-      ws["!cols"] = [ { wch: 30 } ];
-
-    XLSX.writeFile(wb, "KertasKerja.xlsx");
-}
-
-
 
   return (
     <div className='modalOptionsContainer '>
       <div class="modal-footer justify-content-between">
-                            {/* <button type="button" class="btn btn-default" onClick={dataProjectHandler}>Save</button> */}
                             <button type="button" class="btn btn-danger" onClick={dataProjectHandler}>Download XLSX</button>
                             </div>
     <table class="table table-bordered table-hover">
     <thead>
     <tr className='row-table'>
                       <th className='project-header'>No</th>
-                      {/* <th className='project-header'>id</th> */}
                       <th className='project-header'>Nodin Number</th>
                       <th className='project-header'>Nodin Title</th>
                       <th className='project-header'>Date</th>
@@ -119,7 +76,6 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
         {requestor_audit.map((audit, index)=>(
             <tr key={audit.id_project}>
             <td>{index + 1}</td>
-            {/* <td>{audit.id_project}</td> */}
             <td>{audit.no_nodin_bo}</td>
             <td>{audit.subject_nodin_rfsrfi}</td>
             <td>{audit.date_nodin_rfsrfi}</td>
@@ -128,40 +84,27 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
             <td>
               <input
                 type="checkbox"
-                // name={audit.id_project}
                 checked={audit.selection}
-                // id={audit.id_project}
                 onChange={
                   (e)=>{
-                  let coba = e.target.checked;
-                  console.log(e.target.checked)
-                  setReqaudit(
-                    requestor_audit.map(data => {
-                      if(audit.id_project === data.id_project){
-                        data.selection = coba
-                      }
-                      // setSelection(e.target.checked)
-                      // handleSelection(audit.id_project)
-                      return data
-                    })
-                  )
-                  // handleSelection(audit.id_project)
-                  // setSelection(e.target.checked)
-
+                    let valCheck = e.target.checked;
+                    console.log(e.target.checked)
+                      setReqaudit(
+                        requestor_audit.map(data => {
+                            if(audit.id_project === data.id_project){
+                              data.selection = valCheck
+                            }
+                              return data
+                        })
+                      )
                   handleSelection(audit.id_project,audit.selection);
-                  // setSelection(e.target.checked)
-                  
-                  
                 }
               }
-                // onClick={() => handleSelection(audit.id_project)}
               /></td>
           </tr>
         ))}
     </tbody>
-    </table>
-
-  
+    </table> 
 </div>
   )
 }

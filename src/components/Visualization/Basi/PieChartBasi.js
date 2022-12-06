@@ -1,6 +1,5 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
-// import './PieChart.css'
 import { Chart as ChartJS } from "chart.js/auto";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from "chart.js";
@@ -31,7 +30,6 @@ function PieChartBasi({ chartDataPie }) {
             }
           },
           formatter: (value, context) =>{
-            // console.log('tes', value);
             console.log(context.chart.data.datasets[0].data);
             const datapoints = context.chart.data.datasets[0].data;
             function totalSum(total, datapoint){
@@ -48,7 +46,6 @@ function PieChartBasi({ chartDataPie }) {
         }
       }
   }}
-  // plugins={[ChartDataLabels]}
   />
   <br/>
   </div>

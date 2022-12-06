@@ -12,11 +12,10 @@ const WarehouseReporting = () => {
   const [message, setMessage] = useState('');
   const [users, setUsers] = useState([]);
   const [token, setToken] = useState('');
-    const [expire, setExpire] = useState('');
-    const navigate = useNavigate();
+  const [expire, setExpire] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // setUserId(localStorage.getItem("uuid"));
       refreshToken();
       getUsers();
   }, []);
@@ -74,7 +73,6 @@ const getUsers = async () => {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const url = 'http://localhost:3000/uploadFile';
     const formData = new FormData();
     formData.append('file', file);
     formData.append('fileName', file.name);
@@ -85,8 +83,8 @@ const getUsers = async () => {
     };
     axios.post(`uploadproject`, formData, config)
     .then (res => {
-        console.log(res.data); // message
-        console.log(formData);
+        console.log("response data", res.data); 
+        console.log("form data", formData);
         setMessage(res.data.message)
         refreshPage();
     })
