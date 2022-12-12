@@ -64,31 +64,47 @@ const Dashboard = () => {
       const resp = res.data;
       return resp
     }).then((resp)=>{
-      // console.log("resp line chart", resp)
+      console.log("resp line chart", resp)
+      console.log('resp lengh', resp.length)
       const datas = [];
-      let index = 0;
+      // let index = 0;
+      // var i = 1;
       let datasTemp = [];
       for(var i of resp) {
-        for(var j of Object.values(i)){
+        for(var [index, j] of Object.values(i).entries()){
+          console.log('index', index)
+          if(index === 12) continue;
+          
           datasTemp.push(j)
+          console.log('j' + j);
         }
         datas.push(datasTemp);
         datasTemp = [];
-        index++;
+        // index++;
       }
+
+      const labelis =[];
+      for(var i of resp) {
+          labelis.push(i.year)
+      }
+
+      if (typeof(labelis[1]) == "undefined"){
+        labelis[1] = '2021'
+      }
+
       console.log("dataa", datas);
       setLinedata(
         {
           datasets:[
             {
-            label:'2021',
+            label:labelis[1],
             data: datas[1],
             fill: false, 
             backgroundColor: '#f56954',
             borderColor: '#f56954' 
           },
           {
-            label: '2022',
+            label: labelis[0],
             data: datas[0],
             fill: false, 
             backgroundColor: '#00a65a',

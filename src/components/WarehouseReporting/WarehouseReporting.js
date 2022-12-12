@@ -66,7 +66,7 @@ const getUsers = async () => {
   const refreshPage = ()=>{
     setTimeout(function() {
       
-      alert(message);
+      alert('Upload Berhasil');
       window.location.reload();
     }, 2000);
  }
@@ -186,6 +186,7 @@ const getUsers = async () => {
                 />
                 <br></br>
                  <button className="btn btn-danger" style={{marginLeft:'4.5%', width:'7%', marginBottom:'1%'}} type="submit" >Update</button>
+                 <p>{message}</p>
       </form>
     </div>
   )}
