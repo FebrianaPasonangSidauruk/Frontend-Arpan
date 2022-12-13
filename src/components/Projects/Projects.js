@@ -239,7 +239,7 @@ function Project() {
                       <th className='project-header'>No</th>
                       <th className='project-header'>Nomor Nodin RFS/RFI</th>
                       <th className='project-header'>Tanggal Nodin RFS/RFI</th>
-                      <th className='project-header'>Subject Nodin RFS/RFI</th>
+                      <th className='project-header-rfsrfi'>Subject Nodin RFS/RFI</th>
                       <th className='project-header'>Status</th>
                       <th className='project-header'>Status RFC/ITR</th>
                       <th className='project-header'>Nomor Nodin RFC/ITR</th>
@@ -250,7 +250,7 @@ function Project() {
                       <th className='project-header'>Type</th>
                       <th className='project-header'>Nodin BO</th>
                       <th className='project-header'>Testing Progress</th>
-                      <th className='project-header'>Options</th>
+                      <th className='project-header-options'>Options</th>
                   </tr>
               </thead>
               <tbody>
@@ -260,7 +260,7 @@ function Project() {
                     <td>{index + 1}</td>
                     <td>{project.no_nodin_rfsrfi}</td>
                     <td>{project.date_nodin_rfsrfi}</td>
-                    <td>{project.subject_nodin_rfsrfi}</td>
+                    <td className='project-row-rfsrfi'>{project.subject_nodin_rfsrfi}</td>
                     <td>{project.status}</td>
                     <td>{project.detail_status}</td>
                     <td>{project.no_nodin_rfcitr}</td>
@@ -271,7 +271,7 @@ function Project() {
                     <td>{project.type_nodin}</td>
                     <td>{project.no_nodin_bo}</td>
                     <td>{project.testing_progress}</td>
-                    <td>
+                    <td className='project-row-options'>
                         <button type="button" onClick={() => getProjSelected(project.id_project)} onChange={() => setVal(project.id_project)} class="btn btn-default" data-toggle="modal" data-target="#modal-default" ><i className="fas"><FaPencilAlt/> </i></button>
                     </td>
 

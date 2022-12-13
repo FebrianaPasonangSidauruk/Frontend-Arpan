@@ -17,6 +17,36 @@
     /* width: 100vw; */
 }
 
+.project-header-options{
+  top:0;
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: #6c757d;
+  color:white;
+  right: 0px;
+}
+
+.project-header-rfsrfi{
+  top:0;
+  position: sticky;
+  background-color: #6c757d;
+  /* background-color: red; */
+  color:white;
+  min-width: 250px;
+}
+
+/* .project-row-rfsrfi{
+  width: 150px;
+  background-color: blue;
+} */
+
+.project-row-options{
+  top:13%;
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: white;
+  right: 0px;
+}
 
 
 .btn{

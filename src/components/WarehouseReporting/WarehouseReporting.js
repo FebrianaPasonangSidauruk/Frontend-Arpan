@@ -63,15 +63,23 @@ const getUsers = async () => {
     let filename = event.target.files[0].name;
     console.log(filename);
   }
-  const refreshPage = ()=>{
+  const refreshPage = (data)=>{
     setTimeout(function() {
       
-      alert('Upload Berhasil');
+      alert(data);
       window.location.reload();
     }, 2000);
  }
 
-  function handleSubmit(event) {
+ const refreshPageError = (error)=>{
+  setTimeout(function() {
+    
+    alert(error);
+    window.location.reload();
+  }, 2000);
+}
+
+  const handleSubmit = async (event) =>{
     event.preventDefault()
     const formData = new FormData();
     formData.append('file', file);
@@ -81,13 +89,35 @@ const getUsers = async () => {
         'content-type': 'multipart/form-data',
       },
     };
-    axios.post(`uploadproject`, formData, config)
-    .then (res => {
-        console.log("response data", res.data); 
+    // axios.post(`uploadproject`, formData, config)
+    // .then (res => {
+    //     console.log("response data", res.data); 
+    //     console.log("form data", formData);
+    //     setMessage(res.data.message)
+    //     refreshPage();
+    // })
+    try{
+      const res = await axios.post(`uploadproject`, formData, config)
+      console.log("response data", res.data.message); 
         console.log("form data", formData);
         setMessage(res.data.message)
-        refreshPage();
-    })
+        refreshPage(res.data.message);
+    //   axios.post(`uploadproject`, formData, config)
+    // .then (res => {
+    //     console.log("response data", res.data); 
+    //     console.log("form data", formData);
+    //       refreshPage();
+    // })
+    } catch (error){
+      // setTimeout(function() {
+    
+      //   alert("error");
+      //   window.location.reload();
+      // }, 2000);
+      // alert(error)
+      refreshPageError(error);
+      console.log(error)
+    }
   }
 
   return (
@@ -186,7 +216,7 @@ const getUsers = async () => {
                 />
                 <br></br>
                  <button className="btn btn-danger" style={{marginLeft:'4.5%', width:'7%', marginBottom:'1%'}} type="submit" >Update</button>
-                 <p>{message}</p>
+                 {/* <p>{message}</p> */}
       </form>
     </div>
   )}
