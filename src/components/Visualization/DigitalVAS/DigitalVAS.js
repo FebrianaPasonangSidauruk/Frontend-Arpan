@@ -10,8 +10,8 @@ const DigitalVAS = () => {
   //pie chart
   const [data, setData]= useState({
     datasets:[{
-      data: [10, 20, 30, 40],
-      backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+      data: [10, 20, 30, 40, 50],
+      backgroundColor:['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#ef009f']
     },
   ],
   });
@@ -46,6 +46,13 @@ const DigitalVAS = () => {
       fill: false, 
       backgroundColor: '#f56954',
       borderColor: '#f56954' 
+    },
+    {
+      label: 'Business Solution Management Digital and VAS',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
+      fill: false, 
+      backgroundColor: '#ef009f',
+      borderColor: '#ef009f' 
     }
 
   ],
@@ -77,7 +84,7 @@ const DigitalVAS = () => {
           datasets: [{
               data:datas,
               backgroundColor:[
-                '#f56954', '#00a65a', '#f39c12', '#00c0ef'
+                '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#ef009f'
               ]
           },
         ],
@@ -109,37 +116,54 @@ const DigitalVAS = () => {
         datasTemp = [];
         index++;
       }
+
+      const labels =[];
+      for(var i of resp) {
+          labels.push(i.department)
+      }
+
+      if (typeof(labels[4]) == "undefined"){
+        labels[4] = 'Business Solution Management Digital and VAS'
+      }
+
       console.log("dataa", datas);
       setLinedata(
         {
           datasets:[
             {
-              label:'Video Development',
+              label:labels[0],
               data: datas[0],
               fill: false, 
               backgroundColor: '#00c0ef',
               borderColor: '#00c0ef' 
             },
             {
-              label: 'Games Development',
+              label: labels[1],
               data: datas[1],
               fill: false, 
               backgroundColor: '#00a65a',
               borderColor: '#00a65a' 
             },
             {
-              label: 'Music and VAS Development',
+              label: labels[2],
               data: datas[2],
               fill: false, 
               backgroundColor: '#f39c12',
               borderColor: '#f39c12' 
             },
             {
-              label: 'Consumer Channel Development',
+              label: labels[3],
               data: datas[3],
               fill: false, 
               backgroundColor: '#f56954',
               borderColor: '#f56954' 
+            },
+            {
+              label: labels[4],
+              data: datas[4],
+              fill: false, 
+              backgroundColor: '#ef009f',
+              borderColor: '#ef009f' 
             }
         ],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']

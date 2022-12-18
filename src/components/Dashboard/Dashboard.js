@@ -64,11 +64,9 @@ const Dashboard = () => {
       const resp = res.data;
       return resp
     }).then((resp)=>{
-      console.log("resp line chart", resp)
-      console.log('resp lengh', resp.length)
+      // console.log("resp line chart", resp)
+      // console.log('resp lengh', resp.length)
       const datas = [];
-      // let index = 0;
-      // var i = 1;
       let datasTemp = [];
       for(var i of resp) {
         for(var [index, j] of Object.values(i).entries()){
@@ -80,7 +78,6 @@ const Dashboard = () => {
         }
         datas.push(datasTemp);
         datasTemp = [];
-        // index++;
       }
 
       const labelis =[];

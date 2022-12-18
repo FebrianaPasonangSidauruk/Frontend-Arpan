@@ -11,7 +11,7 @@ const Pointer = () => {
   const [data, setData]= useState({
     datasets:[{
       data: [10, 20, 30],
-      backgroundColor:['#00a65a', '#f39c12', '#f56954']
+      backgroundColor:['#00a65a', '#f39c12', '#f56954', '#00c0ef']
     },
   ],
   });
@@ -20,25 +20,32 @@ const Pointer = () => {
   const [linedata, setLinedata]= useState({
     datasets:[
       {
+        label:'Business Solution Management Postpaid, Roaming and Interconnect',
+        data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
+        fill: false, 
+        backgroundColor: '#00a65a',
+        borderColor: '#00a65a' 
+      },
+      {
       label:'Channel and Acquisition Development',
       data: [21, 35, 45, 51, 46, 49, 56, 53, 68, 75, 63, 52],
-      fill: false, 
-      backgroundColor: '#00a65a',
-      borderColor: '#00a65a' 
-    },
-    {
-      label: 'Roaming and Interconnect Development ',
-      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
       fill: false, 
       backgroundColor: '#f39c12',
       borderColor: '#f39c12' 
     },
     {
-      label: 'Postpaid Product Development ',
-      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      label: 'Roaming and Interconnect Development ',
+      data: [51, 69, 63, 57, 63, 71, 54, 59, 46, 60, 52, 78],
       fill: false, 
       backgroundColor: '#f56954',
       borderColor: '#f56954' 
+    },
+    {
+      label: 'Postpaid Product Development ',
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      fill: false, 
+      backgroundColor: '#00c0ef',
+      borderColor: '#00c0ef' 
     }
 
   ],
@@ -70,7 +77,7 @@ const Pointer = () => {
           datasets: [{
               data:datas,
               backgroundColor:[
-                '#00a65a', '#f39c12', '#f56954'
+                '#00a65a', '#f39c12', '#f56954', '#00c0ef'
               ]
           },
         ],
@@ -110,8 +117,8 @@ const Pointer = () => {
       }
       console.log("dataa", datas);
       
-      if (typeof(labels[2]) == "undefined"){
-        labels[2] = 'Postpaid Product Development'
+      if (typeof(labels[3]) == "undefined"){
+        labels[3] = 'Postpaid Product Development'
       }
       setLinedata(
         {
@@ -136,7 +143,14 @@ const Pointer = () => {
               fill: false, 
               backgroundColor: '#f56954',
               borderColor: '#f56954' 
-            }
+            },
+            {
+              label:labels[3],
+              data: datas[3],
+              fill: false, 
+              backgroundColor: '#00c0ef',
+              borderColor: '#00c0ef' 
+            },
         ],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         })

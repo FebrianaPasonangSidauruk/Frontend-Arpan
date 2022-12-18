@@ -89,32 +89,13 @@ const getUsers = async () => {
         'content-type': 'multipart/form-data',
       },
     };
-    // axios.post(`uploadproject`, formData, config)
-    // .then (res => {
-    //     console.log("response data", res.data); 
-    //     console.log("form data", formData);
-    //     setMessage(res.data.message)
-    //     refreshPage();
-    // })
     try{
       const res = await axios.post(`uploadproject`, formData, config)
       console.log("response data", res.data.message); 
         console.log("form data", formData);
         setMessage(res.data.message)
         refreshPage(res.data.message);
-    //   axios.post(`uploadproject`, formData, config)
-    // .then (res => {
-    //     console.log("response data", res.data); 
-    //     console.log("form data", formData);
-    //       refreshPage();
-    // })
     } catch (error){
-      // setTimeout(function() {
-    
-      //   alert("error");
-      //   window.location.reload();
-      // }, 2000);
-      // alert(error)
       refreshPageError(error);
       console.log(error)
     }
