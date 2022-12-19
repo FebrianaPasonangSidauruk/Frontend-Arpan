@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
-import { useNavigate } from 'react-router-dom';
 import {SiReadthedocs} from 'react-icons/si'
 import {FaShareAlt, FaBalanceScale} from 'react-icons/fa'
 import PieChart from '../Chart/PieChart';
@@ -65,7 +64,6 @@ const Dashboard = () => {
       return resp
     }).then((resp)=>{
       // console.log("resp line chart", resp)
-      // console.log('resp lengh', resp.length)
       const datas = [];
       let datasTemp = [];
       for(var i of resp) {
@@ -147,6 +145,7 @@ const Dashboard = () => {
     }) 
   }
 
+  // dashboard rfs, rfi, rfc, itr
   const dboardtop = async () =>{
     const response = await axios.get(`getdboardtop`);
     setRfs(response.data.rfs);

@@ -143,14 +143,12 @@ const Sidebar = () => {
           </li>
 
           <li className="nav-item">
-              {/* <Link to='/profile' className='nav-link'> */}
               <a className='nav-link' href={`/dashboard/profile/${users.uuid}`}>
               <i className="nav-icon fas" ><FaUserAlt/></i>
               <p>
                 User Profile
               </p>
               </a>
-              {/* </Link> */}
           </li>
 
             {users && users.role === "admin" && (

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import './Login.css';
 import {FaLock, FaUserAlt} from 'react-icons/fa';
 import loginPic from '../img/login-left.svg';

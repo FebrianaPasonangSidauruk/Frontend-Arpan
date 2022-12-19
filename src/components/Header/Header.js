@@ -5,7 +5,7 @@ import {FiLogOut} from 'react-icons/fi';
 import jwt_decode from "jwt-decode";
 
 const Header = () => {
-  const [name, setName] = useState('');
+    const [name, setName] = useState('');
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);

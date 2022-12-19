@@ -41,7 +41,6 @@ const ModalExcel = ({requestor_audit, smonth, syear, smonth2, syear2, smonth3, s
     const data = await filterselection(req, req2, req3, smonth, syear, smonth2, syear2, smonth3, syear3);   
     setExportData(data);
     // console.log(data);
-    // console.log(exporData)
     var wb = XLSX.utils.book_new()
     var ws = XLSX.utils.json_to_sheet(data);
     XLSX.utils.book_append_sheet(wb, ws, "Project");

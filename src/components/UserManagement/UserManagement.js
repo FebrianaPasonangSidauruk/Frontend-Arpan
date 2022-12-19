@@ -39,7 +39,7 @@ const UserManagement = () => {
         getUserManagement()
     }, [page, keyword]);
 
-    //get a list of users
+    //get list of users
     const getUserManagement = async () => {
         const response = await axios.get(
           `getUserManagement?search_query=${keyword}&page=${page}&limit=${limit}`
@@ -61,21 +61,21 @@ const UserManagement = () => {
         }
       };
 
+      //search user account
       const searchData =async(e) => {
         e.preventDefault();
-      
         setPage(0);
         setMessage("");
         setKeyword(query);
-        console.log(query)
-        
-        console.log(keyword)
+        console.log("search: ",query)
+        // console.log(keyword)
       };
 
       const refreshPage = ()=>{
         window.location.reload();
     }
 
+    //update user account by admin
       const updateUserAccount = async (event) =>{
         event.preventDefault();
         console.log(uuidUser)
@@ -100,6 +100,7 @@ const UserManagement = () => {
         }
       }
 
+      //delete user account by admin
       const deleteUserAccount = async (event)=>{
         event.preventDefault();
         console.log(uuidUser)
@@ -111,8 +112,9 @@ const UserManagement = () => {
         }
       }
 
+      //get user account from uuid to show in detail page
       const getUserByUUID = async(useruuid)=>{
-        console.log(useruuid);
+        console.log("user uuid",useruuid);
         setVal(useruuid)
         setUuidUser(useruuid)
         const response = await axios.get(`userAccount/${useruuid}`);
@@ -126,7 +128,6 @@ const UserManagement = () => {
         setPhone(response.data.phone);
         setAddress(response.data.address);
         setPassword(response.data.password);
-
       }
 
   return (
