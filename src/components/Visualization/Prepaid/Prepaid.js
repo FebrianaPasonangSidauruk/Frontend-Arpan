@@ -119,6 +119,12 @@ const Prepaid = () => {
       for(var i of resp) {
           labels.push(i.department)
       }
+
+      for(var i=0; i<5; i++ ) {
+        if (typeof(labels[i]) == "undefined"){
+          labels[i] = '-'
+        }
+    }
       console.log("dataa", datas);
       setLinedata(
         {

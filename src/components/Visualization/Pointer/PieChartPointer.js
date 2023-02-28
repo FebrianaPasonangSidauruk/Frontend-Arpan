@@ -29,6 +29,7 @@ function PieChartPointer({ chartDataPie }) {
               }
             },
             formatter: (value, context) =>{
+              if(value >0){
               console.log(context.chart.data.datasets[0].data);
               const datapoints = context.chart.data.datasets[0].data;
               function totalSum(total, datapoint){
@@ -38,6 +39,11 @@ function PieChartPointer({ chartDataPie }) {
               const percentageValue = (value / totalValue * 100).toFixed(1);
               const display = [`${value}`, `${percentageValue}%`]
               return display;
+            }
+            else{
+              value = null
+              
+            }
             }
           },
           tooltip: {

@@ -100,7 +100,6 @@ const Pointer = () => {
       console.log("resp line chart", resp)
       const datas = [];
       let index = 0;
-      
       let datasTemp = [];
       for(var i of resp) {
         for(var j of Object.values(i)){
@@ -116,10 +115,13 @@ const Pointer = () => {
           labels.push(i.department)
       }
       console.log("dataa", datas);
+
+      for(var i=0; i<4; i++ ) {
+        if (typeof(labels[i]) == "undefined"){
+          labels[i] = '-'
+        }
+    }
       
-      if (typeof(labels[3]) == "undefined"){
-        labels[3] = 'Postpaid Product Development'
-      }
       setLinedata(
         {
           datasets:[

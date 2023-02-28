@@ -29,7 +29,7 @@ function PieChartDigitalVas({ chartDataPie }) {
             }
           },
           formatter: (value, context) =>{
-            console.log(context.chart.data.datasets[0].data);
+            if(value>0){console.log(context.chart.data.datasets[0].data);
             const datapoints = context.chart.data.datasets[0].data;
             function totalSum(total, datapoint){
               return total + datapoint;
@@ -37,7 +37,11 @@ function PieChartDigitalVas({ chartDataPie }) {
             const totalValue = datapoints.reduce(totalSum, 0);
             const percentageValue = (value / totalValue * 100).toFixed(1);
             const display = [`${value}`, `${percentageValue}%`]
-            return display;
+            return display;}
+            else{
+              value = null
+              
+            }
           }
         },
         tooltip: {

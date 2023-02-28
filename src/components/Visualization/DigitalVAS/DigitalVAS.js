@@ -122,6 +122,12 @@ const DigitalVAS = () => {
           labels.push(i.department)
       }
 
+      for(var i=0; i<5; i++ ) {
+        if (typeof(labels[i]) == "undefined"){
+          labels[i] = '-'
+        }
+      }
+
       if (typeof(labels[4]) == "undefined"){
         labels[4] = 'Business Solution Management Digital and VAS'
       }
